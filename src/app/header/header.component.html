@@ -1,0 +1,41 @@
+<head>
+<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+</head>
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a href="#" class="navbar-brand">Letterdbox</a>
+    </div>
+
+    <div class="collapse navbar-collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="#">Activity</a></li>
+        <li><a href="#">Films</a></li>
+        <li><a href="#">Lists</a></li>
+        <li><a href="#">Add new Film</a></li>
+        <li >
+          <a (click)="toggleSearch()" href="#" >
+          <fa-icon [icon]="searchText"></fa-icon>
+          </a>
+        </li>
+
+        <li [@search]="searchState"><input class="inputSearch"  type="text"></li>
+
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="dropdown" appDropdown>
+          <a href="#" class="dropdown-toggle" role="button">My account <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Profile</a></li>
+            <li><a href="#">Films</a></li>
+            <li><a href="#">Diary</a></li>
+            <li><a href="#">Reviews</a></li>
+            <li><a href="#">Watchlist</a></li>
+            <li><a href="#">Lists</a></li>
+            
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
