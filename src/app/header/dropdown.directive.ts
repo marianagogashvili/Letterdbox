@@ -9,7 +9,7 @@ export class DropdownDirective {
 	@HostListener('mouseenter') mouseenter() {
 		this.open = true;
 	}
-
+ 
 	@HostListener('mouseleave') mouseleave() {
 		this.open = false;
 	}

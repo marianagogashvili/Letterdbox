@@ -14,13 +14,13 @@
         <li><a href="#">Lists</a></li>
         <li><a href="#">Add new Film</a></li>
         <li >
-          <a (click)="toggleSearch()" href="#" >
+          <a (click)="toggleSearch()" >
           <fa-icon [icon]="searchText"></fa-icon>
           </a>
         </li>
 
         <li [@search]="searchState"><input class="inputSearch"  type="text"></li>
-
+  
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
@@ -39,3 +39,58 @@
     </div>
   </div>
 </nav>
+
+<div> 
+  <nav class="navbar navbar-inverse" style="width:60vw;
+  margin-left: 70px; font-size: 13px; border: 1px solid grey">
+    <div class="container-fluid">
+    <div  style="">
+      <div  class="navbar-header" >
+        <a class="navbar-brand" style="font-size: 14px;" href="#">BROWSE BY</a>
+      </div>
+      <ul class="nav navbar-nav">
+        <li  class="dropdown" appDropdown>
+          <a  href="#" class="dropdown-toggle" role="button">YEAR <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a [routerLink]="['/']" [queryParams]="{year:'2020'}" href="#">2020's</a></li>
+            <li><a [routerLink]="['/']" [queryParams]="{year:'2010'}" href="#">2010's</a></li>
+            <li><a [routerLink]="['/']" [queryParams]="{year:'2000'}" href="#">2000's</a></li>
+            <li><a [routerLink]="['/']" [queryParams]="{year:'1990'}" href="#">1990's</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" appDropdown>
+          <a  href="#" class="dropdown-toggle" role="button">RATING <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Highest</a></li>
+            <li><a href="#">Lowest</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" appDropdown>
+          <a href="#" class="dropdown-toggle" role="button">POPULAR <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">All time</a></li>
+            <li><a href="#">This year</a></li>
+            <li><a href="#">This week</a></li>
+            <li><a href="#">This month</a></li>
+          </ul>
+        </li>
+        <li class="dropdown" appDropdown>
+          <a  href="#" class="dropdown-toggle" role="button">GENRE <span class="caret"></span></a>
+          <ul class="dropdown-menu">
+            <li><a href="#">Action</a></li>
+            <li><a href="#">Documentary</a></li>
+            <li><a href="#">Horror</a></li>
+            <li><a href="#">Drama</a></li>
+          </ul>
+        </li>
+      </ul> 
+    </div>              
+    </div>
+  </nav>
+</div>
+
+  <div *ngFor="let film of films; let i = index"> 
+    <div class="filmColumn">
+      <img class="filmImage" src="{{film.photo}}" alt="Snow" style="width:100%">
+    </div>
+  </div>

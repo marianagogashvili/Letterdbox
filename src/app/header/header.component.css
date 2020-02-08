@@ -8,3 +8,11 @@
 input:focus {
 	outline: none;
 }
+.filmColumn {
+  float: left;
+  width: 33.33%;
+  padding: 35px;
+}
+.filmImage {
+   border-radius: 8px;
+}

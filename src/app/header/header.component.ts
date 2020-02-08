@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, group, animate, keyframes, style, transition } from '@angular/animations';
+import { DataStorageService } from '../shared/data-storage.service';
+import { ActivatedRoute, Params } from '@angular/router';
+import { FilmService } from '../films/film.service'; 
+import { map, catchError } from 'rxjs/operators';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -60,10 +64,29 @@ import { trigger, state, group, animate, keyframes, style, transition } from '@a
 export class HeaderComponent implements OnInit {
   searchText = faSearch;
   searchState = 'normal';
-  constructor() { }
+  films = null;
+  param;
+  constructor(private dataStorageService: DataStorageService,
+              private route: ActivatedRoute,
+              private filmService: FilmService) { }
 
   ngOnInit() {
-  }
+    this.dataStorageService.getFilms().subscribe(result => {
+          this.films = result;
+      });
+
+    // if (this.route.queryParams.observers.length !== 0) {
+      this.route.queryParams.subscribe(params => {
+        this.param = params;
+        this.filmService.sortBy(params).subscribe(result => {
+           this.films = result;
+           console.log(result);
+        });
+
+      });
+    // }
+
+  } 
 
   toggleSearch() {
     this.searchState == 'normal' ? this.searchState = 'sliding' : this.searchState = 'normal';
@@ -72,6 +95,10 @@ export class HeaderComponent implements OnInit {
   	} else {
   		this.searchText = faSearch;
   	}
+  }
+
+  onSelect(result) {
+    console.log(result);
   }
 
 } 
