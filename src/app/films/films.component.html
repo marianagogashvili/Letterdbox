@@ -1,1 +1,6 @@
-<p>films works!</p>
+<div *ngFor="let film of films; "> 
+    <div class="filmColumn">
+        <p class="tooltip1" >{{film.title}}</p>
+        <img  class="filmImage" src="{{film.photo}}" alt="Snow" style="width:100%">
+    </div>
+  </div>

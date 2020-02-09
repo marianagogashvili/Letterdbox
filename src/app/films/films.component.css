@@ -1,0 +1,28 @@
+.filmColumn {
+  float: left;
+  width: 33.33%;
+  padding: 35px;
+  text-align: center;
+
+}
+.filmImage {
+   border-radius: 8px;
+}
+.filmImage:hover {
+	border: 5px solid #00e054;
+}
+.tooltip1 {
+	padding: 3px 10px 3px 10px;
+	margin-bottom: 5px;
+	opacity: 0;
+	display: inline-block;
+	background-color: #E8E8E8;
+	border-radius: 7px;
+	font-family: 'Titillium Web', sans-serif;
+	font-size: 17px;
+	text-transform: uppercase;
+}
+.filmColumn:hover .tooltip1 {
+	transition: opacity 1s;
+	opacity: 1;
+}

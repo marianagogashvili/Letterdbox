@@ -1,3 +1,32 @@
+
+#navText {
+	color: #9ab;
+	font-family: 'Titillium Web', sans-serif;
+	text-transform: uppercase;
+}
+#navText:hover {
+	color: #edeeee;
+}
+#navText2 {
+	color: #778390;
+	font-family: 'Titillium Web', sans-serif;
+	text-transform: uppercase;
+}
+#navText2:hover {
+	color: #edeeee;
+}
+
+.navbar-nav > li > .dropdown-menu {
+	background-color: #151b22;
+	color: #778390;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+
+.navbar-nav > li > .dropdown-menu a:hover {
+	background-color: #151b22;
+}
+
 .inputSearch {
 	margin-top: 9px; 
 	margin-bottom: 8px;
@@ -8,11 +37,4 @@
 input:focus {
 	outline: none;
 }
-.filmColumn {
-  float: left;
-  width: 33.33%;
-  padding: 35px;
-}
-.filmImage {
-   border-radius: 8px;
-}
+
