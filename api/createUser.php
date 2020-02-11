@@ -18,7 +18,7 @@ $json = file_get_contents('php://input');
 $request = json_decode($json, true);
 
 // $email = $request->email;
-error_log($request);
+// error_log($request);
 $user->username = $request['username'];
 $user->email = $request['email'];
 $user->password = $request['password'];

@@ -5,7 +5,10 @@ import { HttpClient } from '@angular/common/http';
 export class AuthService {
 	constructor(private http: HttpClient) {}
 
-	signup(post ) {
+	signup(post) {
 		return this.http.post('http://localhost:8888/createUser.php', JSON.stringify(post));
+	}
+	login(user) {
+		return this.http.post('http://localhost:8888/loginUser.php', JSON.stringify(user));
 	}
 }

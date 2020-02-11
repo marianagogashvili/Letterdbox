@@ -33,6 +33,7 @@ export class HeaderComponent implements OnInit {
   films = null;
   param;
   register = false;
+  loggedInUser = localStorage.getItem('userData');
 
   constructor(private dataStorageService: DataStorageService,
               private route: ActivatedRoute,

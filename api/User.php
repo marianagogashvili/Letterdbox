@@ -18,6 +18,23 @@ class User {
           return true;
         }
 	}
+
+	public static function findUserByEmail($conn, $email) {
+		$sql = "SELECT * FROM user WHERE email = :email";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":email", $email, PDO::PARAM_STR);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
+		}
+	}
+	public static function findUserByUsername($conn, $username) {
+		$sql = "SELECT * FROM user WHERE username = :username";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":username", $username, PDO::PARAM_STR);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
+		}
+	}
 }
 
 ?>

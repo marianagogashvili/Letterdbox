@@ -23,6 +23,9 @@ import { AuthService } from '../auth.service';
 export class RegisterComponent implements OnInit {
   // @Input() registerState = 'hidden';
   @Output() close = new Subject<void>();
+  isLoginMode = false;
+  loginError;
+
   constructor(private authService: AuthService,
   			  private router: Router) { }
 
@@ -37,9 +40,9 @@ export class RegisterComponent implements OnInit {
   	const email = form.value.email;
   	const password = form.value.password;
 
-  	const post = {username: username, email: email, password: password};
-  	console.log(form.value);
-  	this.authService.signup(post).subscribe(result => {
+  	const user = {username: username, email: email, password: password};
+  	// console.log(form.value);
+  	this.authService.signup(user).subscribe(result => {
   		// cookies and authentication
   		if (result === 1) {
   			console.log('good');
@@ -51,8 +54,39 @@ export class RegisterComponent implements OnInit {
   	});
   }
 
+  onLogin(form: NgForm) {
+  	if (!form.valid) {
+  		return;
+  	}
+  	const email = form.value.email;
+  	const password = form.value.password;
+  	const user = {email: email, password: password};
+  	this.authService.login(user).subscribe(result => {
+  		// if (result === 1) {
+  		// 	console.log('success');
+  		// 	localStorage.setItem('userData', JSON.stringify(true));
+  		// 	this.close.next();
+  		// } else
+  		if (result === 0) {
+  			this.loginError = 'Password is incorrect';
+  		} else if (result === 3) {
+  			this.loginError = 'This user does not exist';
+  		} else {
+  			console.log('success');
+  			console.log(result);
+
+  			localStorage.setItem('userData', JSON.stringify(result));
+  			this.close.next();
+  		}
+  	})
+  }
+
   onClose() {
   	this.close.next();
+  }
+
+  onSwitchMode() {
+  	this.isLoginMode = !this.isLoginMode;
   }
 
 }

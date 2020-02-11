@@ -19,8 +19,7 @@ import { RegisterComponent } from './auth/register/register.component';
     DropdownDirective,
     FilmsComponent,
     AuthComponent,
-    RegisterComponent,
-     
+    RegisterComponent,     
   ],
   imports: [
     BrowserModule,

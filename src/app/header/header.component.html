@@ -16,12 +16,16 @@
           <fa-icon [icon]="searchText"></fa-icon>
           </a>
         </li>
-        <li><a id="navText" (click)="onOpenRegister()" href="#">Register</a></li>
+        
 
         <li [@search]="searchState"><input class="inputSearch"  type="text"></li>
   
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <ul *ngIf="!loggedInUser" class="nav navbar-nav navbar-right">
+        <li><a id="navText" href="#">Login</a></li>
+        <li><a id="navText" (click)="onOpenRegister()" href="#">Register</a></li>
+      </ul>
+      <ul *ngIf="loggedInUser" class="nav navbar-nav navbar-right">
         <li class="dropdown" appDropdown>
           <a id="navText" href="#" class="dropdown-toggle" role="button">My account <span class="caret"></span></a>
           <ul class="dropdown-menu">
@@ -33,7 +37,7 @@
             <li><a id="navText" href="#">Lists</a></li> 
           </ul>
         </li>
-
+        <li><a id="navText" href="#">Logout</a></li>
       </ul>
     </div>
   </div>
