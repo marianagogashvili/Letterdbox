@@ -12,6 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AuthComponent } from './auth/auth.component';
 import { RegisterComponent } from './auth/register/register.component';
+import { UserComponent } from './user/user.component';
+import { HomeComponent } from './home/home.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -19,7 +21,9 @@ import { RegisterComponent } from './auth/register/register.component';
     DropdownDirective,
     FilmsComponent,
     AuthComponent,
-    RegisterComponent,     
+    RegisterComponent,
+    UserComponent,
+    HomeComponent,     
   ],
   imports: [
     BrowserModule,

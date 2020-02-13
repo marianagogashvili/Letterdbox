@@ -22,10 +22,12 @@ $request = json_decode($json, true);
 $user->username = $request['username'];
 $user->email = $request['email'];
 $user->password = $request['password'];
+
 if($user->createUser($conn)) {
-	echo(true);
+	echo(json_encode($user));
+	error_log($user);
 } else {
-	echo(false);
+	echo(0);
 }
 
 

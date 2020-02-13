@@ -1,11 +1,13 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
+import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, group, animate, keyframes, style, transition } from '@angular/animations';
 import { DataStorageService } from '../shared/data-storage.service';
-import { ActivatedRoute, Params } from '@angular/router';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FilmService } from '../films/film.service'; 
 import { map, catchError } from 'rxjs/operators';
+// import { Subscription } from 'rxjs';
+import { AuthService } from '../auth/auth.service';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -29,33 +31,34 @@ import { map, catchError } from 'rxjs/operators';
 export class HeaderComponent implements OnInit {
   searchText = faSearch;
   searchState = 'normal';
+  // currentLink = 'films';
 
   films = null;
-  param;
   register = false;
   loggedInUser = localStorage.getItem('userData');
 
+  // private subscription: Subscription;
+
   constructor(private dataStorageService: DataStorageService,
               private route: ActivatedRoute,
+              private router: Router,
               private filmService: FilmService, 
-              private elRef: ElementRef) { }
+              private elRef: ElementRef,
+              private authService: AuthService) { }
 
   ngOnInit() {
     this.elRef.nativeElement.ownerDocument.body.style.backgroundColor = '#2e3945'
-    this.dataStorageService.getFilms().subscribe(result => {
-          this.films = result;
-      });
+    // this.subscription = this.dataStorageService.getFilms().subscribe(result => {
+    //     this.films = result;
+    // });
 
-    // if (this.route.queryParams.observers.length !== 0) {
-      this.route.queryParams.subscribe(params => {
-        this.param = params;
-        this.filmService.sortBy(params).subscribe(result => {
-           this.films = result;
-           console.log(result);
-        });
+    // this.route.queryParams.subscribe(params => {
+    //   this.filmService.sortBy(params).subscribe(result => {
+    //      this.films = result;
+    //      console.log(result);
+    //   });
 
-      });
-    // }
+    // });
 
   } 
 
@@ -80,4 +83,16 @@ export class HeaderComponent implements OnInit {
     this.register = false;
   }
 
+  onLogout() {
+    localStorage.removeItem('userData');
+    this.router.navigate(['/']);
+  }
+
+  // switchToAccount() {
+  //   this.currentLink = 'account';
+  // }
+
+  // ngOnDestroy() {
+  //   this.subscription.unsubscribe();
+  // }
 } 

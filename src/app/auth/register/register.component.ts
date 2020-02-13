@@ -2,12 +2,15 @@ import { Output, Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
+import { BehaviorSubject } from 'rxjs';
 // import { trigger, state, style, animate, transition } from '@angular/animations';
 import { AuthService } from '../auth.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.css'],
+  providers: [DatePipe]
   // animations: [
   // 	trigger('register', [
   // 		state('hidden', style({
@@ -26,8 +29,10 @@ export class RegisterComponent implements OnInit {
   isLoginMode = false;
   loginError;
 
+
   constructor(private authService: AuthService,
-  			  private router: Router) { }
+  			  private router: Router,
+  			  private datePipe: DatePipe) { }
 
   ngOnInit() {
   }
@@ -44,11 +49,15 @@ export class RegisterComponent implements OnInit {
   	// console.log(form.value);
   	this.authService.signup(user).subscribe(result => {
   		// cookies and authentication
-  		if (result === 1) {
-  			console.log('good');
-  			this.close.next();
-  		} else {
+  		if (result === 0) {
   			console.log(result);
+  		} else {
+  			console.log('good');
+			let date = new Date();
+  			let store = {id: result['id'], username: result['username'], email: result['email'], date: date};
+  			localStorage.setItem('userData', JSON.stringify(store));
+  			this.close.next();
+			this.router.navigate(['/user']);
   		}
   		
   	});
@@ -67,16 +76,27 @@ export class RegisterComponent implements OnInit {
   		// 	localStorage.setItem('userData', JSON.stringify(true));
   		// 	this.close.next();
   		// } else
-  		if (result === 0) {
-  			this.loginError = 'Password is incorrect';
-  		} else if (result === 3) {
-  			this.loginError = 'This user does not exist';
-  		} else {
-  			console.log('success');
-  			console.log(result);
 
-  			localStorage.setItem('userData', JSON.stringify(result));
+  		if (result === 0) {
+			this.loginError = 'Password is incorrect';
+  			setTimeout(() => {
+  				this.loginError = null;
+  			}, 3000);
+  		} else if (result === 3) {
+			this.loginError = 'This user does not exist';
+  			setTimeout(() => {
+  				this.loginError = null;
+  			}, 3000);
+  		} else {
+  			// console.log('success');
+  			// console.log(result);
+  			let date = new Date();
+  			// this.datePipe.transform(date, 'dd-MM-yyyy')
+  			let user = {id: result[0], username: result[1], email: result[2], date: date};
+  			localStorage.setItem('userData', JSON.stringify(user));
+  			// this.authService.resolveUser(user); 			
   			this.close.next();
+			this.router.navigate(['/user']);
   		}
   	})
   }

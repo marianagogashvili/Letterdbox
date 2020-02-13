@@ -4,7 +4,7 @@
 	  <a (click)="onSwitchMode()" class="{{ isLoginMode ? '' : 'active' }}">Register</a>
 	  <a (click)="onSwitchMode()" class="{{ isLoginMode ? 'active' : '' }}">Login</a>
 	</div>
-  <span *ngIf="loginError" class="help-block" style=" padding: 5px 0 5px 5px; color: red">
+  <span *ngIf="loginError && isLoginMode" class="help-block" style=" padding: 5px 0 5px 5px; color: red">
 	{{loginError}}
   </span>
   <form *ngIf="!isLoginMode" #registerForm="ngForm" (ngSubmit)="onSubmit(registerForm)">
