@@ -1,7 +1,7 @@
-div {
+/*div {
 	padding-left: 50px;
-	
-}
+
+}*/
 #userImg {
 	float: left; 
 	margin: 30px; 
@@ -9,13 +9,19 @@ div {
 	border: 1px solid grey;
 }
 
-#nameDiv {
+
+#nameDiv, #activityDiv {
 	padding: 30px; 
 	color: #fff;
 	font-family: 'Titillium Web', sans-serif;
 	text-transform: uppercase;
 }
-p {
+#activityDiv {
+	display: inline-block;
+	float: right;
+}
+
+#username {
 	font-size: 22px;
 }
 #btnEdit {
@@ -31,4 +37,22 @@ p {
 button: focus {
 	outline: none;
 	background-color: black;
+}
+#num {
+	margin: 0;
+	font-size: 35px;
+	color: #9ab ;
+}
+#numText {
+	color: #9ab ;
+}
+.navbar-brand {
+	text-transform: uppercase;
+	font-family: 'Titillium Web', sans-serif;
+	margin-right: 10px;
+	margin-left: 10px;
+	/*background-color: #2e3945;*/
+}
+.navbar-brand:hover {
+	background-color: grey;
 }
