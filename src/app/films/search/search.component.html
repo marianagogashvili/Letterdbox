@@ -1,0 +1,33 @@
+<div class="backdrop" (click)="onClose()"></div>
+<div [@searchState] class="alert-box" >
+<!--   <form #searchForm="ngForm" (ngSubmit)="onSubmit(registerForm)"> -->
+	<div class="form-group">
+    	<label for="username">Film Title</label>
+    	<input 
+    		type="text" 
+			id="filtTitle"
+			class="form-control"
+			ngModel 
+			name="username"
+			required
+			[formControl]="filmTitle"
+    	/>
+<!--     	<span class="help-block" *ngIf="!username.valid && username.touched">
+    		Enter valid username
+    	</span> -->
+    </div>
+  <!-- </form> -->
+  <div *ngIf="!isHidden">
+	<ul id="myUL" style="height: 20vw; overflow-y: scroll;">
+  		<li *ngFor="let film of films" style="clear: both;" class="filter-select-list"  (click)="addFilm(film)">	
+  			<img style="float: left;margin-bottom: 20px;" src="{{ film.photo }}" alt="" width="50" height="75">
+  			<p id="searchTitle" style="float: left; ">{{ film.title }}</p>
+  		</li>
+
+  	</ul>
+ </div>
+  <div class="alert-box-actions">
+    <button class="btn btn-success" (click)="onClose()">Close</button>
+  </div>
+
+</div>

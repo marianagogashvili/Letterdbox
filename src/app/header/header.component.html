@@ -1,4 +1,5 @@
 <app-register *ngIf="register" (close)="onCloseRegister()"></app-register>
+<app-search *ngIf="searchFilm" (close)="onCloseSearchFilm()"></app-search>
 <nav class="navbar navbar-inverse" style="border: 0px">
   <div class="container-fluid" style="background-color: #0c1114;">
     <div class="navbar-header">
@@ -34,9 +35,11 @@
             <li><a id="navText" >Reviews</a></li>
             <li><a id="navText" >Watchlist</a></li>
             <li><a id="navText" >Lists</a></li> 
+            <li><a id="navText" (click)="onLogout()" href="/">Logout</a></li>
+
           </ul>
         </li>
-        <li><a (click)="onLogout()" id="navText" href="/">Logout</a></li>
+        <li><a ><p id="log" (click)="onOpenSearchFilm()">+ Log</p></a></li>
       </ul>
     </div>
   </div>

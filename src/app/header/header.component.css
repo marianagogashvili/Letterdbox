@@ -37,4 +37,16 @@
 input:focus {
 	outline: none;
 }
-
+#log {
+	background-color: #00e054;
+	font-family: 'Montserrat', sans-serif;
+	text-transform: uppercase;
+	color: #fff;
+	margin: 0;
+	padding-left: 10px;
+	padding-right: 13px;
+	border-radius: 2px;
+}
+#log:hover {
+	background-color: #006400;
+}

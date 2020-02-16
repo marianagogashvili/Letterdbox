@@ -1,0 +1,72 @@
+.backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.75);
+  z-index: 50;
+}
+
+.alert-box {
+  position: fixed;
+  top: 30vh;
+  left: 30vw;
+  width: 35vw;
+  /*height: 35vw;*/
+  padding: 16px;
+  z-index: 100;
+  background-color: #151b22;
+  color: #778390;
+  font-family: 'Titillium Web', sans-serif;
+  text-transform: uppercase;
+  align-items: center;
+  box-shadow: 0 2px 8px rbga(0, 0, 0, 0.26);
+}
+
+input {
+  background-color: #cde;
+  width: 30vw;
+}
+
+.alert-box-actions {
+  text-align: right;
+}
+
+button, button:hover, button:focus {
+  background-color: #00b020;
+  font-family: 'Titillium Web', sans-serif;
+  text-transform: uppercase;
+  outline: none;
+}
+/*-------------------*/
+
+#myUL {
+  list-style-type: none;
+  padding: 0;
+  margin-right: 30px;
+  /*padding-top: 10px;*/
+  /*margin: 0;*/
+}
+#myUL p {
+  margin: 10px 10px 15px;
+}
+
+#myUL p:active {
+  color: white;
+}
+/*
+#myUL li a {
+  border: 1px solid #ddd;
+  margin-top: -1px; 
+  background-color: #f6f6f6;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px;
+  color: black;
+  display: block
+}
+
+#myUL li a:hover:not(.header) {
+  background-color: #eee;
+}*/

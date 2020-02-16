@@ -22,6 +22,12 @@ class Film {
       		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     	}
 	}
-
+	public static function findFilms($conn, $word) {
+		$sql = "SELECT * FROM film WHERE title LIKE '%" . $word ."%'";
+		$stmt = $conn->prepare($sql);
+		if($stmt->execute()){
+      		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	}
+	}
 }
 ?>

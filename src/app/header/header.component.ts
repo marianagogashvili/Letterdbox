@@ -35,8 +35,8 @@ export class HeaderComponent implements OnInit {
 
   films = null;
   register = false;
+  searchFilm = false;
   loggedInUser = localStorage.getItem('userData');
-
   // private subscription: Subscription;
 
   constructor(private dataStorageService: DataStorageService,
@@ -86,6 +86,14 @@ export class HeaderComponent implements OnInit {
   onLogout() {
     localStorage.removeItem('userData');
     this.router.navigate(['/']);
+  }
+
+  onOpenSearchFilm() {
+    this.searchFilm = true;
+  }
+
+  onCloseSearchFilm() {
+    this.searchFilm = false;
   }
 
   // switchToAccount() {

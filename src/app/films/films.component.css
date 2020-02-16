@@ -3,10 +3,9 @@
   width: 33.33%;
   padding: 35px;
   text-align: center;
-
 }
 .filmImage {
-   border-radius: 8px;
+   border-radius: 8px; 
 }
 .filmImage:hover {
 	border: 5px solid #00e054;
@@ -19,7 +18,7 @@
 	background-color: #E8E8E8;
 	border-radius: 7px;
 	font-family: 'Titillium Web', sans-serif;
-	font-size: 17px;
+	/*font-size: 3vw;*/
 	text-transform: uppercase;
 }
 .filmColumn:hover .tooltip1 {

@@ -8,7 +8,6 @@ export class FilmService {
 	constructor(private http: HttpClient) {}
 
 	sortBy(param: Params) {
-
 		if (param.year) {
 			return this.http.get(
 				'http://localhost:8888/sortFilms.php?year=' + param.year
@@ -30,5 +29,11 @@ export class FilmService {
 				'http://localhost:8888/getFilms.php'
 			);
 		}
+	}
+
+	findFilms(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/findFilms.php', JSON.stringify(param)
+		);
 	}
 }

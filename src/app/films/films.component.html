@@ -47,9 +47,10 @@
     </div>
   </nav>
 </div>
-<div *ngFor="let film of films; "> 
-    <div class="filmColumn">
-        <p class="tooltip1" >{{film.title}}</p>
+	
+<div *ngFor="let film of films; " style="width: 100%; table-layout: fixed; font-size: 2vw;"> 
+    <div class="filmColumn" >
+        <p class="tooltip1">{{film.title}}</p>
         <img  class="filmImage" src="{{film.photo}}" alt="Snow" style="width:100%">
     </div>
   </div>

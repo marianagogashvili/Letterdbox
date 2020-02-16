@@ -14,6 +14,7 @@ import { AuthComponent } from './auth/auth.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
+import { SearchComponent } from './films/search/search.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -23,7 +24,8 @@ import { HomeComponent } from './home/home.component';
     AuthComponent,
     RegisterComponent,
     UserComponent,
-    HomeComponent,     
+    HomeComponent,
+    SearchComponent,     
   ],
   imports: [
     BrowserModule,
@@ -31,7 +33,8 @@ import { HomeComponent } from './home/home.component';
     BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
