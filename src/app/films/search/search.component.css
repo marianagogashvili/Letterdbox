@@ -8,9 +8,8 @@
   z-index: 50;
 }
 
-.alert-box {
+.alert-box, .alert-box2 {
   position: fixed;
-  top: 30vh;
   left: 30vw;
   width: 35vw;
   /*height: 35vw;*/
@@ -23,7 +22,13 @@
   align-items: center;
   box-shadow: 0 2px 8px rbga(0, 0, 0, 0.26);
 }
+.alert-box {
+  top: 30vh;
+}
+.alert-box2 {
+  top: 19vh;
 
+}
 input {
   background-color: #cde;
   width: 30vw;
@@ -54,6 +59,47 @@ button, button:hover, button:focus {
 
 #myUL p:active {
   color: white;
+}
+.currentFilm {
+  margin-right: 20px;
+  display: inline-block;
+}
+.currentFilm:hover {
+  border: 1px solid #00e054;
+}
+
+#watchedFilm {
+  font-size: 17px;
+  color: white;
+}
+#watchedFilm2 {
+  font-size: 15px;
+  margin-top: 10px;
+  color: rgb(153, 170, 187);
+}
+#starIcon {
+  font-size: 30px;  
+  display: inline-block;
+
+}
+
+#saveBtn, #backBtn {
+  font-family: 'Montserrat', sans-serif;
+  text-transform: uppercase;
+  border: 0;
+  color: #fff;
+  margin: 0;
+  padding: 5px 13px 5px 10px;
+  border-radius: 2px;
+}
+#saveBtn {
+  background-color: #00e054;
+}
+#backBtn {
+  background-color: rgb(153, 170, 187);
+}
+#saveBtn:hover {
+  background-color: #006400;
 }
 /*
 #myUL li a {
