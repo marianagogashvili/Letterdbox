@@ -35,6 +35,28 @@ class User {
 			return $stmt->fetch();
 		}
 	}
+
+	public static function addFilmToWatched($conn, $film_id, $user_id, $rating, $date) {
+		$sql = "INSERT INTO watched_films VALUES(:film_id, :user_id, :rating, :dateWatched)";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':rating', $rating, PDO::PARAM_INT);
+		$stmt->bindValue(':dateWatched', $date, PDO::PARAM_STR);
+	    if ($stmt->execute()) {
+	    	return true;
+	    }
+	}
+
+	public static function addFilmToLiked($conn, $film_id, $user_id) {
+		$sql = "INSERT INTO liked_films VALUES(:film_id, :user_id)";
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+	    	return true;
+	    }
+	}
+	
 }
 
 ?>

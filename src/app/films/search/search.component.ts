@@ -31,6 +31,9 @@ import { FilmService } from '../film.service';
 export class SearchComponent implements OnInit {
   @Output() close = new Subject<void>();
   filmTitle: FormControl = new FormControl();
+  filmDate: FormControl = new FormControl();
+  filmReview: FormControl = new FormControl();
+
   films;
   isHidden=true;
   /////
@@ -113,11 +116,12 @@ export class SearchComponent implements OnInit {
   		this.heartIcon = faHeart;
   	}
   }
-  saveReview(id, date, review) {
-  	console.log(id);
-  	console.log(date);
-  	console.log(review);
 
+  saveReview(id) {
+  	console.log(id);
+  	console.log(this.filmDate.value);
+  	console.log(this.filmReview.value);
+  	this.filmService.addFilmToWatched();
   }
 
   goBack() {

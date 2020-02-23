@@ -35,8 +35,21 @@
 		<p id="watchedFilm">
 		{{ currentFilm.title }} ({{ currentFilm.year }})
 		</p>
-		<p><input style="width: 150px" type="date" id="start" name="dateWatched" value="{{ date | date:'yyyy-MM-dd'}}"></p>
-		<textarea style="resize: none" name="review" cols="40" rows="8"></textarea>
+		<p><input 
+			style="width: 150px" 
+			type="date" 
+			id="start" 
+			name="dateWatched" 
+			value="{{ date | date:'yyyy-MM-dd'}}"
+			ngModel
+			[formControl]="filmDate"></p>
+		<textarea 
+			style="resize: none" 
+			name="review" 
+			cols="40" 
+			rows="8"
+			ngModel
+			[formControl]="filmReview"></textarea>
 		<p id="watchedFilm2">Rating {{ rating }} out of 5</p>
 
 		<div (click)="changeStarIcon(1)" id="starIcon"><fa-icon style="color: green;" [icon]="starIcon"></fa-icon></div>
@@ -46,7 +59,7 @@
 		<div (click)="changeStarIcon(5)" id="starIcon"><fa-icon style="color: green;" [icon]="starIcon5"></fa-icon></div>
 		<p id="watchedFilm2">Like</p>
 		<a (click)="changeHeartIcon()"><fa-icon style="color: red;"  id="starIcon" [icon]="heartIcon"></fa-icon></a>
-		<button style="float: right" id="saveBtn" (click)="saveReview()">Save</button>
+		<button style="float: right" id="saveBtn" (click)="saveReview(currentFilm.id)">Save</button>
 		<!-- <p><input type="checkbox"></p> -->
 
 		<!-- <label>Specify the date you watched it
