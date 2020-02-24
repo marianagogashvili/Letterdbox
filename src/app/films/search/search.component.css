@@ -27,7 +27,7 @@
 }
 .alert-box2 {
   top: 19vh;
-
+  bottom: 10vh;
 }
 input {
   background-color: #cde;

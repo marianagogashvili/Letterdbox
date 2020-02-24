@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserComponent implements OnInit {
 
+  username = JSON.parse(localStorage.getItem('userData')).username;
   constructor() { }
 
   ngOnInit() {

@@ -1,9 +1,10 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, OnInit, Output, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { FormControl } from '@angular/forms'; 
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faStar2} from '@fortawesome/free-solid-svg-icons';
+import { DatePipe } from '@angular/common';
 
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faHeart2} from '@fortawesome/free-solid-svg-icons';
@@ -28,7 +29,7 @@ import { FilmService } from '../film.service';
   	])
   ]
 })
-export class SearchComponent implements OnInit {
+export class SearchComponent implements OnInit, OnDestroy {
   @Output() close = new Subject<void>();
   filmTitle: FormControl = new FormControl();
   filmDate: FormControl = new FormControl();
@@ -46,12 +47,15 @@ export class SearchComponent implements OnInit {
   rating = 0;
 
   date = new Date();
-  constructor(private filmService: FilmService) { }
+
+  subscription1; subscription2; subscription3; subscription4;
+  constructor(private filmService: FilmService,
+  			  private datepipe: DatePipe) { }
 
   ngOnInit() {
-  	this.filmTitle.valueChanges.subscribe(title => {
+  	this.subscription1 = this.filmTitle.valueChanges.subscribe(title => {
   		if (title !== '') {
-			this.filmService.findFilms(title).subscribe(result => {
+			this.subscription2 = this.filmService.findFilms(title).subscribe(result => {
 				this.films = result;
 				this.isHidden = false;
 			})  		
@@ -68,7 +72,8 @@ export class SearchComponent implements OnInit {
   }
 
   addFilm(film) {
-  	console.log(film);
+  	// console.log(film);
+  	this.subscription1.unsubscribe();
   	this.currentFilm = film;
   	this.secondTabHidden = false;
   }
@@ -118,14 +123,36 @@ export class SearchComponent implements OnInit {
   }
 
   saveReview(id) {
-  	console.log(id);
-  	console.log(this.filmDate.value);
-  	console.log(this.filmReview.value);
-  	this.filmService.addFilmToWatched();
+  	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  	let dating = (this.filmDate.value !== '' ? this.filmDate.value : this.date);
+  	let param = {film_id: id, 
+  				 user_id: currentUserId, 
+  				 rating: this.rating, 
+  				 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()};
+  	// console.log(param);
+  	this.subscription3 = this.filmService.addFilmToWatched(param).subscribe(result => {
+  		console.log(result);
+  	});
+
+  	if(this.filmReview.value !== '') {
+  			console.log('ha?');
+
+  		this.subscription4 = this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
+  			console.log(result);
+  		});
+  	}
   }
 
   goBack() {
   	this.secondTabHidden = true;
+  }
+
+  ngOnDestroy() {
+  	this.subscription1.unsubscribe();
+  	this.subscription2.unsubscribe();
+  	this.subscription3.unsubscribe();
+  	this.subscription4.unsubscribe();
+
   }
 
 }

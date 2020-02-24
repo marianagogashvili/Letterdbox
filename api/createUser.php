@@ -25,7 +25,7 @@ $user->password = $request['password'];
 
 if($user->createUser($conn)) {
 	echo(json_encode($user));
-	error_log($user);
+	// error_log($user);
 } else {
 	echo(0);
 }

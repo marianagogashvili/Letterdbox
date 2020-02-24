@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { DatePipe } from '@angular/common';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
@@ -36,7 +37,7 @@ import { SearchComponent } from './films/search/search.component';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

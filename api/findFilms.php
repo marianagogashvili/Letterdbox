@@ -14,7 +14,7 @@ $word = json_decode($json, true);
 error_log($word);
 
 $films = Film::findFilms($conn, $word);
-error_log(json_encode($films));
+// error_log(json_encode($films));
 
 echo(json_encode($films));
 ?>
