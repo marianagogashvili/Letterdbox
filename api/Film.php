@@ -29,5 +29,17 @@ class Film {
       		return $stmt->fetchAll(PDO::FETCH_ASSOC);
     	}
 	}
+
+	public static function findFilm($conn, $param, $film_id, $user_id) {
+		$sql = "SELECT * FROM " . $param . " WHERE film_id = :film_id AND user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		// $stmt->bindValue(':param', $param, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
+		}
+	}
+
 }
 ?>

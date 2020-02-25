@@ -48,6 +48,8 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   date = new Date();
 
+  filmWatchedAlert;
+
   subscription1; subscription2; subscription3; subscription4;
   constructor(private filmService: FilmService,
   			  private datepipe: DatePipe) { }
@@ -55,7 +57,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
   	this.subscription1 = this.filmTitle.valueChanges.subscribe(title => {
   		if (title !== '') {
-			this.subscription2 = this.filmService.findFilms(title).subscribe(result => {
+			this.filmService.findFilms(title).subscribe(result => {
 				this.films = result;
 				this.isHidden = false;
 			})  		
@@ -69,13 +71,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   
   onClose() {
   	this.close.next();
-  }
-
-  addFilm(film) {
-  	// console.log(film);
-  	this.subscription1.unsubscribe();
-  	this.currentFilm = film;
-  	this.secondTabHidden = false;
   }
 
   changeStarIcon(num) {
@@ -122,6 +117,35 @@ export class SearchComponent implements OnInit, OnDestroy {
   	}
   }
 
+  addFilm(film) {
+  	// console.log(film);
+  	// this.subscription1.unsubscribe();
+  	// console.log('done');
+  	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  	
+  	this.currentFilm = film;
+  	// {"film":{"0":"1","1":"20","2":"4","3":"2020-02-25","film_id":"1","user_id":"20","rating":"4","date":"2020-02-25"},"like":{"0":"1","1":"20","film_id":"1","user_id":"20"},"review":{"0":"1","1":"20","film_id":"1","user_id":"20"}}
+  	this.filmService.findWatchedFilm({film_id: film.id, user_id: currentUserId}).subscribe(result => {
+  		console.log(JSON.stringify(result));
+  		this.filmWatchedAlert = "Warning! You already added this film to watched.";
+  		setTimeout(() => {
+  			this.filmWatchedAlert = null;
+  		}, 3000);
+  		if (result !== null) {
+  			// this.rating = result['film']['rating'];
+  			this.changeStarIcon(parseInt(result['film']['rating']));
+  			if (result['like'] !== false) {
+  				this.changeHeartIcon();
+  			}
+  			if (result['review'] !== false) {
+  				this.filmReview.setValue(result['review']['text']);
+  			}
+  		}
+  	});
+
+  	this.secondTabHidden = false;
+  }
+
   saveReview(id) {
   	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   	let dating = (this.filmDate.value !== '' ? this.filmDate.value : this.date);
@@ -130,14 +154,17 @@ export class SearchComponent implements OnInit, OnDestroy {
   				 rating: this.rating, 
   				 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()};
   	// console.log(param);
-  	this.subscription3 = this.filmService.addFilmToWatched(param).subscribe(result => {
+  	this.filmService.addFilmToWatched(param).subscribe(result => {
   		console.log(result);
   	});
 
   	if(this.filmReview.value !== '') {
-  			console.log('ha?');
-
-  		this.subscription4 = this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
+  		this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
+  			console.log(result);
+  		});
+  	}
+  	if (this.liked) {
+  		this.filmService.addFilmToLiked({user_id: currentUserId, film_id: id}).subscribe(result => {
   			console.log(result);
   		});
   	}
@@ -148,11 +175,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-  	this.subscription1.unsubscribe();
-  	this.subscription2.unsubscribe();
-  	this.subscription3.unsubscribe();
-  	this.subscription4.unsubscribe();
-
+  	// this.subscription1.unsubscribe();
+  	// console.log('first');
+  	// this.subscription2.unsubscribe();
+  	// console.log('second');
+  	// this.subscription3.unsubscribe();
+  	// console.log('third');
+  	// this.subscription4.unsubscribe();
+  	// console.log('fourth');
   }
 
 }

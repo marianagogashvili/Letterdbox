@@ -50,6 +50,7 @@ class User {
 
 	public static function addFilmToLiked($conn, $film_id, $user_id) {
 		$sql = "INSERT INTO liked_films VALUES(:film_id, :user_id)";
+		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {

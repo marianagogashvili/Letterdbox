@@ -12,8 +12,8 @@ $json = file_get_contents('php://input');
 $value = json_decode($json, true);
 
 if(User::addFilmToWatched($conn, $value['film_id'], $value['user_id'], $value['rating'], $value['date'])){
-	echo(1);
+	echo(json_encode("added film to watched"));
 } else {
-	echo(0);
+	echo(json_encode("did not add film to watched"));
 }
 ?>

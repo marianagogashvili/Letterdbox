@@ -8,7 +8,7 @@ class Review {
 	public $text;
 
 	public function createReview($conn) {
-		$sql = "INSERT INTO review(user_id, film_id, description) VALUES(:user_id, :film_id, :description)";
+		$sql = "INSERT INTO review(user_id, film_id, text) VALUES(:user_id, :film_id, :description)";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id',$this->user_id, PDO::PARAM_INT);
 		$stmt->bindValue(':film_id',$this->film_id, PDO::PARAM_INT);
