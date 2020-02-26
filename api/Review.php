@@ -19,6 +19,18 @@ class Review {
 		}
 
 	}
+
+	public static function updateReview($conn, $film_id, $user_id, $text) {
+		$sql = "UPDATE review SET text = :description WHERE user_id = :user_id AND film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':description', $text, PDO::PARAM_STR);
+		if ($stmt->execute()) {
+          	return true;
+		}
+	}
+
 }
 
 ?>

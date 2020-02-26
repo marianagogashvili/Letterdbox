@@ -56,6 +56,16 @@ class User {
 		if ($stmt->execute()) {
 	    	return true;
 	    }
+	} 
+
+	public static function deleteFilmFromLiked($conn, $film_id, $user_id) {
+		$sql = "DELETE FROM liked_films WHERE film_id = :film_id AND user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+	    	return true;
+	    }
 	}
 	
 }

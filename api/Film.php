@@ -33,13 +33,26 @@ class Film {
 	public static function findFilm($conn, $param, $film_id, $user_id) {
 		$sql = "SELECT * FROM " . $param . " WHERE film_id = :film_id AND user_id = :user_id";
 		$stmt = $conn->prepare($sql);
-		// $stmt->bindValue(':param', $param, PDO::PARAM_INT);
+
 		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return $stmt->fetch();
 		}
 	}
+
+	public static function updateWatchedFilm($conn, $film_id, $user_id, $rating, $date) {
+		$sql = "UPDATE watched_films SET rating = :rating, date = :datum WHERE user_id = :user_id AND film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':rating', $rating, PDO::PARAM_INT);
+		$stmt->bindValue(':datum', $date, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return true;
+		}
+	}
+
 
 }
 ?>

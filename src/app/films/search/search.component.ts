@@ -49,6 +49,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   date = new Date();
 
   filmWatchedAlert;
+  watchedFilm;
 
   subscription1; subscription2; subscription3; subscription4;
   constructor(private filmService: FilmService,
@@ -118,21 +119,21 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   addFilm(film) {
-  	// console.log(film);
-  	// this.subscription1.unsubscribe();
-  	// console.log('done');
+  	this.secondTabHidden = false;
+
   	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   	
   	this.currentFilm = film;
-  	// {"film":{"0":"1","1":"20","2":"4","3":"2020-02-25","film_id":"1","user_id":"20","rating":"4","date":"2020-02-25"},"like":{"0":"1","1":"20","film_id":"1","user_id":"20"},"review":{"0":"1","1":"20","film_id":"1","user_id":"20"}}
   	this.filmService.findWatchedFilm({film_id: film.id, user_id: currentUserId}).subscribe(result => {
-  		console.log(JSON.stringify(result));
-  		this.filmWatchedAlert = "Warning! You already added this film to watched.";
-  		setTimeout(() => {
-  			this.filmWatchedAlert = null;
-  		}, 3000);
   		if (result !== null) {
+  			this.watchedFilm = result;
+  			// console.log(JSON.stringify(result));
+	  		this.filmWatchedAlert = "Warning! You already added this film to watched.";
+	  		setTimeout(() => {
+	  			this.filmWatchedAlert = null;
+	  		}, 3000);
   			// this.rating = result['film']['rating'];
+  			this.filmDate.setValue(result['film']['date']);
   			this.changeStarIcon(parseInt(result['film']['rating']));
   			if (result['like'] !== false) {
   				this.changeHeartIcon();
@@ -143,7 +144,6 @@ export class SearchComponent implements OnInit, OnDestroy {
   		}
   	});
 
-  	this.secondTabHidden = false;
   }
 
   saveReview(id) {
@@ -154,20 +154,56 @@ export class SearchComponent implements OnInit, OnDestroy {
   				 rating: this.rating, 
   				 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()};
   	// console.log(param);
-  	this.filmService.addFilmToWatched(param).subscribe(result => {
-  		console.log(result);
-  	});
+  	if (this.watchedFilm) {
+  		// console.log(this.filmReview.value !== this.watchedFilm['review']['text']);
 
-  	if(this.filmReview.value !== '') {
-  		this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
-  			console.log(result);
-  		});
+ 		if (this.filmReview.value !== this.watchedFilm['review']['text']) {
+  			this.filmService.updateReviewOfFilm({film_id: id, user_id: currentUserId, text: this.filmReview.value}).subscribe(result => {
+  				console.log(result);
+  			});
+  		}
+
+  		if ((this.watchedFilm['like'] !== false) && (this.liked === false)) {
+			this.filmService.filmToLiked({user_id: currentUserId, film_id: id, add: false}).subscribe(result => {
+	  			console.log(result);
+	  		});
+  		} else if ((this.watchedFilm['like'] === false) && (this.liked === true)) {
+			this.filmService.filmToLiked(
+				{user_id: currentUserId, 
+			     film_id: id, 
+			     add: true}).subscribe(result => {
+	  			console.log(result);
+	  		});
+  		}
+
+  		if (parseInt(this.watchedFilm['film']['rating']) !== this.rating) {
+  			// update rating and date
+  			this.filmService.updateWatchedFilm(
+  				{film_id: id, 
+  				 user_id: currentUserId, 
+  				 rating: this.rating, 
+  				 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
+  				 	console.log(result);
+  				 });
+  		}
+  	} else {
+	  	this.filmService.addFilmToWatched(param).subscribe(result => {
+	  		console.log(result);
+	  	});
+
+	  	if(this.filmReview.value !== '') {
+	  		this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
+	  			console.log(result);
+	  		});
+	  	}
+
+	  	if (this.liked) {
+	  		this.filmService.filmToLiked({user_id: currentUserId, film_id: id, add: true}).subscribe(result => {
+	  			console.log(result);
+	  		});
+	  	}
   	}
-  	if (this.liked) {
-  		this.filmService.addFilmToLiked({user_id: currentUserId, film_id: id}).subscribe(result => {
-  			console.log(result);
-  		});
-  	}
+
   }
 
   goBack() {
