@@ -6,7 +6,11 @@ import { HttpClient } from '@angular/common/http';
 export class FilmService {
 
 	constructor(private http: HttpClient) {}
-
+	getFilms() {
+		return this.http.get(
+			'http://localhost:8888/getFilms.php'
+		);
+	}
 	sortBy(param: Params) {
 		if (param.year) {
 			return this.http.get(

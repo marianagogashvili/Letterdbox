@@ -52,5 +52,14 @@
     <div class="filmColumn" >
         <p class="tooltip1">{{film.title}}</p>
         <img  class="filmImage" src="{{film.photo}}" alt="Snow" style="width:100%">
+        <span class="tooltip1">
+          <div style="display: inline; font-size: 20px; padding-right: 10px; color: white;">
+            <fa-icon (click)="addToWatched(film.id)" [icon]="eyeIcon"></fa-icon> 
+          </div>
+          <div  style="display: inline; font-size: 20px; color: white;">
+            <fa-icon (click)="addToLiked(film.id)" [icon]="heartIcon"></fa-icon>
+          </div>
+        </span>
+
     </div>
   </div>

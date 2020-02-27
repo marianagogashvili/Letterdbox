@@ -15,10 +15,11 @@
 	margin-bottom: 5px;
 	opacity: 0;
 	display: inline-block;
-	background-color: #E8E8E8;
+	background-color: #151b22;
 	border-radius: 7px;
 	font-family: 'Titillium Web', sans-serif;
-	/*font-size: 3vw;*/
+	font-size: 18px;
+	color: #778390;
 	text-transform: uppercase;
 }
 .filmColumn:hover .tooltip1 {

@@ -2,7 +2,6 @@ import { Component, OnInit, ElementRef, OnDestroy } from '@angular/core';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { trigger, state, group, animate, keyframes, style, transition } from '@angular/animations';
-import { DataStorageService } from '../shared/data-storage.service';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { FilmService } from '../films/film.service'; 
 import { map, catchError } from 'rxjs/operators';
@@ -39,8 +38,7 @@ export class HeaderComponent implements OnInit {
   loggedInUser = localStorage.getItem('userData');
   // private subscription: Subscription;
 
-  constructor(private dataStorageService: DataStorageService,
-              private route: ActivatedRoute,
+  constructor(private route: ActivatedRoute,
               private router: Router,
               private filmService: FilmService, 
               private elRef: ElementRef,
@@ -48,18 +46,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.elRef.nativeElement.ownerDocument.body.style.backgroundColor = '#2e3945'
-    // this.subscription = this.dataStorageService.getFilms().subscribe(result => {
-    //     this.films = result;
-    // });
-
-    // this.route.queryParams.subscribe(params => {
-    //   this.filmService.sortBy(params).subscribe(result => {
-    //      this.films = result;
-    //      console.log(result);
-    //   });
-
-    // });
-
   } 
 
   toggleSearch() {

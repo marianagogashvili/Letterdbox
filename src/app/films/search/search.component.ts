@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faHeart as faHeart2} from '@fortawesome/free-solid-svg-icons';
-
+import { Router } from '@angular/router';
 import { FilmService } from '../film.service';
 @Component({
   selector: 'app-search',
@@ -25,6 +25,18 @@ import { FilmService } from '../film.service';
 	  		opacity: 1
   		})),
   		transition('void => *', animate(500)),
+
+  	]),
+  	trigger('savedState', [
+  		state('seen', style({
+	  		// transform: 'translateX(-100px)',
+	  		opacity: 1
+  		})),
+  		state('hidden', style({
+	  		// transform: 'translateX(0px)',
+	  		opacity: 0
+  		})),
+  		transition('seen => hidden', animate(500)),
 
   	])
   ]
@@ -50,10 +62,12 @@ export class SearchComponent implements OnInit, OnDestroy {
 
   filmWatchedAlert;
   watchedFilm;
+  savedState = 'seen';
 
   subscription1; subscription2; subscription3; subscription4;
   constructor(private filmService: FilmService,
-  			  private datepipe: DatePipe) { }
+  			  private datepipe: DatePipe,
+  			  private router: Router ) { }
 
   ngOnInit() {
   	this.subscription1 = this.filmTitle.valueChanges.subscribe(title => {
@@ -149,10 +163,12 @@ export class SearchComponent implements OnInit, OnDestroy {
   saveReview(id) {
   	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   	let dating = (this.filmDate.value !== '' ? this.filmDate.value : this.date);
+  	// console.log(this.datepipe.transform(dating, 'yyyy-MM-dd').toString());
+  	console.log(dating.toString());
   	let param = {film_id: id, 
   				 user_id: currentUserId, 
   				 rating: this.rating, 
-  				 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()};
+  				 date: dating.toString()};
   	// console.log(param);
   	if (this.watchedFilm) {
   		// console.log(this.filmReview.value !== this.watchedFilm['review']['text']);
@@ -176,13 +192,15 @@ export class SearchComponent implements OnInit, OnDestroy {
 	  		});
   		}
 
-  		if (parseInt(this.watchedFilm['film']['rating']) !== this.rating) {
+  		if ((parseInt(this.watchedFilm['film']['rating']) !== this.rating) ||
+  			(this.watchedFilm['film']['date'] !== this.filmDate.value)) {
   			// update rating and date
   			this.filmService.updateWatchedFilm(
   				{film_id: id, 
   				 user_id: currentUserId, 
   				 rating: this.rating, 
-  				 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
+  				 date: dating.toString()})
+  			.subscribe(result => {
   				 	console.log(result);
   				 });
   		}
@@ -202,8 +220,11 @@ export class SearchComponent implements OnInit, OnDestroy {
 	  			console.log(result);
 	  		});
 	  	}
+  		
   	}
 
+	this.savedState = 'hidden';
+	// this.router.navigate(['/user']);
   }
 
   goBack() {
