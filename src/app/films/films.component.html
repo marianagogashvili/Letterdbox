@@ -50,14 +50,20 @@
 	
 <div *ngFor="let film of films; " style="width: 100%; table-layout: fixed; font-size: 2vw;"> 
     <div class="filmColumn" >
-        <p class="tooltip1">{{film.title}}</p>
-        <img  class="filmImage" src="{{film.photo}}" alt="Snow" style="width:100%">
+        <p class="tooltip1">{{film['film']['title']}}</p>
+        <img  class="filmImage" src="{{film['film']['photo']}}" alt="Snow" style="width:100%">
         <span class="tooltip1">
-          <div style="display: inline; font-size: 20px; padding-right: 10px; color: white;">
-            <fa-icon (click)="addToWatched(film.id)" [icon]="eyeIcon"></fa-icon> 
+          <div style="display: inline; font-size: 20px; padding-right: 10px; color: white;" *ngIf="!film['watched']">
+            <fa-icon (click)="addToWatched(film['film']['id'])" [icon]="eyeIcon"></fa-icon> 
           </div>
-          <div  style="display: inline; font-size: 20px; color: white;">
-            <fa-icon (click)="addToLiked(film.id)" [icon]="heartIcon"></fa-icon>
+          <div style="display: inline; font-size: 20px; padding-right: 10px; color: green;" *ngIf="film['watched']">
+            <fa-icon (click)="deleteFromWatched(film['film']['id'])" [icon]="eyeIcon"></fa-icon> 
+          </div>
+          <div  style="display: inline; font-size: 20px; color: white;" *ngIf="!film['liked']">
+            <fa-icon (click)="addToLiked(film['film']['id'])" [icon]="heartIcon"></fa-icon>
+          </div>
+          <div  style="display: inline; font-size: 20px; color: red;" *ngIf="film['liked']">
+            <fa-icon (click)="deleteFromLiked(film['film']['id'])" [icon]="heartIcon"></fa-icon>
           </div>
         </span>
 

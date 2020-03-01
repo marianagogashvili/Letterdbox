@@ -31,6 +31,16 @@ class Review {
 		}
 	}
 
+	public static function deleteReview($conn, $film_id, $user_id) {
+		$sql = "DELETE FROM review WHERE user_id = :user_id AND film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return true;
+		}
+	}
+
 }
 
 ?>

@@ -46,6 +46,13 @@ export class FilmService {
 			'http://localhost:8888/addFilmToWatched.php', JSON.stringify(param)
 		);
 	}
+
+	deleteFilmFromWatched(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/deleteFilmFromWatched.php', JSON.stringify(param)
+		);
+	}
+
 	addReviewToFilm(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/addReview.php', JSON.stringify(param)
@@ -70,6 +77,12 @@ export class FilmService {
 	updateWatchedFilm(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/updateWatchedFilm.php', JSON.stringify(param)
+			);
+	}
+
+	findLike(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/findLike.php', JSON.stringify(param)
 			);
 	}
 }

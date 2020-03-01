@@ -14,7 +14,7 @@ class Film {
 	}
 
 	public static function sortAllByYear($conn, $year1, $year2) {
-		$sql = "SELECT * FROM film WHERE year BETWEEN :year1 AND :year2";
+		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id WHERE year BETWEEN :year1 AND :year2";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':year1', $year1, PDO::PARAM_INT);
 		$stmt->bindValue(':year2', $year2, PDO::PARAM_INT);
@@ -41,6 +41,16 @@ class Film {
 		}
 	}
 
+	public static function deleteFromWatched($conn, $film_id, $user_id) {
+		$sql = "DELETE FROM watched_films WHERE film_id = :film_id AND user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return true;
+		}
+	}
+
 	public static function updateWatchedFilm($conn, $film_id, $user_id, $rating, $date) {
 		$sql = "UPDATE watched_films SET rating = :rating, `date` = :datum WHERE user_id = :user_id AND film_id = :film_id";
 		$stmt = $conn->prepare($sql);
@@ -50,6 +60,24 @@ class Film {
 		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return true;
+		}
+	}
+
+	public static function findAllWatchedFilms($conn) {
+		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id ORDER BY film.id";
+		$stmt = $conn->prepare($sql);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
+	public static function findLike($conn, $film_id, $user_id) {
+		$sql = "SELECT * FROM liked_films WHERE film_id = :film_id AND user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
 		}
 	}
 

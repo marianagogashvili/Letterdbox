@@ -7,7 +7,7 @@ require 'Database.php';
 
 $db = new Database();
 $conn = $db->getDB();
-
-$films = Film::getAll($conn);
+$films = Film::findAllWatchedFilms($conn);
+// $films = Film::getAll($conn);
 echo(json_encode($films));
 ?>
