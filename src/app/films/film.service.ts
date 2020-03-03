@@ -6,31 +6,31 @@ import { HttpClient } from '@angular/common/http';
 export class FilmService {
 
 	constructor(private http: HttpClient) {}
-	getFilms() {
-		return this.http.get(
-			'http://localhost:8888/getFilms.php'
+	getFilms(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getFilms.php', JSON.stringify(param)
 		);
 	}
 	sortBy(param: Params) {
-		if (param.year) {
-			return this.http.get(
-				'http://localhost:8888/sortFilms.php?year=' + param.year
+		if (param['year']) {
+			return this.http.post(
+				'http://localhost:8888/sortFilms.php', JSON.stringify(param)
 			);
-		} else if (param.rating) {
-			return this.http.get(
-				'http://localhost:8888/sortFilms.php?rating=' + param.year
+		} else if (param['rating']) {
+			return this.http.post(
+				'http://localhost:8888/sortFilms.php', JSON.stringify(param)
 			);
-		} else if (param.popular) {
-			return this.http.get(
-				'http://localhost:8888/sortFilms.php?popular=' + param.year
+		} else if (param['popular']) {
+			return this.http.post(
+				'http://localhost:8888/sortFilms.php', JSON.stringify(param)
 			);
-		} else if (param.genre) {
-			return this.http.get(
-				'http://localhost:8888/sortFilms.php?genre=' + param.year
+		} else if (param['genre']) {
+			return this.http.post(
+				'http://localhost:8888/sortFilms.php', JSON.stringify(param)
 			);
 		} else {
-			return this.http.get(
-				'http://localhost:8888/getFilms.php'
+			return this.http.post(
+				'http://localhost:8888/getFilms.php', JSON.stringify(param)
 			);
 		}
 	}

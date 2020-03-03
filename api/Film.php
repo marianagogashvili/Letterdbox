@@ -13,9 +13,11 @@ class Film {
 		return $stmt->fetchAll(PDO::FETCH_ASSOC);
 	}
 
-	public static function sortAllByYear($conn, $year1, $year2) {
-		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id WHERE year BETWEEN :year1 AND :year2";
+	public static function sortAllByYear($conn, $user_id, $year1, $year2) {
+		// $sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id AND watched_films.user_id = :user_id AND year BETWEEN :year1 AND :year2";
+		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id AND watched_films.user_id = :user_id WHERE year BETWEEN :year1 AND :year2";
 		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		$stmt->bindValue(':year1', $year1, PDO::PARAM_INT);
 		$stmt->bindValue(':year2', $year2, PDO::PARAM_INT);
 		if($stmt->execute()){
@@ -63,9 +65,10 @@ class Film {
 		}
 	}
 
-	public static function findAllWatchedFilms($conn) {
-		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id ORDER BY film.id";
+	public static function findAllWatchedFilms($conn, $user_id) {
+		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id AND watched_films.user_id = :user_id ORDER BY film.id";
 		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return $stmt->fetchAll();
 		}
@@ -80,6 +83,7 @@ class Film {
 			return $stmt->fetch();
 		}
 	}
+
 
 
 }

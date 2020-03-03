@@ -8,7 +8,7 @@
 	</div>
 	<div id="activityDiv">
 		<div style="display: inline-block; border-right: 1px solid grey; padding-right: 7px;">
-			<p id="num">5</p>
+			<p id="num">{{numberOfFilms}}</p>
 			<p id="numText">Films</p>
 		</div>
 		<div  style="display: inline-block;border-right: 1px solid grey; padding-left: 7px;  padding-right: 7px">
@@ -31,7 +31,7 @@
         <a  class="navbar-brand" style="font-size: 14px;" href="#">activity</a>
       </div>
       <div  class="navbar-header" >
-        <a  class="navbar-brand" style="font-size: 14px;" href="#">films</a>
+        <a  class="navbar-brand" style="font-size: 14px;" routerLink="films">films</a>
       </div> 
       <div  class="navbar-header" >
         <a  class="navbar-brand" style="font-size: 14px;" href="#">diary</a>
@@ -51,4 +51,6 @@
     </div>
   </nav>
 </div>
+  <router-outlet></router-outlet>
+
 </div>

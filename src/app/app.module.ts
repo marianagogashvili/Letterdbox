@@ -16,6 +16,8 @@ import { RegisterComponent } from './auth/register/register.component';
 import { UserComponent } from './user/user.component';
 import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './films/search/search.component';
+import { WatchedFilmsComponent } from './user/watched-films/watched-films.component';
+import { FilmComponent } from './films/film/film.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +28,9 @@ import { SearchComponent } from './films/search/search.component';
     RegisterComponent,
     UserComponent,
     HomeComponent,
-    SearchComponent,     
+    SearchComponent,
+    WatchedFilmsComponent,
+    FilmComponent,     
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { UserService } from './user.service';
 
 @Component({
   selector: 'app-user',
@@ -8,9 +9,18 @@ import { Component, OnInit } from '@angular/core';
 export class UserComponent implements OnInit {
 
   username = JSON.parse(localStorage.getItem('userData')).username;
-  constructor() { }
+  id = JSON.parse(localStorage.getItem('userData')).id;
+  numberOfFilms;
+  constructor(private userService: UserService) { }
 
   ngOnInit() {
+  	this.userService.getWatchedFilms({user_id: this.id}).subscribe(films => {
+  		this.numberOfFilms = films.length;
+  	});
   }
+  	// this.userService.numberOfFilms.subscribe(number => {
+  	// 	console.log(number);
+  	// 	this.numberOfFilms = number;
+  	// });
 
 }

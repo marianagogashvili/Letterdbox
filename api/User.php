@@ -67,6 +67,16 @@ class User {
 	    	return true;
 	    }
 	}
+
+		public static function getAllFilmsWatchedByUser($conn, $user_id) {
+		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id WHERE watched_films.user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
 	
 }
 

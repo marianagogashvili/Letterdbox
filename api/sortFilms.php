@@ -7,10 +7,14 @@ require 'Database.php';
 $db = new Database();
 $conn = $db->getDB();
 
-if (isset($_GET['year'])) {
+$json = file_get_contents('php://input');
+$value = json_decode($json, true);
+
+if ($value['year'] != null) {
 	$films = Film::sortAllByYear($conn, 
-								(intval($_GET['year'])-10), 
-								intval($_GET['year'])
+								$value['user_id'],
+								(intval($value['year'])-10), 
+								intval($value['year'])
 								);
 }
 echo(json_encode($films));

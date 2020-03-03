@@ -53,7 +53,9 @@ export class FilmsComponent implements OnInit, OnDestroy {
 
     this.route.queryParams.subscribe(params => {
       this.films = [];
-      this.filmService.sortBy(params).pipe(map(r => {
+      // console.log(params['year']);
+      let param = {year: params['year'], user_id: this.currentUserId};
+      this.filmService.sortBy(param).pipe(map(r => {
   		Object.values(r).forEach(value => {
   			// console.log(value);
   			this.filmService.findLike({film_id: value['id'], user_id: this.currentUserId}).subscribe(like => {
