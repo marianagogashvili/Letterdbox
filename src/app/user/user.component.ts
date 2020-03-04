@@ -15,7 +15,7 @@ export class UserComponent implements OnInit {
 
   ngOnInit() {
   	this.userService.getWatchedFilms({user_id: this.id}).subscribe(films => {
-  		this.numberOfFilms = films.length;
+  		this.numberOfFilms = Object.keys(films).length;
   	});
   }
   	// this.userService.numberOfFilms.subscribe(number => {

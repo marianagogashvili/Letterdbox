@@ -1,4 +1,4 @@
-
+<app-header></app-header>
 <div> 
   <nav class="navbar navbar-inverse" style="width:60vw;
   margin-left: 70px; font-size: 13px; ">
@@ -51,7 +51,7 @@
 <div *ngFor="let film of films; " style="width: 100%; table-layout: fixed; font-size: 2vw;"> 
     <div class="filmColumn" >
         <p class="tooltip1">{{film['film']['title']}}</p>
-        <img  class="filmImage" src="{{film['film']['photo']}}" alt="Snow" style="width:100%">
+        <img  class="filmImage" src="{{film['film']['photo']}}" alt="Snow" style="width:100%" (click)="goToFilm(film['film']['id'])">
         <span class="tooltip1">
           <div style="display: inline; font-size: 20px; padding-right: 10px; color: white;" *ngIf="!film['watched']">
             <fa-icon (click)="addToWatched(film['film']['id'])" [icon]="eyeIcon"></fa-icon> 
@@ -66,6 +66,5 @@
             <fa-icon (click)="deleteFromLiked(film['film']['id'])" [icon]="heartIcon"></fa-icon>
           </div>
         </span>
-
     </div>
   </div>

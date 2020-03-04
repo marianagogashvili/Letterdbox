@@ -85,4 +85,10 @@ export class FilmService {
 			'http://localhost:8888/findLike.php', JSON.stringify(param)
 			);
 	}
+
+	getFilmById(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getFilmById.php', JSON.stringify(param)
+			);
+	}
 }

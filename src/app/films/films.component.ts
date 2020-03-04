@@ -51,7 +51,7 @@ export class FilmsComponent implements OnInit, OnDestroy {
    //      console.log(result);
    //  });
 
-    this.route.queryParams.subscribe(params => {
+    this.subscription = this.route.queryParams.subscribe(params => {
       this.films = [];
       // console.log(params['year']);
       let param = {year: params['year'], user_id: this.currentUserId};
@@ -127,6 +127,11 @@ export class FilmsComponent implements OnInit, OnDestroy {
   	this.filmService.filmToLiked(param).subscribe(result => {
   		console.log(result);
   	});	
+  }
+
+  goToFilm(id) {
+    // console.log(id);
+    this.router.navigate(['/films', id], { replaceUrl: true });
   }
 
   ngOnDestroy() {

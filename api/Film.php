@@ -84,6 +84,14 @@ class Film {
 		}
 	}
 
+	public static function getFilmById($conn, $id) {
+		$sql = "SELECT * FROM film WHERE id = :id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
+		}
+	}
 
 
 }
