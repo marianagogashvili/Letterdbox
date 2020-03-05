@@ -1,8 +1,74 @@
 <app-header></app-header>
-<div style="padding-top: 30px; padding-left: 100px; padding-right: 100px; position: absolute; ">
-	<img style="border-radius: 5px" src="{{ film['photo'] }}" alt="" width="300" height="450" >
-	<div style="display: inline-block;">
-		{{ film['description'] }}
+<div style="padding-top: 30px; padding-left: 80px; padding-right: 100px; position: fixed; ">
+	<img style="border-radius: 5px" src="{{ film[4] }}" alt="" width="250" height="375" >
+	<div style="display: inline-block; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin: 40px; padding-top: 40px; top: 0; position:fixed; ">
+		<div>
+			<h1 style="color: white; font-family: 'Libre Baskerville';">{{ film[1] }}</h1>
+			<p style="color: #9ab;">{{ film[2] }}</p>
+			<p style="color: #9ab; width: 40vw; height: 30vw;  overflow:scroll; ">{{ film[3] }}</p>
+		</div>
+
+	</div>
+	
+</div>
+<div style="float: right; position: relative; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin-right: 80px; margin-top: 140px; background-color: #456; padding: 20px">
+	<div style="text-align: center; ">
+		<fa-icon id="icon" style="" [icon]="eyeIcon"></fa-icon>
+		<fa-icon id="icon" [icon]="likeIcon"></fa-icon>
+		<fa-icon id="icon" [icon]="watchIcon"></fa-icon>
+	</div>
+	<hr>
+	<div style="text-align: center">
+		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+	</div>
+	<hr>
+	<div style="text-align: center">
+		<a href="" style="color: #9ab;">Add a review</a>
+		
+	</div>
+	<div style="text-align: center">
+		<a href="" style="color: #9ab;">Add to a list</a>
+		
+	</div>
+</div>
+<!-- 
+<app-header></app-header>
+<div style="padding-top: 30px; padding-left: 10vw;   padding-right: 10vw; width: 100%; display: inline-block;">
+	<img style=" display: inline-block;border-radius: 5px; position: fixed;" src="{{ film[4] }}" alt="" width="250" height="375" >
+	<div style=" display: inline-block; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin: 40px; top: 0; position: relative;">
+		<h1 style="color: white; font-family: 'Libre Baskerville';">{{ film[1] }}</h1>
+		<p style="color: #9ab;">{{ film[2] }}</p>
+		<p style="color: #9ab; width: 40vw; height: 24vw;  overflow:scroll; ">{{ film[3] }}</p>
 	</div>
 </div>
 
+		<div style="display: inline-block;  font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin-left: 40px; background-color: #456;">
+			<div style="text-align: center; ">
+				<fa-icon id="icon" style="" [icon]="eyeIcon"></fa-icon>
+				<fa-icon id="icon" [icon]="likeIcon"></fa-icon>
+				<fa-icon id="icon" [icon]="watchIcon"></fa-icon>
+			</div>
+
+			<div style="text-align: center">
+				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+			</div>
+			<div style="text-align: center">
+				<a href="" style="color: #9ab;">Add a review</a>
+				
+			</div>
+			<div style="text-align: center">
+				<a href="" style="color: #9ab;">Add to a list</a>
+				
+			</div>
+ -->
+		<!-- </div> -->
+	<!-- </div> -->
+<!-- </div> -->

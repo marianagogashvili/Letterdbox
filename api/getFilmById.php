@@ -11,6 +11,7 @@ $json = file_get_contents('php://input');
 $value = json_decode($json, true);
 
 $film = Film::getFilmById($conn, $value['id']);
+
 if ($film) {
 	echo(json_encode($film));
 } else {
