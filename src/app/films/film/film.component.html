@@ -1,23 +1,25 @@
 <app-header></app-header>
+
 <div style="padding-top: 30px; padding-left: 80px; padding-right: 100px; position: fixed; ">
-	<img style="border-radius: 5px" src="{{ film[4] }}" alt="" width="250" height="375" >
+	<img style="border-radius: 5px" src="{{ film[0]?.photo }}" alt="" width="250" height="375" >
 	<div style="display: inline-block; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin: 40px; padding-top: 40px; top: 0; position:fixed; ">
 		<div>
-			<h1 style="color: white; font-family: 'Libre Baskerville';">{{ film[1] }}</h1>
-			<p style="color: #9ab;">{{ film[2] }}</p>
-			<p style="color: #9ab; width: 40vw; height: 30vw;  overflow:scroll; ">{{ film[3] }}</p>
+			<h1 style="color: white; font-family: 'Libre Baskerville';">{{ film[0]?.title }}</h1>
+			<p style="color: #9ab;">{{ film[0]?.year }}</p>
+			<p style="color: #9ab; width: 40vw; height: 30vw;  overflow:scroll;">{{ film[0]?.description }}</p>
 		</div>
 
 	</div>
 	
 </div>
-<div style="float: right; position: relative; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin-right: 80px; margin-top: 140px; background-color: #456; padding: 20px">
+<div style="float: right; position: relative; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin-right: 80px; margin-top: 140px; background-color: #456; padding: 20px; border-radius: 5px">
 	<div style="text-align: center; ">
-		<fa-icon id="icon" style="" [icon]="eyeIcon"></fa-icon>
-		<fa-icon id="icon" [icon]="likeIcon"></fa-icon>
-		<fa-icon id="icon" [icon]="watchIcon"></fa-icon>
+		<fa-icon id="icon" style="" [icon]="eyeIcon" (click)="addToWatched()"></fa-icon>
+		<fa-icon id="icon" [icon]="likeIcon" (click)="addToLiked()"></fa-icon>
+		<fa-icon id="icon" [icon]="watchIcon" (click)="addToLater()"></fa-icon>
 	</div>
-	<hr>
+	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
+	</div>
 	<div style="text-align: center">
 		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
 		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
@@ -25,10 +27,13 @@
 		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
 		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
 	</div>
-	<hr>
+	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
+	</div>
 	<div style="text-align: center">
 		<a href="" style="color: #9ab;">Add a review</a>
 		
+	</div>
+	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
 	</div>
 	<div style="text-align: center">
 		<a href="" style="color: #9ab;">Add to a list</a>

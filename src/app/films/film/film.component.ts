@@ -1,10 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FilmService } from '../film.service';
 import { ActivatedRoute } from '@angular/router';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
+import { faHeart as faHeart2 } from '@fortawesome/free-solid-svg-icons';
+
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 
 @Component({
@@ -18,6 +20,11 @@ export class FilmComponent implements OnInit {
   eyeIcon = faEye;
   likeIcon = faHeart;
   watchIcon = faClock;
+  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  
+  liked;
+  watched;
+  later;
   constructor(private filmService: FilmService,
   			  private route: ActivatedRoute) { 
   }
@@ -25,14 +32,47 @@ export class FilmComponent implements OnInit {
   ngOnInit() {
   	this.route.params.subscribe(params => {
   		let id = +params['id'];
-  		this.filmService.getFilmById({id: id}).subscribe(film => {
-  			// this.film = film;
-  			Object.values(film).forEach(v => {
-  				this.film.push(v);
-  			});
+   		this.filmService.getFilmById({id: id}).subscribe(result => {
+   			this.film.push(result);
    		});
+   		this.filmService.findWatchedFilm({film_id: id, user_id: this.currentUserId}).subscribe(result => {
+   			this.film.push(result);
+   			// console.log(result);
+	  	});
+	  	this.filmService.findLike({film_id: id, user_id: this.currentUserId})
+	  	.subscribe(result => {
+   			this.film.push(result);
+	  		// console.log(result);
+	  	});
   	});
-  	console.log(this.film);
+  	// if (this.film[2] === true) {
+  	// 	this.likeIcon = faHeart2;
+  	// }
+  }
+
+  addToWatched() {
+  	this.filmService.addFilmToWatched({}).subscribe(result => {
+
+  	});
+  }
+
+  deleteFromWatched() {
+
+  }
+
+  addToLiked() {
+
+  }
+
+  deleteFromLiked() {
+
+  }
+
+  addToLater() {
+
+  }
+
+  deleteFromLater() {
 
   }
 

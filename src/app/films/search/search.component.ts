@@ -56,6 +56,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   starIcon = faStar; starIcon2 = faStar; starIcon3 = faStar; starIcon4 = faStar; starIcon5 = faStar;
   heartIcon = faHeart;
   liked = false;
+  initialLike: boolean;
   rating = 0;
 
   date = new Date();
@@ -64,7 +65,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   watchedFilm;
   savedState = 'seen';
 
-  subscription1; subscription2; subscription3; subscription4;
+  subscription1;
   constructor(private filmService: FilmService,
   			  private datepipe: DatePipe,
   			  private router: Router ) { }
@@ -86,6 +87,49 @@ export class SearchComponent implements OnInit, OnDestroy {
   
   onClose() {
   	this.close.next();
+  }
+
+
+  addFilm(film) {
+    this.secondTabHidden = false;
+
+    let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+    
+    this.currentFilm = film;
+
+    this.filmService.findWatchedFilm({film_id: film.id, user_id: currentUserId}).subscribe(result => {
+      console.log(result);
+      if (result !== null) {
+        this.watchedFilm = result;
+        // console.log(JSON.stringify(result));
+        this.filmWatchedAlert = "Warning! You already added this film to watched.";
+        setTimeout(() => {
+          this.filmWatchedAlert = null;
+        }, 3000);
+        // this.rating = result['film']['rating'];
+        this.filmDate.setValue(result['film']['date']);
+        if (result['film']['rating']) {
+          this.changeStarIcon(parseInt(result['film']['rating']));
+        }
+        if (result['review'] !== null) {
+          this.filmReview.setValue(result['review']['text']);
+        }
+      }
+    });
+
+    this.filmService.findLike({film_id: film.id, user_id: currentUserId}).subscribe(result => {
+      if (result === false) {
+        this.heartIcon = faHeart;
+        this.liked = false;
+        this.initialLike = false;
+      } else if(result === true) {
+        this.heartIcon = faHeart2;
+        this.liked = true;
+        this.initialLike = true;
+      }
+      
+    });
+    console.log('liked', this.liked);
   }
 
   changeStarIcon(num) {
@@ -123,83 +167,59 @@ export class SearchComponent implements OnInit, OnDestroy {
 	  	} 
   }
 
+
   changeHeartIcon() {
-  	this.liked = !this.liked;
-  	if (this.heartIcon === faHeart) {
-  		this.heartIcon = faHeart2;
-  	} else if (this.heartIcon === faHeart2) {
-  		this.heartIcon = faHeart;
-  	}
+    this.liked = !this.liked;
+    if (this.heartIcon === faHeart) {
+      this.heartIcon = faHeart2;
+    } else if (this.heartIcon === faHeart2) {
+      this.heartIcon = faHeart;
+    }
   }
-
-  addFilm(film) {
-  	this.secondTabHidden = false;
-
-  	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
-  	
-  	this.currentFilm = film;
-  	this.filmService.findWatchedFilm({film_id: film.id, user_id: currentUserId}).subscribe(result => {
-  		if (result !== null) {
-  			this.watchedFilm = result;
-  			// console.log(JSON.stringify(result));
-	  		this.filmWatchedAlert = "Warning! You already added this film to watched.";
-	  		setTimeout(() => {
-	  			this.filmWatchedAlert = null;
-	  		}, 3000);
-  			// this.rating = result['film']['rating'];
-  			this.filmDate.setValue(result['film']['date']);
-  			this.changeStarIcon(parseInt(result['film']['rating']));
-  			if (result['like'] !== false) {
-  				this.changeHeartIcon();
-  			}
-  			if (result['review'] !== false) {
-  				this.filmReview.setValue(result['review']['text']);
-  			}
-  		}
-  	});
-
-  }
-
   saveReview(id) {
   	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   	let dating = (this.filmDate.value !== '' ? this.filmDate.value : this.date);
-  	// console.log(this.datepipe.transform(dating, 'yyyy-MM-dd').toString());
-  	console.log(dating.toString());
+
   	let param = {film_id: id, 
   				 user_id: currentUserId, 
   				 rating: this.rating, 
-  				 date: dating.toString()};
-  	// console.log(param);
+  				 date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()};
+
   	if (this.watchedFilm) {
-  		// console.log(this.filmReview.value !== this.watchedFilm['review']['text']);
-
- 		if (this.filmReview.value !== this.watchedFilm['review']['text']) {
-  			this.filmService.updateReviewOfFilm({film_id: id, user_id: currentUserId, text: this.filmReview.value}).subscribe(result => {
-  				console.log(result);
-  			});
-  		}
-
-  		if ((this.watchedFilm['like'] !== false) && (this.liked === false)) {
-			this.filmService.filmToLiked({user_id: currentUserId, film_id: id, add: false}).subscribe(result => {
-	  			console.log(result);
-	  		});
-  		} else if ((this.watchedFilm['like'] === false) && (this.liked === true)) {
-			this.filmService.filmToLiked(
-				{user_id: currentUserId, 
-			     film_id: id, 
-			     add: true}).subscribe(result => {
-	  			console.log(result);
-	  		});
-  		}
+      if (this.filmReview.value) {
+        if (this.watchedFilm['review'] !== false) {
+          if (this.filmReview.value !== this.watchedFilm['review']['text']) {
+            this.filmService.updateReviewOfFilm({film_id: id, user_id: currentUserId, text: this.filmReview.value}).subscribe(result => {
+              console.log(result);
+            });
+          }
+        } else {
+            this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
+              console.log(result);
+            });
+        }
+      }
+      
+   		
+      if ((this.initialLike === true) && (this.liked === false)) {
+        this.filmService.filmToLiked(
+          { user_id: currentUserId, 
+            film_id: id,
+            add: false}).subscribe(result => {
+            console.log(result);
+          });
+      } else if ((this.initialLike === false) && (this.liked === true)) {
+        this.filmService.filmToLiked(
+          {user_id: currentUserId, 
+             film_id: id, 
+             add: true}).subscribe(result => {
+            console.log(result);
+          });
+      } 
 
   		if ((parseInt(this.watchedFilm['film']['rating']) !== this.rating) ||
   			(this.watchedFilm['film']['date'] !== this.filmDate.value)) {
-  			// update rating and date
-  			this.filmService.updateWatchedFilm(
-  				{film_id: id, 
-  				 user_id: currentUserId, 
-  				 rating: this.rating, 
-  				 date: dating.toString()})
+  			this.filmService.updateWatchedFilm(param)
   			.subscribe(result => {
   				 	console.log(result);
   				 });
@@ -232,7 +252,7 @@ export class SearchComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-  	// this.subscription1.unsubscribe();
+  	this.subscription1.unsubscribe();
   	// console.log('first');
   	// this.subscription2.unsubscribe();
   	// console.log('second');

@@ -14,10 +14,13 @@ $value = json_decode($json, true);
 $film = Film::findFilm($conn, 'watched_films', $value['film_id'], $value['user_id']);
 // error_log(json_encode($film));
 if ($film) {
-	$like = Film::findFilm($conn, 'liked_films', $value['film_id'], $value['user_id']);
+	// $like = Film::findFilm($conn, 'liked_films', $value['film_id'], $value['user_id']);
+
 	$review = Film::findFilm($conn, 'review', $value['film_id'], $value['user_id']);
 
-	$result = array('film'=>$film, 'like'=>$like, 'review'=>$review);
+	// $result = array('film'=>$film, 'like'=>$like, 'review'=>$review);
+	$result = array('film'=>$film, 'review'=>$review);
+
 	// error_log(json_encode($result));
 	echo(json_encode($result));
 } else {
