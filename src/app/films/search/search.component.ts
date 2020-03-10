@@ -101,7 +101,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       console.log(result);
       if (result !== null) {
         this.watchedFilm = result;
-        // console.log(JSON.stringify(result));
+
         this.filmWatchedAlert = "Warning! You already added this film to watched.";
         setTimeout(() => {
           this.filmWatchedAlert = null;
@@ -109,12 +109,19 @@ export class SearchComponent implements OnInit, OnDestroy {
         // this.rating = result['film']['rating'];
         this.filmDate.setValue(result['film']['date']);
         if (result['film']['rating']) {
-          this.changeStarIcon(parseInt(result['film']['rating']));
+          this.rating = parseInt(result['film']['rating']);
+        } else {
+          this.rating = 0;
         }
         if (result['review'] !== null) {
           this.filmReview.setValue(result['review']['text']);
         }
+        
+      } else {
+          this.rating = 0;
       }
+        this.changeStarIcon(this.rating);
+      
     });
 
     this.filmService.findLike({film_id: film.id, user_id: currentUserId}).subscribe(result => {
@@ -164,7 +171,13 @@ export class SearchComponent implements OnInit, OnDestroy {
 	  		this.starIcon3 = faStar2;
 	  		this.starIcon4 = faStar2;
 	  		this.starIcon5 = faStar2;
-	  	} 
+	  	}  else {
+        this.starIcon = faStar;
+        this.starIcon2 = faStar;
+        this.starIcon3 = faStar;
+        this.starIcon4 = faStar;
+        this.starIcon5 = faStar;
+      }
   }
 
 

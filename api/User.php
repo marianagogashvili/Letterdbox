@@ -68,7 +68,7 @@ class User {
 	    }
 	}
 
-		public static function getAllFilmsWatchedByUser($conn, $user_id) {
+	public static function getAllFilmsWatchedByUser($conn, $user_id) {
 		$sql = "SELECT * FROM film LEFT JOIN watched_films ON film.id=watched_films.film_id WHERE watched_films.user_id = :user_id";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
@@ -77,6 +77,33 @@ class User {
 		}
 	}
 
+	public static function addFilmToWatchlist($conn, $user_id, $film_id) {
+		$sql = "INSERT INTO watchlist VALUES(:film_id, :user_id)";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return true;
+		}
+	}
+
+	public static function deleteFilmFromWatchlist($conn, $user_id, $film_id) {
+		$sql = "DELETE FROM watchlist WHERE user_id = :user_id AND film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		return $stmt->execute();
+	}
+
+	public static function findFromWatchlist($conn, $user_id, $film_id) {
+		$sql = "SELECT * FROM watchlist WHERE user_id = :user_id AND film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
+		}
+	}
 	
 }
 

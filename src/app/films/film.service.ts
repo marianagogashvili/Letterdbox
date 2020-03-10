@@ -41,6 +41,12 @@ export class FilmService {
 		);
 	}
 
+	getFilmById(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getFilmById.php', JSON.stringify(param)
+			);
+	}
+
 	addFilmToWatched(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/addFilmToWatched.php', JSON.stringify(param)
@@ -53,31 +59,34 @@ export class FilmService {
 		);
 	}
 
-	addReviewToFilm(param: Params) {
-		return this.http.post(
-			'http://localhost:8888/addReview.php', JSON.stringify(param)
-		);
-	}
-	filmToLiked(param: Params) {
-		return this.http.post(
-			'http://localhost:8888/filmToLiked.php', JSON.stringify(param)
-		);
-	}
-
 	findWatchedFilm(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/findWatchedFilm.php', JSON.stringify(param)
 			);
 	}
+
+	updateWatchedFilm(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/updateWatchedFilm.php', JSON.stringify(param)
+			);
+	}
+
+	addReviewToFilm(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/addReview.php', JSON.stringify(param)
+		);
+	}
+
 	updateReviewOfFilm(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/updateFilmReview.php', JSON.stringify(param)
 			);
 	}
-	updateWatchedFilm(param: Params) {
+
+	filmToLiked(param: Params) {
 		return this.http.post(
-			'http://localhost:8888/updateWatchedFilm.php', JSON.stringify(param)
-			);
+			'http://localhost:8888/filmToLiked.php', JSON.stringify(param)
+		);
 	}
 
 	findLike(param: Params) {
@@ -86,9 +95,15 @@ export class FilmService {
 			);
 	}
 
-	getFilmById(param: Params) {
+	filmToWatchList(param: Params) {
 		return this.http.post(
-			'http://localhost:8888/getFilmById.php', JSON.stringify(param)
+			'http://localhost:8888/filmToWatchlist.php', JSON.stringify(param)
+			);
+	}
+
+	findFromWatchlist(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/findFromWatchlist.php', JSON.stringify(param)
 			);
 	}
 }

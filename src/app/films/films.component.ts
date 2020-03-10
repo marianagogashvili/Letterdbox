@@ -22,7 +22,7 @@ export class FilmsComponent implements OnInit, OnDestroy {
   		      private route: ActivatedRoute,
               private router: Router) { }
   currentUserId = JSON.parse(localStorage.getItem('userData')).id;
-  date = this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString();
+  date = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   ngOnInit() {
   	// this.subscription = this.filmService.getFilms().pipe(map(r => {
   	// 	Object.values(r).forEach(value => {
