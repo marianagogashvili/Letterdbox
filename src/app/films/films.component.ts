@@ -18,8 +18,8 @@ export class FilmsComponent implements OnInit, OnDestroy {
 
   subscription;
   constructor(private filmService: FilmService,
-  			  private datePipe: DatePipe,
-  		      private route: ActivatedRoute,
+  			      private datePipe: DatePipe,
+  		        private route: ActivatedRoute,
               private router: Router) { }
   currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   date = this.datePipe.transform(new Date(), 'yyyy-MM-dd');

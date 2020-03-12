@@ -21,16 +21,16 @@
 	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
 	</div>
 	<div style="text-align: center">
-		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon1" [ngStyle]="rating >= 1 && {'color':'green'}" (click)="changeRating(1)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon2" [ngStyle]="rating >=2 && {'color':'green'}" (click)="changeRating(2)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon3" [ngStyle]="rating >= 3 && {'color' : 'green'}" (click)="changeRating(3)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon4" [ngStyle]="rating >= 4 && {'color' : 'green'}" (click)="changeRating(4)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon5" [ngStyle]="rating === 5 && {'color' : 'green'}" (click)="changeRating(5)"></fa-icon>
 	</div>
 	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
 	</div>
 	<div style="text-align: center">
-		<a href="" style="color: #9ab;">Add a review</a>
+		<a ><p id="log" (click)="addReview()">Add a review</p></a>
 		
 	</div>
 	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
@@ -39,6 +39,18 @@
 		<a href="" style="color: #9ab;">Add to a list</a>
 		
 	</div>
+</div>
+<div *ngIf="showState" class="backdrop" [@initState2]="initState" (click)="onClose()"></div>
+<div [@initState]="initState" class="alert-box" >
+	<p>Enter review</p>
+	<textarea 
+			style="resize: none" 
+			name="review" 
+			spellcheck="false" 
+			ngModel 
+			[formControl]="filmReview"></textarea>
+	<!-- <input type="text" ngModel [formControl]="filmReview"> -->
+	<button style="float: right" id="saveBtn" (click)="saveFilmReview()">Save</button>
 </div>
 <!-- 
 <app-header></app-header>

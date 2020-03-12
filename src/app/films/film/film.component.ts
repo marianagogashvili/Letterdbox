@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FilmService } from '../film.service';
 import { ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
@@ -15,15 +15,47 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { faClock as faClock2 } from '@fortawesome/free-solid-svg-icons';
 
 import { DatePipe } from '@angular/common';
+import { Subject } from 'rxjs';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-film',
   templateUrl: './film.component.html',
-  styleUrls: ['./film.component.css']
+  styleUrls: ['./film.component.css'],
+  animations: [
+  	trigger('initState', [
+  		state('closed', style({
+  			transform: 'translateX(-200px)',
+  			opacity: 0
+  		})),
+  		state('opened', style({
+  			transform: 'translateX(0)',
+  			opacity: 1
+  		})),
+  		transition('closed <=> opened', animate(500))
+  	]),
+  	trigger('initState2', [
+  		state('closed', style({
+  			opacity: 0
+  		})),
+  		state('opened', style({
+  			opacity: 1
+  		})),
+  		transition('closed <=> opened', animate(500))
+  	]),
+
+
+  ]
 })
 export class FilmComponent implements OnInit {
   film;
-  starIcon = faStar;
+  starIcon1 = faStar;
+  starIcon2 = faStar;
+  starIcon3 = faStar;
+  starIcon4 = faStar;
+  starIcon5 = faStar;
+  
   eyeIcon = faEye;
   likeIcon = faHeart;
   watchIcon = faClock;
@@ -32,31 +64,61 @@ export class FilmComponent implements OnInit {
   liked;
   watched;
   later;
+  rating;
+
+  initState = 'closed';
+  showState = false;
+  filmReview: FormControl = new FormControl();
+
+  watchedFilm;
+  // @Output() close = new Subject<void>();
   constructor(private filmService: FilmService,
   			  private route: ActivatedRoute,
   			  private datePipe: DatePipe) { 
-
   }
 
   ngOnInit() {
   	this.route.params.subscribe(params => {
   		let id = +params['id'];
-   		// this.filmService.getFilmById({id: id}).subscribe(result => {
-   		// 	// this.film.push(result);
-   		// 	this.film = result;  			
-   		// });
    		this.filmService.getFilmById({id: id}).subscribe(result => {
-   			// this.film.push(result);
-			this.film = result; 	
+			this.film = result; 
    		});
    		this.filmService.findWatchedFilm({film_id: id, user_id: this.currentUserId}).subscribe(result => {
-   			// this.film.push(result);
-   			if (result === null) {
-   				this.watched = false;
-   			} else {
+   			this.watchedFilm = result;
+   			if (result !== null) {
    				this.watched = true;
-   				this.eyeIcon = faEye2;
+	   			this.eyeIcon = faEye2;
+
+	   			this.rating = result['film']['rating'];
+	   			
+	   			if (this.rating !== null) {
+	   				console.log(+this.rating === 4);
+	   				if (+this.rating === 1) {
+	   					this.starIcon1 = faStar2;
+	   				} else if (+this.rating === 2) {
+	   					this.starIcon1 = faStar2;
+	   					this.starIcon2 = faStar2;
+	   				} else if (+this.rating === 3) {
+	   					this.starIcon1 = faStar2;
+	   					this.starIcon2 = faStar2;
+	   					this.starIcon3 = faStar2;
+	   				} else if (+this.rating === 4) {
+	   					this.starIcon1 = faStar2;
+	   					this.starIcon2 = faStar2;
+	   					this.starIcon3 = faStar2;
+	   					this.starIcon4 = faStar2;
+	   				} else if (+this.rating === 5) {
+	   					this.starIcon1 = faStar2;
+	   					this.starIcon2 = faStar2;
+	   					this.starIcon3 = faStar2;
+	   					this.starIcon4 = faStar2;
+	   					this.starIcon5 = faStar2;
+	   				}
+	   			}
+   			} else {
+   				this.watched = false;
    			}
+
 	  	});
 	  	this.filmService.findLike({film_id: id, user_id: this.currentUserId})
 	  	.subscribe(result => {
@@ -80,7 +142,6 @@ export class FilmComponent implements OnInit {
 	  		}
 	  	});
   	});
-  	console.log(this.film);
 
   	// if (this.film[2] === true) {
   	// 	this.likeIcon = faHeart2;
@@ -89,7 +150,7 @@ export class FilmComponent implements OnInit {
 
   toWatched() {
   	let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString();
-  	let param = {film_id: this.film[0]['id'], 
+  	let param = {film_id: this.film['id'], 
   				 user_id: this.currentUserId, 
   				 rating: null, 
   				 date: date};
@@ -105,6 +166,13 @@ export class FilmComponent implements OnInit {
   			this.eyeIcon = faEye;
   			console.log(result);
   		});
+  		this.rating = 0;
+  		this.starIcon1 = faStar;
+  		this.starIcon2 = faStar;
+  		this.starIcon3 = faStar;
+  		this.starIcon4 = faStar;
+  		this.starIcon5 = faStar;
+
   	}
   	
   }
@@ -113,7 +181,7 @@ export class FilmComponent implements OnInit {
   	let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString();
   	if (this.liked === false) {
   		this.filmService.filmToLiked(
-  				{film_id: this.film[0]['id'], 
+  				{film_id: this.film['id'], 
   				 user_id: this.currentUserId, 
   				 add: true}).subscribe(result => {
   			this.liked = true;
@@ -122,7 +190,7 @@ export class FilmComponent implements OnInit {
 
   		});
   	} else {
-  		this.filmService.filmToLiked({film_id: this.film[0]['id'], 
+  		this.filmService.filmToLiked({film_id: this.film['id'], 
   				 user_id: this.currentUserId, 
   				 add: false}).subscribe(result => {
   			this.liked = false;
@@ -137,7 +205,7 @@ export class FilmComponent implements OnInit {
   toLater() {
   	if (this.later === false) {
   		this.filmService.filmToWatchList(
-  				{film_id: this.film[0]['id'], 
+  				{film_id: this.film['id'], 
   				 user_id: this.currentUserId, 
   				 add: true}).subscribe(result => {
   			this.later = true;
@@ -146,7 +214,7 @@ export class FilmComponent implements OnInit {
   		});
   	} else {
 		this.filmService.filmToWatchList(
-			    {film_id: this.film[0]['id'], 
+			    {film_id: this.film['id'], 
   				 user_id: this.currentUserId, 
   				 add: false}).subscribe(result => {
   			this.later = false;
@@ -156,5 +224,85 @@ export class FilmComponent implements OnInit {
   	}
   }
 
+  changeRating(num) {
+  	if (num !== +this.rating) {
+  		let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString();
+	  	let param = {film_id: this.film['id'], 
+	  				 user_id: this.currentUserId, 
+	  				 rating: num, 
+	  				 date: date};
+	  	this.filmService.updateWatchedFilm(param).subscribe(result => {
+	  		console.log(result);
+	  	});
+  	}
+  	this.rating = num;
+	if (num === 1) {
+		this.starIcon1 = faStar2;
+		this.starIcon2 = faStar;
+		this.starIcon3 = faStar;
+		this.starIcon4 = faStar;
+		this.starIcon5 = faStar;
+	} else if (num === 2) {
+		this.starIcon1 = faStar2;
+		this.starIcon2 = faStar2;
+		this.starIcon3 = faStar;
+		this.starIcon4 = faStar;
+		this.starIcon5 = faStar;
+	} else if (num === 3) {
+		this.starIcon1 = faStar2;
+		this.starIcon2 = faStar2;
+		this.starIcon3 = faStar2;
+		this.starIcon4 = faStar;
+		this.starIcon5 = faStar;
+	} else if (num === 4) {
+		this.starIcon1 = faStar2;
+		this.starIcon2 = faStar2;
+		this.starIcon3 = faStar2;
+		this.starIcon4 = faStar2;
+		this.starIcon5 = faStar;
+	} else if (num === 5) {
+		this.starIcon1 = faStar2;
+		this.starIcon2 = faStar2;
+		this.starIcon3 = faStar2;
+		this.starIcon4 = faStar2;
+		this.starIcon5 = faStar2;
+	}
+  }
+
+  addReview() {
+  	console.log(this.watchedFilm);
+  	// updateReviewOfFilm
+  	this.showState = true;
+  	this.initState = 'opened';
+  	if (this.watchedFilm['review'] !== false && this.watchedFilm !== null) {
+  		this.filmReview.setValue(this.watchedFilm['review']['text']);
+  	} 
+  }
+
+  onClose(){
+  	// this.close.next();
+  	this.showState = false;
+  	this.initState = 'closed';
+  }
+
+  saveFilmReview() {
+  	console.log(this.filmReview.value);
+  	let review = {film_id: this.film['id'], user_id: this.currentUserId, text: this.filmReview.value};
+  	if (this.watchedFilm['review'] !== false && this.watchedFilm !== null) {
+	  	if (this.filmReview.value !== this.watchedFilm['review']['text']) {
+	  		this.filmService.updateReviewOfFilm(review).subscribe(result => {
+				console.log(result);
+			});
+	  	}
+	} else {
+		if (this.filmReview.value !== '') {
+			this.watchedFilm.addReview(review).subscribe(result => {
+				console.log(result);
+			});
+		}
+	}
+	this.showState = false;
+  	this.initState = 'closed';
+  }
 
 }

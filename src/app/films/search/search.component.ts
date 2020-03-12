@@ -121,7 +121,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           this.rating = 0;
       }
         this.changeStarIcon(this.rating);
-      
+
     });
 
     this.filmService.findLike({film_id: film.id, user_id: currentUserId}).subscribe(result => {
