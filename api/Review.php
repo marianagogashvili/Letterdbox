@@ -7,6 +7,25 @@ class Review {
 	public $film_id;
 	public $text;
 
+	public static function getReview($conn, $user_id, $film_id) {
+		$sql = "SELECT * FROM review WHERE user_id = :user_id AND film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id',$user_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id',$film_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return $stmt->fetch();
+		}
+	}
+
+	public static function getAllReviews($conn, $film_id) {
+		$sql = "SELECT review.user_id, review.film_id, review.text, user.username FROM review INNER JOIN user ON review.user_id = user.id WHERE review.film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':film_id',$film_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return $stmt->fetchAll();
+		}
+	}
+
 	public function createReview($conn) {
 		$sql = "INSERT INTO review(user_id, film_id, text) VALUES(:user_id, :film_id, :description)";
 		$stmt = $conn->prepare($sql);

@@ -1,6 +1,6 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, OnDestroy, Output } from '@angular/core';
 import { FilmService } from '../film.service';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { map, tap } from 'rxjs/operators';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { faStar as faStar2 } from '@fortawesome/free-solid-svg-icons';
@@ -48,7 +48,7 @@ import { FormControl } from '@angular/forms';
 
   ]
 })
-export class FilmComponent implements OnInit {
+export class FilmComponent implements OnInit, OnDestroy {
   film;
   starIcon1 = faStar;
   starIcon2 = faStar;
@@ -59,8 +59,10 @@ export class FilmComponent implements OnInit {
   eyeIcon = faEye;
   likeIcon = faHeart;
   watchIcon = faClock;
+
   currentUserId = JSON.parse(localStorage.getItem('userData')).id;
-  
+  currentFilmId;
+
   liked;
   watched;
   later;
@@ -71,17 +73,23 @@ export class FilmComponent implements OnInit {
   filmReview: FormControl = new FormControl();
 
   watchedFilm;
+  filmReviews;
   // @Output() close = new Subject<void>();
   constructor(private filmService: FilmService,
   			  private route: ActivatedRoute,
+  			  private router: Router,
   			  private datePipe: DatePipe) { 
   }
 
   ngOnInit() {
   	this.route.params.subscribe(params => {
   		let id = +params['id'];
+  		this.currentFilmId = id;
    		this.filmService.getFilmById({id: id}).subscribe(result => {
-			this.film = result; 
+			this.film = result;
+			if (result === null) {
+				this.router.navigate(['/']);
+			} 
    		});
    		this.filmService.findWatchedFilm({film_id: id, user_id: this.currentUserId}).subscribe(result => {
    			this.watchedFilm = result;
@@ -141,11 +149,18 @@ export class FilmComponent implements OnInit {
 	  			this.watchIcon = faClock2;
 	  		}
 	  	});
+
+	    this.filmService.getAllReviewsOfFilm({film_id: id}).subscribe(result => {
+	    	this.filmReviews = result;
+	    	console.log(result);
+	    });
   	});
 
   	// if (this.film[2] === true) {
   	// 	this.likeIcon = faHeart2;
   	// }
+
+
   }
 
   toWatched() {
@@ -269,40 +284,57 @@ export class FilmComponent implements OnInit {
 	}
   }
 
+  // reviewSubscription;
+  currentReview;
+
   addReview() {
-  	console.log(this.watchedFilm);
-  	// updateReviewOfFilm
   	this.showState = true;
   	this.initState = 'opened';
-  	if (this.watchedFilm['review'] !== false && this.watchedFilm !== null) {
-  		this.filmReview.setValue(this.watchedFilm['review']['text']);
-  	} 
+
+  	let param = {
+  		film_id: this.currentFilmId, 
+  		user_id: this.currentUserId};
+  	this.filmService.getReview(param).subscribe(result => {
+  		this.currentReview = result;
+  		if (result !== null) {
+	  		this.filmReview.setValue(result['text']);
+		}
+  	});
   }
 
   onClose(){
   	// this.close.next();
   	this.showState = false;
   	this.initState = 'closed';
+  	// this.reviewSubscription.unsubscribe();
   }
 
   saveFilmReview() {
   	console.log(this.filmReview.value);
-  	let review = {film_id: this.film['id'], user_id: this.currentUserId, text: this.filmReview.value};
-  	if (this.watchedFilm['review'] !== false && this.watchedFilm !== null) {
-	  	if (this.filmReview.value !== this.watchedFilm['review']['text']) {
+  	let review = {film_id: this.currentFilmId, user_id: +this.currentUserId, text: this.filmReview.value};
+  	console.log(review);
+  	// if (this.watchedFilm['review'] !== false  ) {
+  	if (this.currentReview !== null) {
+	  	if (this.filmReview.value !== this.currentReview['text']) {
 	  		this.filmService.updateReviewOfFilm(review).subscribe(result => {
 				console.log(result);
 			});
 	  	}
 	} else {
 		if (this.filmReview.value !== '') {
-			this.watchedFilm.addReview(review).subscribe(result => {
+			this.filmService.addReviewToFilm(review).subscribe(result => {
 				console.log(result);
 			});
 		}
 	}
 	this.showState = false;
   	this.initState = 'closed';
+  }
+
+  ngOnDestroy() {
+  	// this.reviewSubscription.unsubscribe();
+  	console.log("unsubscribed");
+
   }
 
 }

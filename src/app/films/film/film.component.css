@@ -82,3 +82,58 @@ textarea {
 #saveBtn {
   background-color: #00e054;
 }
+
+#reviews {
+  clear: both;
+  color: #9ab;
+  font-family: 'Titillium Web', sans-serif;
+  padding-top: 100px;
+  padding-left: 80px;
+  padding-right: 100px;
+  /*margin-top: 200px;*/
+  /*margin: 140px 0 20px 40px;*/
+
+}
+
+#review {
+	font-size: 17px;
+	width: 80vw; 
+	height: 10vw; 
+	overflow:scroll;
+}
+
+#addition {
+	display: inline-block;
+	
+}
+
+@media only screen and (min-width: 1200px) {
+  #addition {
+    float: right; 
+	/*position: relative; */
+	display: inline-block;
+	font-family: 'Titillium Web', 
+	sans-serif;  font-size: 20px; 
+	margin-right: 80px; 
+	margin-top: 140px; 
+	background-color: #456; 
+	padding: 20px; 
+
+	border-radius: 5px;
+  }
+}
+@media only screen and (max-width: 1200px) {
+  #addition {
+    /*float: right; */
+	/*position: relative; */
+	font-family: 'Titillium Web', 
+	sans-serif;  font-size: 20px; 
+	/*margin-right: 80px; */
+	/*margin-top: 140px; */
+	background-color: #456; 
+	width: 60vw;
+	margin-left: 25vw;
+	/*padding: 20px; */
+	border-radius: 5px;
+  }
+}

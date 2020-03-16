@@ -71,6 +71,16 @@ export class FilmService {
 			);
 	}
 
+	getReview(param: Params) {
+		return this.http.post('http://localhost:8888/getReview.php', JSON.stringify(param)
+		);
+	}
+
+	getAllReviewsOfFilm(param: Params) {
+		return this.http.post('http://localhost:8888/getAllReviews.php', JSON.stringify(param)
+		);
+	}
+
 	addReviewToFilm(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/addReview.php', JSON.stringify(param)
