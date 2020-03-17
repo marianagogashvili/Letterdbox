@@ -83,6 +83,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 		}
   		
   	});
+    console.log('saved',this.savedState);
   }
   
   onClose() {

@@ -24,9 +24,12 @@ a {
 
 .alert-box {
   position: fixed;
-  left: 30vw;
-  width: 34vw;
-  height: 28vw;
+  left: 20vw;
+  top: 20vh;
+
+  width: 60vw;
+  /*height: 35vw;*/
+  height: 30vmax;
   padding: 16px;
   z-index: 100;
   background-color: #151b22;
@@ -36,17 +39,15 @@ a {
   align-items: center;
   box-shadow: 0 2px 8px rbga(0, 0, 0, 0.26);
 }
-.alert-box {
-  top: 30vh;
-}
+
 /*.alert-box2 {
   top: 19vh;
   bottom: 10vh;
 }*/
 textarea {
   background-color: #cde;
-  width: 30vw;
-  height: 16vw;
+  width: 55vw;
+  height: 20vw;
   padding-top: 0;
   padding-left: 0;
 
@@ -56,7 +57,7 @@ textarea {
   text-align: right;
 }
 
-#log {
+#addReviewBtn {
 	color: #9ab;
 	/*background-color: #00e054;*/
 	/*font-family: 'Montserrat', sans-serif;*/
@@ -66,7 +67,7 @@ textarea {
 	padding-right: 13px;
 	border-radius*/: 2px;
 }
-#log:hover {
+#addReviewBtn:hover {
 	color: #fff;
 }
 #saveBtn {
@@ -81,13 +82,14 @@ textarea {
 }
 #saveBtn {
   background-color: #00e054;
+  float: right
 }
 
 #reviews {
   clear: both;
   color: #9ab;
   font-family: 'Titillium Web', sans-serif;
-  padding-top: 100px;
+  padding-top: 10px;
   padding-left: 80px;
   padding-right: 100px;
   /*margin-top: 200px;*/
@@ -107,13 +109,39 @@ textarea {
 	
 }
 
+#iconAndBtn {
+	text-align: center;
+}
+
+#line {
+	height: 1px; 
+  	background-color: #9ab; 
+  	margin: 5px;
+  	margin-left: 2vw;
+}
+
+#filmDescr {
+	color: #9ab; 
+	width: 45vw; 
+	height: 30vw;  
+	overflow:scroll;
+}
+
+#filmImg {
+	display: inline-block;
+	border-radius: 5px; 
+	vertical-align: 
+	top; margin: 40px;
+}
+
 @media only screen and (min-width: 1200px) {
   #addition {
     float: right; 
 	/*position: relative; */
 	display: inline-block;
 	font-family: 'Titillium Web', 
-	sans-serif;  font-size: 20px; 
+	sans-serif;  
+	font-size: 20px; 
 	margin-right: 80px; 
 	margin-top: 140px; 
 	background-color: #456; 
@@ -121,8 +149,11 @@ textarea {
 
 	border-radius: 5px;
   }
+  #line {
+  	width: 180px;
+  }
 }
-@media only screen and (max-width: 1200px) {
+@media only screen and (max-width: 1194px) {
   #addition {
     /*float: right; */
 	/*position: relative; */
@@ -131,9 +162,33 @@ textarea {
 	/*margin-right: 80px; */
 	/*margin-top: 140px; */
 	background-color: #456; 
-	width: 60vw;
-	margin-left: 25vw;
+	width: 40vw;
+	margin-left: 30vw;
 	/*padding: 20px; */
 	border-radius: 5px;
+  }
+  #line {
+  	width: 35vw;
+  }
+  #iconAndBtn {
+	padding: 10px;
+	text-transform: uppercase;
+  }
+  #filmDescr {
+  	width: 65vw; 
+  }
+}
+@media only screen and (max-width: 1000px) {
+  #mainDiv {
+  	margin-left: 20%;
+  	margin-bottom: 20px;
+  }
+  #filmImg {
+  	margin-left: 17%;
+  }
+}
+@media only screen and (max-width: 500px) {
+  #filmImg {
+  	margin-left: 10%;
   }
 }

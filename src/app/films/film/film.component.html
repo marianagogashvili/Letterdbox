@@ -1,6 +1,6 @@
 <app-header></app-header>
-<div *ngIf="showState" class="backdrop" [@initState2]="initState" (click)="onClose()"></div>
-<div [@initState]="initState" class="alert-box" >
+<div class="backdrop" [@initState2]="initState" (click)="onClose()"></div>
+<div  [@initState]="initState" class="alert-box" >
 	<p>Enter review</p>
 	<textarea 
 			style="resize: none" 
@@ -8,48 +8,42 @@
 			spellcheck="false" 
 			ngModel 
 			[formControl]="filmReview"></textarea>
-	<!-- <input type="text" ngModel [formControl]="filmReview"> -->
-	<button style="float: right" id="saveBtn" (click)="saveFilmReview()">Save</button>
+
+	<button id="saveBtn" (click)="saveFilmReview()">Save</button>
 </div>
 
-<!-- <div style="display: inline-block; padding-top: 30px; padding-left: 80px; padding-right: 100px; "> -->
-<div style="display: inline-block;">
-	<img style="display: inline-block;border-radius: 5px; vertical-align: top; margin: 40px;" src="{{ film?.photo }}" alt="" width="250" height="375" >
-	<!-- <div style="display: inline-block; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin: 40px; padding-top: 40px; top: 0;"> -->
+<div id="mainDiv" style="display: inline-block;">
+	<img id="filmImg" src="{{ film?.photo }}" alt="" width="250" height="375" >
 	<div style="display: inline-block;">
 		<div style="display: inline-block; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin-left: 10px">
-			<h1 style="color: white; font-family: 'Libre Baskerville';">{{ film?.title }}</h1>
+			<h1 style="color: white; font-family: 'Libre Baskerville';">{{ film?.title }}  <span style="color: #00e054; font-family: 'Titillium Web';"> {{ mainRatingNum }} </span> <fa-icon style="color: #00e054;" [icon]="star"></fa-icon></h1>
 			<p style="color: #9ab;">{{ film?.year }}</p>
-			<p style="color: #9ab; width: 45vw; height: 30vw;  overflow:scroll;">{{ film?.description }}</p>
+			<p id="filmDescr">{{ film?.description }}</p>
 		</div>
 
 	</div>
-	
 </div>
 <div id="addition" style="">
-	<div style="text-align: center; ">
-		<fa-icon id="icon" [ngStyle]="watched && {'color':'green'}" [icon]="eyeIcon" (click)="toWatched()"></fa-icon>
+	<div id="iconAndBtn">
+		<fa-icon id="icon" [ngStyle]="watched && {'color':'#00e054'}" [icon]="eyeIcon" (click)="toWatched()"></fa-icon>
 		<fa-icon id="icon" [ngStyle]="liked && {'color': 'red'}" [icon]="likeIcon" (click)="toLiked()"></fa-icon>
 		<fa-icon id="icon" [ngStyle]="later && {'color': 'blue'}" [icon]="watchIcon" (click)="toLater()"></fa-icon>
 	</div>
-	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
+	<div id="line"></div>
+	<div id="iconAndBtn">
+		<fa-icon id="icon2" [icon]="starIcon1" [ngStyle]="rating >= 1 && {'color':'#00e054'}" (click)="changeRating(1)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon2" [ngStyle]="rating >=2 && {'color':'#00e054'}" (click)="changeRating(2)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon3" [ngStyle]="rating >= 3 && {'color' : '#00e054'}" (click)="changeRating(3)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon4" [ngStyle]="rating >= 4 && {'color' : '#00e054'}" (click)="changeRating(4)"></fa-icon>
+		<fa-icon id="icon2" [icon]="starIcon5" [ngStyle]="rating === 5 && {'color' : '#00e054'}" (click)="changeRating(5)"></fa-icon>
 	</div>
-	<div style="text-align: center">
-		<fa-icon id="icon2" [icon]="starIcon1" [ngStyle]="rating >= 1 && {'color':'green'}" (click)="changeRating(1)"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon2" [ngStyle]="rating >=2 && {'color':'green'}" (click)="changeRating(2)"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon3" [ngStyle]="rating >= 3 && {'color' : 'green'}" (click)="changeRating(3)"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon4" [ngStyle]="rating >= 4 && {'color' : 'green'}" (click)="changeRating(4)"></fa-icon>
-		<fa-icon id="icon2" [icon]="starIcon5" [ngStyle]="rating === 5 && {'color' : 'green'}" (click)="changeRating(5)"></fa-icon>
-	</div>
-	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
-	</div>
-	<div style="text-align: center">
-		<a ><p id="log" (click)="addReview()">Add a review</p></a>
+	<div id="line"></div>
+	<div id="iconAndBtn">
+		<a ><p id="addReviewBtn" (click)="addReview()">Add a review</p></a>
 		
 	</div>
-	<div style="height: 1px; width: 180px; background-color: #9ab; margin: 5px;">
-	</div>
-	<div style="text-align: center">
+	<div id="line"></div>
+	<div id="iconAndBtn">
 		<a href="" style="color: #9ab;">Add to a list</a>
 		
 	</div>

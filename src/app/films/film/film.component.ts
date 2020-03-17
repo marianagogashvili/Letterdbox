@@ -15,7 +15,7 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { faClock as faClock2 } from '@fortawesome/free-solid-svg-icons';
 
 import { DatePipe } from '@angular/common';
-import { Subject } from 'rxjs';
+import { Subject, BehaviorSubject } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { FormControl } from '@angular/forms';
 
@@ -27,20 +27,24 @@ import { FormControl } from '@angular/forms';
   	trigger('initState', [
   		state('closed', style({
   			transform: 'translateX(-200px)',
-  			opacity: 0
+  			opacity: 0,
+  			visibility: 'hidden'
   		})),
   		state('opened', style({
   			transform: 'translateX(0)',
-  			opacity: 1
+  			opacity: 1,
+  			visibility: 'visible'
   		})),
   		transition('closed <=> opened', animate(500))
   	]),
   	trigger('initState2', [
   		state('closed', style({
-  			opacity: 0
+  			opacity: 0,
+  			visibility: 'hidden'
   		})),
   		state('opened', style({
-  			opacity: 1
+  			opacity: 1,
+  			visibility: 'visible'
   		})),
   		transition('closed <=> opened', animate(500))
   	]),
@@ -50,6 +54,8 @@ import { FormControl } from '@angular/forms';
 })
 export class FilmComponent implements OnInit, OnDestroy {
   film;
+  star = faStar2;
+
   starIcon1 = faStar;
   starIcon2 = faStar;
   starIcon3 = faStar;
@@ -67,6 +73,7 @@ export class FilmComponent implements OnInit, OnDestroy {
   watched;
   later;
   rating;
+  mainRatingNum;
 
   initState = 'closed';
   showState = false;
@@ -74,6 +81,9 @@ export class FilmComponent implements OnInit, OnDestroy {
 
   watchedFilm;
   filmReviews;
+
+  reviewSubject = new BehaviorSubject(null); 
+  subscription1; 
   // @Output() close = new Subject<void>();
   constructor(private filmService: FilmService,
   			  private route: ActivatedRoute,
@@ -150,9 +160,20 @@ export class FilmComponent implements OnInit, OnDestroy {
 	  		}
 	  	});
 
-	    this.filmService.getAllReviewsOfFilm({film_id: id}).subscribe(result => {
-	    	this.filmReviews = result;
-	    	console.log(result);
+	    
+	    this.subscription1 = this.reviewSubject.subscribe(result => {
+	    	if (result != null) {
+	    		this.filmReviews = result;
+	    	} else {
+	    		this.filmService.getAllReviewsOfFilm({film_id: id}).subscribe(result => {
+			    	this.filmReviews = result;
+			    	// console.log(result);
+			    });
+	    	}
+	    });
+	    this.filmService.getFilmRating({film_id: id}).subscribe(result => {
+	    	// console.log('rating', result);
+	    	this.mainRatingNum = result;
 	    });
   	});
 
@@ -329,10 +350,15 @@ export class FilmComponent implements OnInit, OnDestroy {
 	}
 	this.showState = false;
   	this.initState = 'closed';
+  	// this.reviewSubject.next(true);
+  	this.filmService.getAllReviewsOfFilm({film_id: this.currentFilmId}).subscribe(result => {
+  	    this.reviewSubject.next(result);
+    });
   }
 
   ngOnDestroy() {
   	// this.reviewSubscription.unsubscribe();
+  	this.subscription1.unsubscribe();
   	console.log("unsubscribed");
 
   }

@@ -116,4 +116,10 @@ export class FilmService {
 			'http://localhost:8888/findFromWatchlist.php', JSON.stringify(param)
 			);
 	}
+
+	getFilmRating(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getFilmRating.php', JSON.stringify(param)
+			);
+	}
 }

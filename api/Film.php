@@ -93,6 +93,15 @@ class Film {
 		}
 	}
 
+	public static function getFilmRating($conn, $film_id) {
+		$sql = "SELECT rating FROM watched_films WHERE film_id = :film_id AND rating IS NOT NULL";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
 
 }
 ?>

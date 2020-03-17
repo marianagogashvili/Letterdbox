@@ -46,6 +46,9 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit() {
     this.elRef.nativeElement.ownerDocument.body.style.backgroundColor = '#2e3945'
+    console.log('search', this.searchFilm);
+    console.log('reg', this.register);
+
   } 
 
   toggleSearch() {
