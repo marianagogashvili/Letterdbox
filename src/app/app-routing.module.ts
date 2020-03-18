@@ -6,12 +6,13 @@ import { Routes, RouterModule } from '@angular/router';
 import { FilmComponent } from './films/film/film.component';
 
 import { FilmsComponent } from './films/films.component';
-
+import { ActivityComponent } from './user/activity/activity.component';
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
 	{path: 'home', component: HomeComponent},
 	{path: 'user', component: UserComponent, children: [
-		{path: 'films', component: WatchedFilmsComponent}
+		{path: 'films', component: WatchedFilmsComponent},
+		{path: 'activity', component: ActivityComponent}
 	]},
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent}

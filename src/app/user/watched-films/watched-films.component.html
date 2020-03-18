@@ -1,4 +1,4 @@
 <div *ngFor="let film of watchedFilms" style="display: inline; margin-right: 17px; overflow-x: hidden;">
-	<img id="filmImage" style="border-radius: 1px" src="{{film['photo']}}" width="100" height="150" alt="">
+	<img id="filmImage" style="border-radius: 1px" src="{{film['photo']}}" width="100" height="150" alt="" (click)="toFilm(film['id'])">
 </div>
 

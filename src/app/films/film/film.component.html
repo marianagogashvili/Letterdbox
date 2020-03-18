@@ -48,7 +48,11 @@
 		
 	</div>
 </div>
-<div id="reviews">
+
+<div *ngIf="!spinnerIsLoading" id="reviews">
+	<div *ngIf="spinnerIsLoading" style="text-align: center;">
+	  <app-loading-spinner></app-loading-spinner>
+	</div>
 	<h1 style="font-size: 20px;text-transform: uppercase; color: white">Reviews</h1>
 	<div style="padding-left: 10px" *ngFor="let review of filmReviews">
 		<div style="width: 40vw; height: 1px; background-color: grey; margin-top: 20px;margin-bottom: 20px;"></div>

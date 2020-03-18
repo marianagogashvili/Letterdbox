@@ -84,6 +84,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 
   reviewSubject = new BehaviorSubject(null); 
   subscription1; 
+  spinnerIsLoading = false;
   // @Output() close = new Subject<void>();
   constructor(private filmService: FilmService,
   			  private route: ActivatedRoute,
@@ -92,6 +93,8 @@ export class FilmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+	this.spinnerIsLoading = true;
+
   	this.route.params.subscribe(params => {
   		let id = +params['id'];
   		this.currentFilmId = id;
@@ -159,9 +162,9 @@ export class FilmComponent implements OnInit, OnDestroy {
 	  			this.watchIcon = faClock2;
 	  		}
 	  	});
-
-	    
-	    this.subscription1 = this.reviewSubject.subscribe(result => {
+	  	
+	  	this.subscription1 = this.reviewSubject.subscribe(result => {
+	    	console.log('reviewssss', result);
 	    	if (result != null) {
 	    		this.filmReviews = result;
 	    	} else {
@@ -171,11 +174,13 @@ export class FilmComponent implements OnInit, OnDestroy {
 			    });
 	    	}
 	    });
+    
 	    this.filmService.getFilmRating({film_id: id}).subscribe(result => {
 	    	// console.log('rating', result);
 	    	this.mainRatingNum = result;
 	    });
   	});
+    this.spinnerIsLoading = false;
 
   	// if (this.film[2] === true) {
   	// 	this.likeIcon = faHeart2;
@@ -331,6 +336,8 @@ export class FilmComponent implements OnInit, OnDestroy {
   }
 
   saveFilmReview() {
+  	this.spinnerIsLoading = true;
+
   	console.log(this.filmReview.value);
   	let review = {film_id: this.currentFilmId, user_id: +this.currentUserId, text: this.filmReview.value};
   	console.log(review);
@@ -338,22 +345,43 @@ export class FilmComponent implements OnInit, OnDestroy {
   	if (this.currentReview !== null) {
 	  	if (this.filmReview.value !== this.currentReview['text']) {
 	  		this.filmService.updateReviewOfFilm(review).subscribe(result => {
-				console.log(result);
+				console.log('updated');
+				this.filmService.getAllReviewsOfFilm({film_id: this.currentFilmId}).subscribe(result => {
+			  	    this.reviewSubject.next(result);
+			  	    console.log('new result');
+			    });
+			    this.filmService.createActivity(
+	                {user_id: currentUserId, 
+	                  film_id: this.currentFilmId, 
+	                  film_title: title, 
+	                  action: 'review update', 
+	                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+	                console.log(result);
+	              });
 			});
 	  	}
 	} else {
 		if (this.filmReview.value !== '') {
 			this.filmService.addReviewToFilm(review).subscribe(result => {
-				console.log(result);
+				console.log('added');
+				this.filmService.getAllReviewsOfFilm({film_id: this.currentFilmId}).subscribe(result => {
+			  	    this.reviewSubject.next(result);
+			  	    console.log('new result');
+			    });
+			    this.filmService.createActivity(
+	                {user_id: currentUserId, 
+	                  film_id: this.currentFilmId, 
+	                  film_title: title, 
+	                  action: 'review add', 
+	                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+	                console.log(result);
+	              });
 			});
 		}
 	}
-	this.showState = false;
+
+    this.showState = false;
   	this.initState = 'closed';
-  	// this.reviewSubject.next(true);
-  	this.filmService.getAllReviewsOfFilm({film_id: this.currentFilmId}).subscribe(result => {
-  	    this.reviewSubject.next(result);
-    });
   }
 
   ngOnDestroy() {

@@ -43,6 +43,9 @@ button: focus {
 	font-size: 35px;
 	color: #9ab ;
 }
+.active {
+	color: white;
+}
 #numText {
 	color: #9ab ;
 }

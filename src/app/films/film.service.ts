@@ -122,4 +122,10 @@ export class FilmService {
 			'http://localhost:8888/getFilmRating.php', JSON.stringify(param)
 			);
 	}
+
+	createActivity(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/createActivity.php', JSON.stringify(param)
+			);
+	}
 }

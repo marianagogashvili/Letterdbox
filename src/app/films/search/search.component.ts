@@ -17,12 +17,14 @@ import { FilmService } from '../film.service';
   animations: [
   	trigger('searchState', [
   		state('void', style({
-	  		transform: 'translateX(-100px)',
-	  		opacity: 0
+	  		transform: 'translateX(-200px)',
+        opacity: 0,
+	  		visibility: 'hidden'
   		})),
   		state('*', style({
 	  		transform: 'translateX(0px)',
-	  		opacity: 1
+        opacity: 1,
+	  		visibility: 'visible'
   		})),
   		transition('void => *', animate(500)),
 
@@ -30,13 +32,15 @@ import { FilmService } from '../film.service';
   	trigger('savedState', [
   		state('seen', style({
 	  		// transform: 'translateX(-100px)',
-	  		opacity: 1
+        opacity: 1,
+	  		visibility: 'visible'
   		})),
   		state('hidden', style({
 	  		// transform: 'translateX(0px)',
-	  		opacity: 0
+        opacity: 0,
+	  		visibility: 'hidden'
   		})),
-  		transition('seen => hidden', animate(500)),
+  		transition('seen <=> hidden', animate(500)),
 
   	])
   ]
@@ -88,10 +92,14 @@ export class SearchComponent implements OnInit, OnDestroy {
   
   onClose() {
   	this.close.next();
+    this.savedState = 'hidden';
+
   }
 
 
   addFilm(film) {
+    console.log(this.currentFilm);
+
     this.secondTabHidden = false;
 
     let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
@@ -137,7 +145,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       }
       
     });
-    console.log('liked', this.liked);
   }
 
   changeStarIcon(num) {
@@ -190,7 +197,7 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.heartIcon = faHeart;
     }
   }
-  saveReview(id) {
+  saveReview(id, title) {
   	let currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   	let dating = (this.filmDate.value !== '' ? this.filmDate.value : this.date);
 
@@ -205,58 +212,116 @@ export class SearchComponent implements OnInit, OnDestroy {
           if (this.filmReview.value !== this.watchedFilm['review']['text']) {
             this.filmService.updateReviewOfFilm({film_id: id, user_id: currentUserId, text: this.filmReview.value}).subscribe(result => {
               console.log(result);
+              this.filmService.createActivity(
+                {user_id: currentUserId, 
+                 film_id: id, 
+                 film_title: title, 
+                 action: 'film review update', 
+                 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                console.log(result);
+              });
             });
           }
         } else {
-            this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
+            this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, text: this.filmReview.value}).subscribe(result => {
               console.log(result);
+              this.filmService.createActivity(
+                {user_id: currentUserId, 
+                  film_id: id, 
+                  film_title: title, 
+                  action: 'film review add', 
+                  date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                console.log(result);
+              });
             });
         }
       }
-      
-   		
-      if ((this.initialLike === true) && (this.liked === false)) {
-        this.filmService.filmToLiked(
-          { user_id: currentUserId, 
-            film_id: id,
-            add: false}).subscribe(result => {
-            console.log(result);
-          });
-      } else if ((this.initialLike === false) && (this.liked === true)) {
-        this.filmService.filmToLiked(
-          {user_id: currentUserId, 
-             film_id: id, 
-             add: true}).subscribe(result => {
-            console.log(result);
-          });
-      } 
-
+     
   		if ((parseInt(this.watchedFilm['film']['rating']) !== this.rating) ||
   			(this.watchedFilm['film']['date'] !== this.filmDate.value)) {
   			this.filmService.updateWatchedFilm(param)
   			.subscribe(result => {
   				 	console.log(result);
+             this.filmService.createActivity(
+                {user_id: currentUserId, 
+                  film_id: id, 
+                  film_title: title, 
+                  action: 'film update', 
+                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                console.log(result);
+              });
   				 });
   		}
   	} else {
 	  	this.filmService.addFilmToWatched(param).subscribe(result => {
 	  		console.log(result);
+        this.filmService.createActivity(
+                {user_id: currentUserId, 
+                  film_id: id, 
+                  film_title: title, 
+                  action: 'film add', 
+                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                console.log(result);
+              });
 	  	});
 
 	  	if(this.filmReview.value !== '') {
-	  		this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, review: this.filmReview.value}).subscribe(result => {
+        console.log(this.filmReview.value);
+	  		this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, text: this.filmReview.value}).subscribe(result => {
 	  			console.log(result);
+          this.filmService.createActivity(
+                {user_id: currentUserId, 
+                  film_id: id, 
+                  film_title: title, 
+                  action: 'review add', 
+                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                console.log(result);
+              });
 	  		});
+
 	  	}
 
-	  	if (this.liked) {
-	  		this.filmService.filmToLiked({user_id: currentUserId, film_id: id, add: true}).subscribe(result => {
-	  			console.log(result);
-	  		});
-	  	}
+	  	// if (this.liked) {
+	  	// 	this.filmService.filmToLiked({user_id: currentUserId, film_id: id, add: true}).subscribe(result => {
+	  	// 		console.log(result);
+	  	// 	});
+	  	// }
   		
   	}
 
+  if ((this.initialLike === true) && (this.liked === false)) {
+    this.filmService.filmToLiked(
+      { user_id: currentUserId, 
+        film_id: id,
+        add: false}).subscribe(result => {
+        console.log(result);
+        this.filmService.createActivity(
+          {user_id: currentUserId, 
+            film_id: id, 
+            film_title: title, 
+            action: 'like delete', 
+            date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+          console.log(result);
+        });
+      });
+  } else if ((this.initialLike === false) && (this.liked === true)) {
+    this.filmService.filmToLiked(
+      {user_id: currentUserId, 
+         film_id: id, 
+         add: true}).subscribe(result => {
+        console.log(result);
+        this.filmService.createActivity(
+          {user_id: currentUserId, 
+            film_id: id, 
+            film_title: title, 
+            action: 'like add', 
+            date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+          console.log(result);
+        });
+      });
+  } 
+
+  this.close.next();
 	this.savedState = 'hidden';
 	// this.router.navigate(['/user']);
   }

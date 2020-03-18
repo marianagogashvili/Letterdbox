@@ -18,6 +18,8 @@ import { HomeComponent } from './home/home.component';
 import { SearchComponent } from './films/search/search.component';
 import { WatchedFilmsComponent } from './user/watched-films/watched-films.component';
 import { FilmComponent } from './films/film/film.component';
+import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
+import { ActivityComponent } from './user/activity/activity.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -30,7 +32,9 @@ import { FilmComponent } from './films/film/film.component';
     HomeComponent,
     SearchComponent,
     WatchedFilmsComponent,
-    FilmComponent,     
+    FilmComponent,
+    LoadingSpinnerComponent,
+    ActivityComponent,     
   ],
   imports: [
     BrowserModule,
@@ -40,6 +44,9 @@ import { FilmComponent } from './films/film/film.component';
     AppRoutingModule,
     FormsModule,
     ReactiveFormsModule
+  ],
+  exports: [
+    LoadingSpinnerComponent
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

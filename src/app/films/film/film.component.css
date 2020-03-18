@@ -100,7 +100,8 @@ textarea {
 #review {
 	font-size: 17px;
 	width: 80vw; 
-	height: 10vw; 
+	/*height: 10vw;*/
+	max-height: 10vw; 
 	overflow:scroll;
 }
 
