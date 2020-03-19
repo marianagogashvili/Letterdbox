@@ -216,7 +216,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 {user_id: currentUserId, 
                  film_id: id, 
                  film_title: title, 
-                 action: 'film review update', 
+                 action: 'updated review of', 
                  date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
@@ -229,7 +229,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 {user_id: currentUserId, 
                   film_id: id, 
                   film_title: title, 
-                  action: 'film review add', 
+                  action: 'added review to', 
                   date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
@@ -246,7 +246,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 {user_id: currentUserId, 
                   film_id: id, 
                   film_title: title, 
-                  action: 'film update', 
+                  action: 'updated', 
                   date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
@@ -259,7 +259,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 {user_id: currentUserId, 
                   film_id: id, 
                   film_title: title, 
-                  action: 'film add', 
+                  action: 'watched', 
                   date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
@@ -273,7 +273,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                 {user_id: currentUserId, 
                   film_id: id, 
                   film_title: title, 
-                  action: 'review add', 
+                  action: 'added review to', 
                   date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
@@ -299,7 +299,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           {user_id: currentUserId, 
             film_id: id, 
             film_title: title, 
-            action: 'like delete', 
+            action: 'deleted like from', 
             date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
           console.log(result);
         });
@@ -314,7 +314,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           {user_id: currentUserId, 
             film_id: id, 
             film_title: title, 
-            action: 'like add', 
+            action: 'added like to', 
             date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
           console.log(result);
         });

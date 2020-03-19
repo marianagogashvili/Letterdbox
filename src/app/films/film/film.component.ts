@@ -165,7 +165,8 @@ export class FilmComponent implements OnInit, OnDestroy {
 	  	
 	  	this.subscription1 = this.reviewSubject.subscribe(result => {
 	    	console.log('reviewssss', result);
-	    	if (result != null) {
+
+	    	if (result !== null) {
 	    		this.filmReviews = result;
 	    	} else {
 	    		this.filmService.getAllReviewsOfFilm({film_id: id}).subscribe(result => {
@@ -173,6 +174,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 			    	// console.log(result);
 			    });
 	    	}
+	    	console.log('spin', this.spinnerIsLoading);
 	    });
     
 	    this.filmService.getFilmRating({film_id: id}).subscribe(result => {
@@ -200,12 +202,28 @@ export class FilmComponent implements OnInit, OnDestroy {
   			this.watched = true;
   			this.eyeIcon = faEye2;
   			console.log(result);
+		    this.filmService.createActivity(
+            	{user_id: this.currentUserId, 
+             	 film_id: this.currentFilmId, 
+             	 film_title: this.film['title'], 
+             	 action: 'watched', 
+             	 date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+            	console.log('ACTIVITY', result);
+            });	 
   		});
   	} else {
   		this.filmService.deleteFilmFromWatched(param).subscribe(result => {
   			this.watched = false;
   			this.eyeIcon = faEye;
   			console.log(result);
+  			this.filmService.createActivity(
+            	{user_id: this.currentUserId, 
+             	 film_id: this.currentFilmId, 
+             	 film_title: this.film['title'], 
+             	 action: 'watched', 
+             	 date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+            	console.log('deleted from watched film', result);
+            });	
   		});
   		this.rating = 0;
   		this.starIcon1 = faStar;
@@ -228,7 +246,14 @@ export class FilmComponent implements OnInit, OnDestroy {
   			this.liked = true;
   			this.likeIcon = faHeart2;
   			console.log(result);
-
+		  	this.filmService.createActivity(
+	            {user_id: this.currentUserId, 
+	              film_id: this.currentFilmId, 
+	              film_title: this.film['title'], 
+	              action: 'liked', 
+	              date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+	            console.log('ACTIVITY', result);
+            });	 
   		});
   	} else {
   		this.filmService.filmToLiked({film_id: this.film['id'], 
@@ -237,7 +262,14 @@ export class FilmComponent implements OnInit, OnDestroy {
   			this.liked = false;
   			this.likeIcon = faHeart;
   			console.log(result);
-
+  			this.filmService.createActivity(
+		        {user_id: this.currentUserId, 
+		          film_id: this.currentFilmId, 
+		          film_title: this.film['title'], 
+		          action: 'deleted like from', 
+		          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+		        console.log('ACTIVITY', result);
+	        });	 
   		});
   	}
   }
@@ -252,6 +284,14 @@ export class FilmComponent implements OnInit, OnDestroy {
   			this.later = true;
   			this.watchIcon = faClock2;
   		    console.log(JSON.stringify(result));
+      	    this.filmService.createActivity(
+		        {user_id: this.currentUserId, 
+		          film_id: this.currentFilmId, 
+		          film_title: this.film['title'], 
+		          action: 'added to watchlist', 
+		          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+		        console.log('ACTIVITY', result);
+	        });	 
   		});
   	} else {
 		this.filmService.filmToWatchList(
@@ -260,7 +300,15 @@ export class FilmComponent implements OnInit, OnDestroy {
   				 add: false}).subscribe(result => {
   			this.later = false;
   			this.watchIcon = faClock;
-  			console.log(JSON.stringify(result));	 	
+  			console.log(JSON.stringify(result));
+  			this.filmService.createActivity(
+		        {user_id: this.currentUserId, 
+		          film_id: this.currentFilmId, 
+		          film_title: this.film['title'], 
+		          action: 'deleted from watchlist', 
+		          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+		        console.log('ACTIVITY', result);
+	        });	 	
   		});
   	}
   }
@@ -274,6 +322,14 @@ export class FilmComponent implements OnInit, OnDestroy {
 	  				 date: date};
 	  	this.filmService.updateWatchedFilm(param).subscribe(result => {
 	  		console.log(result);
+	  		this.filmService.createActivity(
+	                {user_id: this.currentUserId, 
+	                  film_id: this.currentFilmId, 
+	                  film_title: this.film['title'], 
+	                  action: 'updated', 
+	                  date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+	                console.log('ACTIVITY', result);
+	              });
 	  	});
   	}
   	this.rating = num;
@@ -336,7 +392,7 @@ export class FilmComponent implements OnInit, OnDestroy {
   }
 
   saveFilmReview() {
-  	this.spinnerIsLoading = true;
+  	// this.spinnerIsLoading = true;
 
   	console.log(this.filmReview.value);
   	let review = {film_id: this.currentFilmId, user_id: +this.currentUserId, text: this.filmReview.value};
@@ -351,12 +407,12 @@ export class FilmComponent implements OnInit, OnDestroy {
 			  	    console.log('new result');
 			    });
 			    this.filmService.createActivity(
-	                {user_id: currentUserId, 
+	                {user_id: this.currentUserId, 
 	                  film_id: this.currentFilmId, 
-	                  film_title: title, 
-	                  action: 'review update', 
-	                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
-	                console.log(result);
+	                  film_title: this.film['title'], 
+	                  action: 'updated review of', 
+	                  date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+	                console.log('ACTIVITY', result);
 	              });
 			});
 	  	}
@@ -369,12 +425,12 @@ export class FilmComponent implements OnInit, OnDestroy {
 			  	    console.log('new result');
 			    });
 			    this.filmService.createActivity(
-	                {user_id: currentUserId, 
+	                {user_id: this.currentUserId, 
 	                  film_id: this.currentFilmId, 
-	                  film_title: title, 
-	                  action: 'review add', 
-	                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
-	                console.log(result);
+	                  film_title: this.film['title'], 
+	                  action: 'added review to', 
+	                  date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+	                console.log('ACTIVITY', result);
 	              });
 			});
 		}

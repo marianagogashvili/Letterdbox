@@ -1,1 +1,10 @@
-<p>activity works!</p>
+
+	<div *ngFor="let value of activity; index as i" style=" color: #678; ">
+		<p style="background-color: #E1F1FF;" [ngStyle]="((i+1)%2===0) && {'margin-left': '20px',
+						  'color': '#00e054'}">
+			You {{ value['action'] }} 
+			<a style="color: white; text-decoration: none" href="" [routerLink]="['/films',value['film_id']]">"{{ value['film_title'] }}"</a>
+		</p>
+	</div>
+
+<!-- [ngStyle]="watched && {'color':'#00e054'}" -->

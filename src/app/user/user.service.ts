@@ -16,5 +16,10 @@ export class UserService {
  		);
  	}
 
+ 	getUserActivity(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getUserActivity.php', JSON.stringify(param)
+			);
+	}
 
 }
