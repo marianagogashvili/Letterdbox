@@ -6,9 +6,10 @@
 	float: left; 
 	margin: 30px; 
 	border-radius: 50%; 
-	border: 1px solid grey;
+	border: 1px ;
+	background-image:  linear-gradient(to right, #E1F1FF , #00E054);
+	padding: 3px;
 }
-
 
 #nameDiv, #activityDiv {
 	padding: 30px; 

@@ -1,10 +1,19 @@
 
-	<div *ngFor="let value of activity; index as i" style=" color: #678; ">
-		<p style="background-color: #E1F1FF;" [ngStyle]="((i+1)%2===0) && {'margin-left': '20px',
-						  'color': '#00e054'}">
+	<div *ngFor="let value of activity; index as i" style=" color: #9ab;">
+		<div id="activityDiv" [ngStyle]="((i+1)%2===0) ? 
+						 {'margin-left': '50px',
+						  'background':  'linear-gradient(to left, #E1F1FF, #00E054)',
+						   'margin-left': '50px'
+						  } : {'margin-right': '50px' }">
+		<p id="activityP">
 			You {{ value['action'] }} 
-			<a style="color: white; text-decoration: none" href="" [routerLink]="['/films',value['film_id']]">"{{ value['film_title'] }}"</a>
+			<a id="activityA" [routerLink]="['/films',value['film_id']]" [ngStyle]="((i+1)%2!==0) ? {'color': '#00E054'} : {'color': 'white'}">"{{ value['film_title'] }}"</a>
+			<span id="dateSpan" *ngIf="value['date'] === yesterday">yesterday</span>
+			<span id="dateSpan" *ngIf="value['date'] !== yesterday">{{value['date'] | date}}</span>
 		</p>
+		
+
+		</div>
 	</div>
 
-<!-- [ngStyle]="watched && {'color':'#00e054'}" -->
+<!-- , [ngStyle]="watched && {'color':'#00e054'}" -->

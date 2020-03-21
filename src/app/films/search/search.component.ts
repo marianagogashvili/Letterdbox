@@ -314,7 +314,7 @@ export class SearchComponent implements OnInit, OnDestroy {
           {user_id: currentUserId, 
             film_id: id, 
             film_title: title, 
-            action: 'added like to', 
+            action: 'liked', 
             date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
           console.log(result);
         });

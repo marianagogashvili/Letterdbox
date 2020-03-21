@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-activity',
   templateUrl: './activity.component.html',
@@ -9,8 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 export class ActivityComponent implements OnInit {
  
   activity;
+  yesterday = this.datePipe.transform((new Date(Date.now() - 86400000)), 'yyyy-MM-dd').toString(); 
   constructor(private userService: UserService,
-  			  private route: ActivatedRoute) { }
+  			  private route: ActivatedRoute,
+  			  private datePipe: DatePipe) { }
 
   ngOnInit() {
   	let userId = JSON.parse(localStorage.getItem('userData')).id;
@@ -20,6 +24,8 @@ export class ActivityComponent implements OnInit {
 		this.activity = result;
 		console.log(result);
   	});
+
+  	console.log();
   	
   }
 
