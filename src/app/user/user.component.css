@@ -60,3 +60,9 @@ button: focus {
 .navbar-brand:hover {
 	background-color: grey;
 }
+
+@media only screen and (max-width: 770px) {
+	#activityDiv2 {
+		visibility: hidden;
+	}
+}

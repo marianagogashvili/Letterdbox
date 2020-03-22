@@ -1,0 +1,42 @@
+
+	<table style="width: 95%">
+		<thead>
+			<tr style="background-color: #14181c; color: #9ab; font-family: 'Titillium Web', sans-serif; text-transform: uppercase;">
+				<th style="width: 12%; padding-left: 10px">Month</th>
+				<th style="width: 10%">Day</th>
+				<th style="width: 40%">Film</th>
+				<th style="width: 10%">Released</th>
+				<th style="width: 40%">Rating</th>
+				<th style="width: 8%; padding-right: 10px">Like</th>
+			</tr>
+		</thead>
+		<tbody  *ngFor="let film of watchedFilms" >
+			<tr style="color: #9ab">
+				<td></td>
+				<td><span style="font-size: 25px;  padding-right: 3vw">{{ film['date'] | date:'dd' }}</span></td>
+				<td>
+					<div  style="display: inline; color: #9ab; font-family: 'Tinos', sans-serif;">
+						<img style="padding: 5px; border-radius: 9px;" width="50" height="75" src="{{ film['photo'] }}" alt="">
+						<span style="color: white; font-size: 25px; padding-left: 10vw">{{ film['title'] }}</span>
+					</div>
+					
+				</td>
+				<td style="font-size: 18px">{{ film['year'] }}</td>
+				<td>
+					<div style="display: inline; padding: 2px; font-size: 17px" *ngFor="let r of toArr(+film['rating'])">
+						<fa-icon style="color: #00e054;" [icon]="star"></fa-icon>
+					</div>
+					
+					 <!-- *ngIf="film['rating']" -->
+				</td>
+				<td>
+					<div style="font-size: 20px" *ngIf="film['liked']">
+						<fa-icon style="color: red;" [icon]="heart"></fa-icon>
+					</div>
+					
+				</td>
+
+			</tr>
+		</tbody>
+	</table>
+

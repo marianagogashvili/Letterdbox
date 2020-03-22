@@ -9,7 +9,7 @@
 			You {{ value['action'] }} 
 			<a id="activityA" [routerLink]="['/films',value['film_id']]" [ngStyle]="((i+1)%2!==0) ? {'color': '#00E054'} : {'color': 'white'}">"{{ value['film_title'] }}"</a>
 			<span id="dateSpan" *ngIf="value['date'] === yesterday">yesterday</span>
-			<span id="dateSpan" *ngIf="value['date'] !== yesterday">{{value['date'] | date}}</span>
+			<span id="dateSpan" *ngIf="value['date'] !== yesterday">{{ value['date'] | date:'dd MMM' }}</span>
 		</p>
 		
 

@@ -12,21 +12,24 @@ export class ActivityComponent implements OnInit {
  
   activity;
   yesterday = this.datePipe.transform((new Date(Date.now() - 86400000)), 'yyyy-MM-dd').toString(); 
+  weekAgo = this.datePipe.transform((new Date(Date.now() - 7*86400000)), 'yyyy-MM-dd').toString(); 
   constructor(private userService: UserService,
   			  private route: ActivatedRoute,
   			  private datePipe: DatePipe) { }
 
   ngOnInit() {
   	let userId = JSON.parse(localStorage.getItem('userData')).id;
-	console.log(userId);
+	// console.log(userId);
 
 	this.userService.getUserActivity({user_id: userId}).subscribe(result => {
 		this.activity = result;
 		console.log(result);
+		// Object.values(result).forEach(value => {
+		// 	console.log(value['date']);
+		// });
   	});
 
-  	console.log();
-  	
-  }
 
+  	// console.log((new Date(Date.now() - 86400000)) !== (new Date(Date.now() - 7*86400000)));
+  }
 }

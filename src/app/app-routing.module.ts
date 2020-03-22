@@ -7,12 +7,15 @@ import { FilmComponent } from './films/film/film.component';
 
 import { FilmsComponent } from './films/films.component';
 import { ActivityComponent } from './user/activity/activity.component';
+import { DiaryComponent } from './user/diary/diary.component';
+
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
 	{path: 'home', component: HomeComponent},
 	{path: 'user', component: UserComponent, children: [
 		{path: 'films', component: WatchedFilmsComponent},
-		{path: 'activity', component: ActivityComponent}
+		{path: 'activity', component: ActivityComponent},
+		{path: 'diary', component: DiaryComponent}
 	]},
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent}
