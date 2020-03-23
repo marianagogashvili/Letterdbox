@@ -1,0 +1,65 @@
+#titleSpan {
+	font-size: 25px; 
+	padding-left: 10vw
+}
+
+th {
+	font-family: 'Roboto', sans-serif;
+	height: 30px;
+}
+
+#filmCalendar {
+	font-size: 60px;
+	text-align: center;
+
+	/*background-size: 70%;*/
+}
+
+
+#titleA {
+	color: white;
+	text-decoration: none;
+}
+
+#titleA:hover {
+	color: #00A1E7;
+}
+
+#filmDateTd {
+	font-size: 18px; 
+	font-family: 'Roboto', sans-serif;
+}
+
+#filmDateSpan {
+	font-size: 25px;  
+	padding-right: 3vw; 
+	font-family: 'Roboto', sans-serif;
+}
+
+th {
+	padding: 3px;
+}
+
+
+tbody tr {
+	border-bottom: 1px solid rgba(153,170,187, .3);
+
+}
+@media only screen and (max-width: 600px) {
+	#titleSpan {
+		font-size: 15px;
+	}
+	#filmDateTd {
+		font-size: 15px; 
+		font-family: 'Roboto', sans-serif;
+	}
+	#filmDateSpan {
+		font-size: 15px;  
+	}
+}
+
+@media only screen and (min-width: 620px) and (max-width: 700px) {
+	#titleSpan {
+		font-size: 20px;
+	}
+}

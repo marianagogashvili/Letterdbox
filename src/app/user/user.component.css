@@ -2,6 +2,11 @@
 	padding-left: 50px;
 
 }*/
+#mainUserDiv {
+	padding-left: 100px; 
+	padding-right: 100px; 
+	position: absolute;
+}
 #userImg {
 	float: left; 
 	margin: 30px; 
@@ -63,6 +68,12 @@ button: focus {
 
 @media only screen and (max-width: 770px) {
 	#activityDiv2 {
-		visibility: hidden;
+		display: none;
 	}
+}
+@media only screen and (max-width: 500px) {
+	#mainUserDiv {
+		padding-left: 50px;
+	}
+
 }

@@ -12,16 +12,30 @@
 		</thead>
 		<tbody  *ngFor="let film of watchedFilms" >
 			<tr style="color: #9ab">
-				<td></td>
-				<td><span style="font-size: 25px;  padding-right: 3vw">{{ film['date'] | date:'dd' }}</span></td>
-				<td>
-					<div  style="display: inline; color: #9ab; font-family: 'Tinos', sans-serif;">
-						<img style="padding: 5px; border-radius: 9px;" width="50" height="75" src="{{ film['photo'] }}" alt="">
-						<span style="color: white; font-size: 25px; padding-left: 10vw">{{ film['title'] }}</span>
+				<!-- <td><div id="filmCalendar">{{ film['date'] | date:'MMM' }}</div></td> -->
+				<td >
+					<div id="filmCalendar">
+						<fa-layers>
+
+							<fa-icon  [icon]="calendar"></fa-icon>
+
+							<fa-layers-text id="dateIcon" style="font-size: 15px; color: black;font-family: 'Roboto', sans-serif;" content="{{ film['date'] | date:'MMM' }}" data-fa-transform="down-8 " ></fa-layers-text>
+							<fa-layers-text id="dateIcon" style="font-size: 15px; color: black;font-family: 'Roboto', sans-serif;" content="{{ film['date'] | date:'yyyy' }}" data-fa-transform="down-8 " ></fa-layers-text>
+							
+						</fa-layers>
+							
 					</div>
 					
 				</td>
-				<td style="font-size: 18px">{{ film['year'] }}</td>
+				<td><span id="filmDateSpan">{{ film['date'] | date:'dd' }}</span></td>
+				<td>
+					<div  style="display: inline; color: #9ab; font-family: 'Tinos', sans-serif;">
+						<img style="padding: 5px; border-radius: 9px;" width="50" height="75" src="{{ film['photo'] }}" alt="">
+						<span id="titleSpan"><a id="titleA" [routerLink]="['/films', film['id']]">{{ film['title'] }}</a></span>
+					</div>
+					
+				</td>
+				<td id="filmDateTd">{{ film['year'] }}</td>
 				<td>
 					<div style="display: inline; padding: 2px; font-size: 17px" *ngFor="let r of toArr(+film['rating'])">
 						<fa-icon style="color: #00e054;" [icon]="star"></fa-icon>
