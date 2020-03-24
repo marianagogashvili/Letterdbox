@@ -1,0 +1,10 @@
+#titleA {
+	color: white;
+	text-decoration: none;
+	 font-family: 'Tinos', sans-serif;
+	 font-size: 25px;
+}
+
+#titleA:hover {
+	color: #00A1E7;
+}

@@ -21,6 +21,7 @@ import { FilmComponent } from './films/film/film.component';
 import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.component';
 import { ActivityComponent } from './user/activity/activity.component';
 import { DiaryComponent } from './user/diary/diary.component';
+import { ReviewsComponent } from './user/reviews/reviews.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -36,7 +37,8 @@ import { DiaryComponent } from './user/diary/diary.component';
     FilmComponent,
     LoadingSpinnerComponent,
     ActivityComponent,
-    DiaryComponent,     
+    DiaryComponent,
+    ReviewsComponent,     
   ],
   imports: [
     BrowserModule,

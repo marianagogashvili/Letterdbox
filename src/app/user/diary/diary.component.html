@@ -19,9 +19,8 @@
 
 							<fa-icon  [icon]="calendar"></fa-icon>
 
-							<fa-layers-text id="dateIcon" style="font-size: 15px; color: black;font-family: 'Roboto', sans-serif;" content="{{ film['date'] | date:'MMM' }}" data-fa-transform="down-8 " ></fa-layers-text>
-							<fa-layers-text id="dateIcon" style="font-size: 15px; color: black;font-family: 'Roboto', sans-serif;" content="{{ film['date'] | date:'yyyy' }}" data-fa-transform="down-8 " ></fa-layers-text>
-							
+							<fa-layers-text transform="down-1" id="dateIcon" style="font-size: 17px; color: black;font-family: 'Roboto', sans-serif; margin-top: 20px " content="  {{ film['date'] | date:'MMM' }}" ></fa-layers-text>
+							<fa-layers-text transform="down-25"  id="dateIcon" style="font-size: 12px; color: black;font-family: 'Roboto', sans-serif; margin-top: 20px " content="  {{ film['date'] | date:'yyyy' }}" ></fa-layers-text>
 						</fa-layers>
 							
 					</div>

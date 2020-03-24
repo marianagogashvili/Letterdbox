@@ -22,5 +22,11 @@ export class UserService {
 			);
 	}
 
+	getUserReviews(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getUserReviews.php', JSON.stringify(param)
+			);
+	}
+
 
 }

@@ -60,6 +60,15 @@ class Review {
 		}
 	}
 
+	public static function getUserReviews($conn, $user_id) {
+		$sql = "SELECT * FROM review LEFT JOIN film ON review.film_id = film.id LEFT JOIN watched_films ON review.film_id = watched_films.film_id AND watched_films.user_id = review.user_id WhERE review.user_id = :user_id ORDER BY watched_films.date DESC";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return $stmt->fetchAll();
+		}
+	}
+
 }
 
 ?>

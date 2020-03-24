@@ -1,0 +1,16 @@
+<div *ngFor="let review of reviews">
+	
+	<div style="display: inline-block; padding: 15px;">
+		<img style="margin-bottom: 15px; border-radius: 3px" width="100" height="150" src="{{ review['photo'] }}" alt="">
+		<div style="display: inline-block;    vertical-align:top; margin-left: 10px;">
+			<span id="titleSpan" [routerLink]="['/films', review['film_id']]"><a id="titleA" >{{ review['title'] }}</a></span>
+			<span style="margin-left: 7px; color: #9ab; font-family: 'Roboto'; font-size: 20px">{{ review['year']}}</span>
+			<div  style="color: #9ab; font-size: 15px;">
+				{{ review['rating'] }}
+				<span>{{ review['date'] | date: 'dd MMM, yyyy' }}</span>
+			</div>
+			<div style="color: #9ab; font-size: 15px;">{{ review['text'] }}</div>
+		</div>
+			
+	</div>
+</div>
