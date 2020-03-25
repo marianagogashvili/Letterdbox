@@ -8,3 +8,14 @@
 #titleA:hover {
 	color: #00A1E7;
 }
+
+#filmImage {
+	margin-bottom: 15px; 
+	border-radius: 3px
+}
+
+@media only screen and (max-width: 770px) {
+	#filmImage {
+		margin-left: 26vw;
+	}
+} 

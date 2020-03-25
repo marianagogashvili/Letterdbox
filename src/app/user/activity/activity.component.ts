@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 export class ActivityComponent implements OnInit {
  
   activity;
+  today = this.datePipe.transform(new Date(Date.now()), 'yyyy-MM-dd').toString(); 
   yesterday = this.datePipe.transform((new Date(Date.now() - 86400000)), 'yyyy-MM-dd').toString(); 
   weekAgo = this.datePipe.transform((new Date(Date.now() - 7*86400000)), 'yyyy-MM-dd').toString(); 
   constructor(private userService: UserService,

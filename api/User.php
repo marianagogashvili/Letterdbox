@@ -104,6 +104,15 @@ class User {
 			return $stmt->fetch();
 		}
 	}
+
+	public static function getWatchlist($conn, $user_id) {
+		$sql = "SELECT watched_films.*, film.*  FROM watchlist LEFT JOIN watched_films ON watchlist.film_id = watched_films.film_id AND watchlist.user_id = watched_films.user_id LEFT JOIN film ON watchlist.film_id = film.id WHERE watchlist.user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
 	
 }
 

@@ -22,6 +22,9 @@ import { LoadingSpinnerComponent } from './loading-spinner/loading-spinner.compo
 import { ActivityComponent } from './user/activity/activity.component';
 import { DiaryComponent } from './user/diary/diary.component';
 import { ReviewsComponent } from './user/reviews/reviews.component';
+import { WatchlistComponent } from './user/watchlist/watchlist.component';
+import { LikedComponent } from './user/liked/liked.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -38,7 +41,10 @@ import { ReviewsComponent } from './user/reviews/reviews.component';
     LoadingSpinnerComponent,
     ActivityComponent,
     DiaryComponent,
-    ReviewsComponent,     
+    ReviewsComponent,
+    WatchlistComponent,
+    LikedComponent,   
+
   ],
   imports: [
     BrowserModule,

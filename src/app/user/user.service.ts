@@ -28,5 +28,9 @@ export class UserService {
 			);
 	}
 
-
+	getWatchlist(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getWatchlist.php', JSON.stringify(param)
+			);
+	}
 }
