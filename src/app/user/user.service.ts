@@ -33,4 +33,11 @@ export class UserService {
 			'http://localhost:8888/getWatchlist.php', JSON.stringify(param)
 			);
 	}
+
+
+	getUserLikes(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getUserLikes.php', JSON.stringify(param)
+			);
+	}
 }

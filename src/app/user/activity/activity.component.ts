@@ -24,6 +24,7 @@ export class ActivityComponent implements OnInit {
 
 	this.userService.getUserActivity({user_id: userId}).subscribe(result => {
 		this.activity = result;
+		// this.activity.reverse();
 		console.log(result);
 		// Object.values(result).forEach(value => {
 		// 	console.log(value['date']);

@@ -106,7 +106,16 @@ class User {
 	}
 
 	public static function getWatchlist($conn, $user_id) {
-		$sql = "SELECT watched_films.*, film.*  FROM watchlist LEFT JOIN watched_films ON watchlist.film_id = watched_films.film_id AND watchlist.user_id = watched_films.user_id LEFT JOIN film ON watchlist.film_id = film.id WHERE watchlist.user_id = :user_id";
+		$sql = "SELECT watched_films.*, film.*  FROM watchlist LEFT JOIN watched_films ON watchlist.film_id = watched_films.film_id AND watchlist.user_id = watched_films.user_id LEFT JOIN film ON watchlist.film_id = film.id WHERE watchlist.user_id = :user_id ORDER BY film.id DESC";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
+	public static function getUserLikes($conn, $user_id) {
+		$sql = "SELECT watched_films.*, film.* FROM liked_films LEFT JOIN watched_films ON liked_films.film_id = watched_films.film_id AND liked_films.user_id = watched_films.user_id LEFT JOIN film ON liked_films.film_id = film.id WHERE liked_films.user_id = :user_id ORDER BY film.id DESC";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {

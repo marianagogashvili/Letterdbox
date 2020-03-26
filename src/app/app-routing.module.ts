@@ -10,7 +10,7 @@ import { ActivityComponent } from './user/activity/activity.component';
 import { DiaryComponent } from './user/diary/diary.component';
 import { ReviewsComponent } from './user/reviews/reviews.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
-
+import { LikedComponent } from './user/liked/liked.component';
 
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -21,7 +21,7 @@ const appRoutes: Routes = [
 		{path: 'diary', component: DiaryComponent},
 		{path: 'reviews', component: ReviewsComponent},
 		{path: 'watchlist', component: WatchlistComponent},
-
+		{path: 'liked', component: LikedComponent},
 	]},
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent}

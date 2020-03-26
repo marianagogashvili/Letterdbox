@@ -13,10 +13,12 @@ import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { faClock as faClock2 } from '@fortawesome/free-solid-svg-icons';
 
 import { BehaviorSubject } from 'rxjs';
+import { DatePipe } from '@angular/common';
+
 @Component({
   selector: 'app-watchlist',
   templateUrl: './watchlist.component.html',
-  styleUrls: ['./watchlist.component.css']
+  styleUrls: ['../watched-films/watched-films.component.css']
 })
 export class WatchlistComponent implements OnInit, OnDestroy {
   watchlistFilms;
@@ -34,7 +36,8 @@ export class WatchlistComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private filmService: FilmService,
-              private router: Router) { }
+              private router: Router,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.subscription = this.filmSubject.subscribe(subj => {
@@ -56,9 +59,6 @@ export class WatchlistComponent implements OnInit, OnDestroy {
         this.filmService.findLike({user_id: this.currentUserId, film_id: film['id']}).subscribe(like => {
           film['liked'] = like;
         });
-        this.filmService.findFromWatchlist({user_id: this.currentUserId, film_id: film['id']}).subscribe(watchlist => {
-          film['watchlisted'] = watchlist;
-        });
       });
   }
 
@@ -66,36 +66,85 @@ export class WatchlistComponent implements OnInit, OnDestroy {
     this.router.navigate(['/films', id], { replaceUrl: true });
   }
 
-  filmToWatched(id, add) {
-    this.filmService.deleteFilmFromWatched({user_id: this.currentUserId, film_id: id}).subscribe(result => {
-        this.userService.getWatchlist({user_id: this.currentUserId}).subscribe(films => {
-          this.filmSubject.next(films);
-        });
-    });
+  filmToWatched(id, add, title) {
+  	let date = (this.datePipe.transform(new Date(), 'yyyy-MM-dd')).toString();
+  	if (add === false) {
+  		this.filmService.deleteFilmFromWatched({user_id: this.currentUserId, film_id: id, date: date}).subscribe(result => {
+	        this.userService.getWatchlist({user_id: this.currentUserId}).subscribe(films => {
+	          this.filmSubject.next(films);
+	        });
+	        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'deleted from watched film', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
+	    });
+  	} else if(add === true) {
+  		this.filmService.addFilmToWatched({user_id: this.currentUserId, film_id: id, date: date}).subscribe(result => {
+	        this.userService.getWatchlist({user_id: this.currentUserId}).subscribe(films => {
+	          this.filmSubject.next(films);
+	        });
+	        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'watched', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
+	    });
+  	}
+    
   }
 
-  filmToLiked(id, add){
+  filmToLiked(id, add, title){
     if (add === true) {
       this.filmService.filmToLiked({film_id: id, user_id: this.currentUserId, add: true}).subscribe(result => {
         this.userService.getWatchlist({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
+        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'liked', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
       });
     } else if (add === false) {
       this.filmService.filmToLiked({film_id: id, user_id: this.currentUserId, add: false}).subscribe(result => {
         this.userService.getWatchlist({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
-
+        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'deleted like from', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
       });
     }
   }
 
-  deleteFromWatchlist(id){
+  deleteFromWatchlist(id, title){
       this.filmService.filmToWatchList({film_id: id, user_id: this.currentUserId, add: false}).subscribe(result => {
         this.userService.getWatchlist({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
+         this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'deleted from watchlist', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
       }); 
   }
 

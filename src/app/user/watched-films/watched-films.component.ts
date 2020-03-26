@@ -11,6 +11,8 @@ import { faHeart as faHeart2 } from '@fortawesome/free-solid-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
 import { faClock as faClock2 } from '@fortawesome/free-solid-svg-icons';
 
+import { DatePipe } from '@angular/common';
+
 import { BehaviorSubject } from 'rxjs';
 @Component({
   selector: 'app-watched-films',
@@ -32,7 +34,8 @@ export class WatchedFilmsComponent implements OnInit, OnDestroy {
 
   constructor(private userService: UserService,
               private filmService: FilmService,
-              private router: Router) { }
+              private router: Router,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
     this.subscription = this.filmSubject.subscribe(subj => {
@@ -63,43 +66,83 @@ export class WatchedFilmsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/films', id], { replaceUrl: true });
   }
 
-  deleteFromWatched(id) {
+  deleteFromWatched(id, title) {
     this.filmService.deleteFilmFromWatched({user_id: this.currentUserId, film_id: id}).subscribe(result => {
         this.userService.getWatchedFilms({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
+        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'deleted from watched film', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
     });
   }
 
-  filmToLiked(id, add){
+  filmToLiked(id, add, title){
     if (add === true) {
       this.filmService.filmToLiked({film_id: id, user_id: this.currentUserId, add: true}).subscribe(result => {
         this.userService.getWatchedFilms({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
+        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'liked', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
       });
     } else if (add === false) {
       this.filmService.filmToLiked({film_id: id, user_id: this.currentUserId, add: false}).subscribe(result => {
         this.userService.getWatchedFilms({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
-
+        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'deleted like from', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
       });
     }
   }
 
-  filmToWatchlist(id, add){
+  filmToWatchlist(id, add, title){
     if (add === true) {
       this.filmService.filmToWatchList({film_id: id, user_id: this.currentUserId, add: true}).subscribe(result => {
         this.userService.getWatchedFilms({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
+        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'added to watchlist', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
       });  
     } else if (add === false) {
       this.filmService.filmToWatchList({film_id: id, user_id: this.currentUserId, add: false}).subscribe(result => {
         this.userService.getWatchedFilms({user_id: this.currentUserId}).subscribe(films => {
           this.filmSubject.next(films);
         });
+
+        this.filmService.createActivity(
+              {user_id: this.currentUserId, 
+                film_id: id, 
+                film_title: title, 
+                action: 'deleted from watchlist', 
+                date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+              console.log('ACTIVITY', result);
+            });
       }); 
     }
   }
