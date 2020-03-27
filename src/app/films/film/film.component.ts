@@ -207,7 +207,7 @@ export class FilmComponent implements OnInit, OnDestroy {
              	 film_id: this.currentFilmId, 
              	 film_title: this.film['title'], 
              	 action: 'watched', 
-             	 date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+             	 date: date}).subscribe(result => {
             	console.log('ACTIVITY', result);
             });	 
   		});
@@ -221,7 +221,7 @@ export class FilmComponent implements OnInit, OnDestroy {
              	 film_id: this.currentFilmId, 
              	 film_title: this.film['title'], 
              	 action: 'watched', 
-             	 date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+             	 date: date}).subscribe(result => {
             	console.log('deleted from watched film', result);
             });	
   		});
@@ -251,7 +251,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 	              film_id: this.currentFilmId, 
 	              film_title: this.film['title'], 
 	              action: 'liked', 
-	              date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+	              date: date}).subscribe(result => {
 	            console.log('ACTIVITY', result);
             });	 
   		});
@@ -267,7 +267,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 		          film_id: this.currentFilmId, 
 		          film_title: this.film['title'], 
 		          action: 'deleted like from', 
-		          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+		          date: date}).subscribe(result => {
 		        console.log('ACTIVITY', result);
 	        });	 
   		});
@@ -276,6 +276,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 
 
   toLater() {
+    let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString();
   	if (this.later === false) {
   		this.filmService.filmToWatchList(
   				{film_id: this.film['id'], 
@@ -289,7 +290,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 		          film_id: this.currentFilmId, 
 		          film_title: this.film['title'], 
 		          action: 'added to watchlist', 
-		          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+		          date: date}).subscribe(result => {
 		        console.log('ACTIVITY', result);
 	        });	 
   		});
@@ -306,7 +307,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 		          film_id: this.currentFilmId, 
 		          film_title: this.film['title'], 
 		          action: 'deleted from watchlist', 
-		          date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+		          date: date}).subscribe(result => {
 		        console.log('ACTIVITY', result);
 	        });	 	
   		});
@@ -327,7 +328,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 	                  film_id: this.currentFilmId, 
 	                  film_title: this.film['title'], 
 	                  action: 'updated', 
-	                  date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+	                  date: date}).subscribe(result => {
 	                console.log('ACTIVITY', result);
 	              });
 	  	});
@@ -418,7 +419,8 @@ export class FilmComponent implements OnInit, OnDestroy {
 	  	}
 	} else {
 		if (this.filmReview.value !== '') {
-			this.filmService.addReviewToFilm(review).subscribe(result => {
+			let date = (this.datePipe.transform(new Date(), 'yyyy-MM-dd')).toString();
+			this.filmService.addReviewToFilm({film_id: this.currentFilmId, user_id: +this.currentUserId, text: this.filmReview.value, date: date}).subscribe(result => {
 				console.log('added');
 				this.filmService.getAllReviewsOfFilm({film_id: this.currentFilmId}).subscribe(result => {
 			  	    this.reviewSubject.next(result);
@@ -429,7 +431,7 @@ export class FilmComponent implements OnInit, OnDestroy {
 	                  film_id: this.currentFilmId, 
 	                  film_title: this.film['title'], 
 	                  action: 'added review to', 
-	                  date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+	                  date: date}).subscribe(result => {
 	                console.log('ACTIVITY', result);
 	              });
 			});

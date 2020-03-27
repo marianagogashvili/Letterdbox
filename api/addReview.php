@@ -20,6 +20,7 @@ $review->film_id = $value['film_id'];
 // error_log($value['film_id']);
 
 $review->text = $value['text'];
+$review->date = $value['date'];
 // error_log($review);
 if($review->createReview($conn)){
 	echo(json_encode("added review to film"));

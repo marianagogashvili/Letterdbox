@@ -1,4 +1,4 @@
-.filmColumn {
+/*.filmColumn {
   float: left;
   width: 33.33%;
   padding: 35px;
@@ -25,4 +25,84 @@
 .filmColumn:hover .tooltip1 {
 	transition: opacity 1s;
 	opacity: 1;
+}*/
+.filmImage {
+  border-radius: 8px; 
+  width: 400px;
+  height: 600px;
+}
+
+.filmImage:hover {
+	border: 1px solid #00e054;
+}
+
+ul {
+	
+	/*padding-:5vw;*/
+	width: 100%;
+	/*margin:0;*/
+}
+li {
+	position:relative; 
+	float:left; 
+	display:inline;
+	list-style-type:none;
+	margin-bottom:10px; 
+	margin-left: 5px;
+	/*margin-right: 5px;*/
+
+}
+li .desc {
+	display: none;
+}
+li .desc2 {
+	display: none;
+}
+/*:hover*/
+li:hover .desc {
+	display: block;
+	position:absolute; /* Important */
+	width:90%; 
+	bottom:10px; 
+	text-align: center;
+	background-color:rgba(0, 0, 0, 0.5);
+	margin-left: 10px;
+	margin-bottom: 7px;
+	border-radius: 2px;
+	
+}
+li:hover .desc2 {
+	display: block;
+	position:absolute; /* Important */
+	width:90%; 
+	top:10px; 
+	font-size: 25px;
+	color: white;
+	font-family: 'Roboto', sans-serif;
+	text-align: center;
+	background-color:rgba(0, 0, 0, 0.5);
+	margin-left: 10px;
+	margin-bottom: 7px;
+	border-radius: 2px;
+	
+}
+@media only screen and (min-width: 501px) and (max-width: 1000px) {
+	.filmImage {
+	  border-radius: 8px; 
+	  width: 300px;
+	  height: 450px;
+	}
+
+}
+
+@media only screen and (max-width: 630px) {
+	li {
+		margin-left: 2px;
+	}
+	.filmImage {
+	  border-radius: 8px; 
+	  width: 200px;
+	  height: 300px;
+	}
+
 }

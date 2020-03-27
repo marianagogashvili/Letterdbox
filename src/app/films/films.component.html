@@ -48,7 +48,7 @@
   </nav>
 </div>
 	
-<div *ngFor="let film of films; " style="width: 100%; table-layout: fixed; font-size: 2vw;"> 
+<!-- <div *ngFor="let film of films; " style="width: 100%; table-layout: fixed; font-size: 2vw;"> 
     <div class="filmColumn" >
         <p class="tooltip1">{{film['film']['title']}}</p>
         <img  class="filmImage" src="{{film['film']['photo']}}" alt="Snow" style="width:100%" (click)="goToFilm(film['film']['id'])">
@@ -67,4 +67,38 @@
           </div>
         </span>
     </div>
-  </div>
+  </div> -->
+
+<ul *ngFor="let film of films; " style="">
+  <li style="display: inline; margin-right: 17px; overflow-x: hidden; "><!-- 
+    <img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="100" height="150" alt="" (click)="toFilm(film['id'])"> -->
+    <div class="desc2">
+      {{film['title']}}
+    </div>
+    <img  class="filmImage" src="{{film['photo']}}" alt="Snow"  (click)="goToFilm(film['id'])" >
+    <div class="desc">
+      <div >
+          <div style="display: inline; font-size: 20px; padding-right: 10px; color: white;" *ngIf="!film['watched']">
+            <fa-icon (click)="addToWatched(film['id'])" [icon]="eyeIcon"></fa-icon> 
+          </div>
+          <div style="display: inline; font-size: 20px; padding-right: 10px; color: green;" *ngIf="film['watched']">
+            <fa-icon (click)="deleteFromWatched(film['id'])" [icon]="eyeIcon"></fa-icon> 
+          </div>
+          <div  style="display: inline; font-size: 20px; color: white; padding-right: 10px;" *ngIf="!film['liked']">
+            <fa-icon (click)="addToLiked(film['id'])" [icon]="heartIcon"></fa-icon>
+          </div>
+          <div  style="display: inline; font-size: 20px; color: red; padding-right: 10px;" *ngIf="film['liked']">
+            <fa-icon (click)="deleteFromLiked(film['id'])" [icon]="heartIcon"></fa-icon>
+          </div>
+          <div  style="display: inline; font-size: 20px; color: white;" *ngIf="!film['watchlist']">
+            <fa-icon (click)="addToWatchlist(film['id'])" [icon]="clockIcon"></fa-icon>
+          </div>
+          <div  style="display: inline; font-size: 20px; color: #00A1E7;" *ngIf="film['watchlist']">
+            <fa-icon (click)="deleteFromWatchlist(film['id'])" [icon]="clockIcon"></fa-icon>
+          </div>
+      </div>
+      
+    </div>
+  </li>
+  
+</ul>

@@ -217,20 +217,20 @@ export class SearchComponent implements OnInit, OnDestroy {
                  film_id: id, 
                  film_title: title, 
                  action: 'updated review of', 
-                 date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                 date: this.datepipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
             });
           }
         } else {
-            this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, text: this.filmReview.value}).subscribe(result => {
+            this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, text: this.filmReview.value, date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
               console.log(result);
               this.filmService.createActivity(
                 {user_id: currentUserId, 
                   film_id: id, 
                   film_title: title, 
                   action: 'added review to', 
-                  date: this.datepipe.transform(this.date, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                  date: this.datepipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
             });
@@ -247,7 +247,7 @@ export class SearchComponent implements OnInit, OnDestroy {
                   film_id: id, 
                   film_title: title, 
                   action: 'updated', 
-                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                  date: this.datepipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
   				 });
@@ -260,21 +260,21 @@ export class SearchComponent implements OnInit, OnDestroy {
                   film_id: id, 
                   film_title: title, 
                   action: 'watched', 
-                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                  date: this.datepipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
 	  	});
 
 	  	if(this.filmReview.value !== '') {
         console.log(this.filmReview.value);
-	  		this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, text: this.filmReview.value}).subscribe(result => {
+	  		this.filmService.addReviewToFilm({user_id: currentUserId, film_id: id, text: this.filmReview.value, date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
 	  			console.log(result);
           this.filmService.createActivity(
                 {user_id: currentUserId, 
                   film_id: id, 
                   film_title: title, 
                   action: 'added review to', 
-                  date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+                  date: this.datepipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
                 console.log(result);
               });
 	  		});
@@ -300,7 +300,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             film_id: id, 
             film_title: title, 
             action: 'deleted like from', 
-            date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+            date: this.datepipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
           console.log(result);
         });
       });
@@ -315,7 +315,7 @@ export class SearchComponent implements OnInit, OnDestroy {
             film_id: id, 
             film_title: title, 
             action: 'liked', 
-            date: this.datepipe.transform(dating, 'yyyy-MM-dd').toString()}).subscribe(result => {
+            date: this.datepipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
           console.log(result);
         });
       });

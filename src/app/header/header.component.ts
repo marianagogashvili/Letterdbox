@@ -85,10 +85,6 @@ export class HeaderComponent implements OnInit {
     this.searchFilm = false;
   }
 
-  // switchToAccount() {
-  //   this.currentLink = 'account';
-  // }
-
   // ngOnDestroy() {
   //   this.subscription.unsubscribe();
   // }

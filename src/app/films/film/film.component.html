@@ -57,46 +57,8 @@
 	<div style="padding-left: 10px" *ngFor="let review of filmReviews">
 		<div style="width: 40vw; height: 1px; background-color: grey; margin-top: 20px;margin-bottom: 20px;"></div>
 		<p style="font-style: italic;">Review by 
-			<span style="font-weight: 900; font-size: 17px; color: white">{{ review['username'] }}</span></p>
+			<span style="font-weight: 900; font-size: 17px; color: white">{{ review['username'] }}</span> added on <span style="font-weight: 900; font-size: 12px; color: white">{{ review['date'] }}</span></p>
 		<p id="review">{{ review['text'] }}</p>
 	</div>
 </div>
 
-
-<!-- 
-<app-header></app-header>
-<div style="padding-top: 30px; padding-left: 10vw;   padding-right: 10vw; width: 100%; display: inline-block;">
-	<img style=" display: inline-block;border-radius: 5px; position: fixed;" src="{{ film[4] }}" alt="" width="250" height="375" >
-	<div style=" display: inline-block; font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin: 40px; top: 0; position: relative;">
-		<h1 style="color: white; font-family: 'Libre Baskerville';">{{ film[1] }}</h1>
-		<p style="color: #9ab;">{{ film[2] }}</p>
-		<p style="color: #9ab; width: 40vw; height: 24vw;  overflow:scroll; ">{{ film[3] }}</p>
-	</div>
-</div>
-
-		<div style="display: inline-block;  font-family: 'Titillium Web', sans-serif;  font-size: 20px; margin-left: 40px; background-color: #456;">
-			<div style="text-align: center; ">
-				<fa-icon id="icon" style="" [icon]="eyeIcon"></fa-icon>
-				<fa-icon id="icon" [icon]="likeIcon"></fa-icon>
-				<fa-icon id="icon" [icon]="watchIcon"></fa-icon>
-			</div>
-
-			<div style="text-align: center">
-				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-				<fa-icon id="icon2" [icon]="starIcon"></fa-icon>
-			</div>
-			<div style="text-align: center">
-				<a href="" style="color: #9ab;">Add a review</a>
-				
-			</div>
-			<div style="text-align: center">
-				<a href="" style="color: #9ab;">Add to a list</a>
-				
-			</div>
- -->
-		<!-- </div> -->
-	<!-- </div> -->
-<!-- </div> -->
