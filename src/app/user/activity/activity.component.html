@@ -1,4 +1,4 @@
-
+	<div class="clearBtn"><a (click)="clearActivity()" id="clearBtn">Clear all</a></div>
 	<div *ngFor="let value of activity; index as i" style=" color: #9ab;">
 		<div id="activityDiv" [ngStyle]="((i+1)%2===0) ? 
 						 {'margin-left': '50px',

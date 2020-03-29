@@ -11,6 +11,8 @@ import { DatePipe } from '@angular/common';
 export class ActivityComponent implements OnInit {
  
   activity;
+  userId = JSON.parse(localStorage.getItem('userData')).id;
+
   today = this.datePipe.transform(new Date(Date.now()), 'yyyy-MM-dd').toString(); 
   yesterday = this.datePipe.transform((new Date(Date.now() - 86400000)), 'yyyy-MM-dd').toString(); 
   weekAgo = this.datePipe.transform((new Date(Date.now() - 7*86400000)), 'yyyy-MM-dd').toString(); 
@@ -19,10 +21,8 @@ export class ActivityComponent implements OnInit {
   			  private datePipe: DatePipe) { }
 
   ngOnInit() {
-  	let userId = JSON.parse(localStorage.getItem('userData')).id;
-	// console.log(userId);
 
-	this.userService.getUserActivity({user_id: userId}).subscribe(result => {
+	this.userService.getUserActivity({user_id: this.userId}).subscribe(result => {
 		this.activity = result;
 		// this.activity.reverse();
 		console.log(result);
@@ -30,8 +30,11 @@ export class ActivityComponent implements OnInit {
 		// 	console.log(value['date']);
 		// });
   	});
-
-
-  	// console.log((new Date(Date.now() - 86400000)) !== (new Date(Date.now() - 7*86400000)));
+  }
+  clearActivity() {
+    this.userService.clearActivity({user_id: this.userId}).subscribe(result => {
+      console.log(result);
+      this.activity = null;
+    });
   }
 }

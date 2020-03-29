@@ -35,6 +35,15 @@ class Activity {
 			return $stmt->fetchAll();
 		}
 	}
+
+	public static function clearActivity($conn, $user_id) {
+		$sql = "DELETE FROM activity WHERE user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return true;
+		}
+	}
 }
 
 ?>

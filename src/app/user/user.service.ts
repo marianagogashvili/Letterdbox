@@ -22,6 +22,12 @@ export class UserService {
 			);
 	}
 
+	clearActivity(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/clearActivity.php', JSON.stringify(param)
+			);
+	}
+
 	getUserReviews(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/getUserReviews.php', JSON.stringify(param)
