@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faHeart } from '@fortawesome/free-regular-svg-icons';
 import { faClock } from '@fortawesome/free-regular-svg-icons';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 import { FilmService } from './film.service';
 import { DatePipe } from '@angular/common';
@@ -19,6 +20,7 @@ export class FilmsComponent implements OnInit, OnDestroy {
   eyeIcon = faEye;
   heartIcon = faHeart;
   clockIcon = faClock;
+  starIcon = faStar;
 
   subscription;
   constructor(private filmService: FilmService,
@@ -31,10 +33,18 @@ export class FilmsComponent implements OnInit, OnDestroy {
 
     this.subscription = this.route.queryParams.subscribe(params => {
       this.films = [];
-      // console.log(params['year']);
-      let param = {year: params['year'], user_id: this.currentUserId};
+      console.log(params);
+      let param;
+      if (params['year']) {
+        param = {year: params['year'], user_id: this.currentUserId};
+      } else if(params['rating']) {
+        param = {rating: params['rating'], user_id: this.currentUserId};        
+      } else {
+        param = {}; 
+      }
       this.filmService.sortBy(param).subscribe(r => {
         this.films = r;
+        console.log(r);
         Object.values(this.films).forEach(value => {
           // console.log(value);
           // if (value['film_id']) {
