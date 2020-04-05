@@ -22,6 +22,12 @@ export class UserService {
 			);
 	}
 
+	getShortUserActivity(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getShortUserActivity.php', JSON.stringify(param)
+			);
+	}
+
 	clearActivity(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/clearActivity.php', JSON.stringify(param)

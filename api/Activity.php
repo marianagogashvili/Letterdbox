@@ -27,6 +27,15 @@ class Activity {
 		}
 	}
 
+	public static function getShortUserActivity($conn, $user_id) {
+		$sql = "SELECT DISTINCT watched_films.*, film.*, activity.date FROM activity LEFT JOIN watched_films ON activity.film_id = watched_films.film_id AND activity.user_id = watched_films.user_id LEFT JOIN film ON activity.film_id = film.id WHERE activity.user_id = :user_id ORDER BY activity.date";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
 	public static function getUserActivity($conn, $user_id) {
 		$sql = "SELECT * FROM activity WHERE user_id = :user_id ORDER BY date DESC";
 		$stmt = $conn->prepare($sql);

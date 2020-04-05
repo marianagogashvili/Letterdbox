@@ -86,13 +86,15 @@ li:hover .desc2 {
 	border-radius: 2px;
 	
 }
-@media only screen and (min-width: 501px) and (max-width: 1000px) {
+@media only screen and (min-width: 500px) and (max-width: 1000px) {
 	.filmImage {
 	  border-radius: 8px; 
 	  width: 300px;
 	  height: 450px;
 	}
-
+	#filmsUl {
+		padding-left: 7vw;
+	}
 }
 
 @media only screen and (max-width: 630px) {
@@ -103,6 +105,10 @@ li:hover .desc2 {
 	  border-radius: 8px; 
 	  width: 200px;
 	  height: 300px;
+	}
+
+	#filmsUl {
+		padding-left: 7vw;
 	}
 
 }

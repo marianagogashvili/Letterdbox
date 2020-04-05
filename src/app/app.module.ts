@@ -24,6 +24,7 @@ import { DiaryComponent } from './user/diary/diary.component';
 import { ReviewsComponent } from './user/reviews/reviews.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { LikedComponent } from './user/liked/liked.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { LikedComponent } from './user/liked/liked.component';
     DiaryComponent,
     ReviewsComponent,
     WatchlistComponent,
-    LikedComponent,   
+    LikedComponent,
+    ProfileComponent,   
 
   ],
   imports: [

@@ -21,14 +21,9 @@ export class ActivityComponent implements OnInit {
   			  private datePipe: DatePipe) { }
 
   ngOnInit() {
-
-	this.userService.getUserActivity({user_id: this.userId}).subscribe(result => {
-		this.activity = result;
-		// this.activity.reverse();
-		console.log(result);
-		// Object.values(result).forEach(value => {
-		// 	console.log(value['date']);
-		// });
+	  this.userService.getUserActivity({user_id: this.userId}).subscribe(result => {
+  		this.activity = result;
+  		console.log(result);
   	});
   }
   clearActivity() {

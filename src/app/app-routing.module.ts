@@ -11,6 +11,7 @@ import { DiaryComponent } from './user/diary/diary.component';
 import { ReviewsComponent } from './user/reviews/reviews.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { LikedComponent } from './user/liked/liked.component';
+import { ProfileComponent } from './user/profile/profile.component';
 
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -22,6 +23,7 @@ const appRoutes: Routes = [
 		{path: 'reviews', component: ReviewsComponent},
 		{path: 'watchlist', component: WatchlistComponent},
 		{path: 'liked', component: LikedComponent},
+		{path: 'profile', component: ProfileComponent}
 	]},
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent}

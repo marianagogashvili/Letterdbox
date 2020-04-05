@@ -40,7 +40,7 @@ export class FilmsComponent implements OnInit, OnDestroy {
       } else if(params['rating']) {
         param = {rating: params['rating'], user_id: this.currentUserId};        
       } else {
-        param = {}; 
+        param = {user_id: this.currentUserId}; 
       }
       this.filmService.sortBy(param).subscribe(r => {
         this.films = r;

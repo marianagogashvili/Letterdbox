@@ -5,7 +5,7 @@
     <div class="container-fluid" style="background-color: #151b22"> 
     <div  style="">
       <div  class="navbar-header" >
-        <a id="navText2" class="navbar-brand" style="font-size: 14px;" href="#">BROWSE BY</a>
+        <a id="navText2" class="navbar-brand" style="font-size: 14px;" [routerLink]="">BROWSE BY</a>
       </div>
       <ul class="nav navbar-nav">
         <li  class="dropdown" appDropdown>
@@ -47,29 +47,8 @@
     </div>
   </nav>
 </div>
-	
-<!-- <div *ngFor="let film of films; " style="width: 100%; table-layout: fixed; font-size: 2vw;"> 
-    <div class="filmColumn" >
-        <p class="tooltip1">{{film['film']['title']}}</p>
-        <img  class="filmImage" src="{{film['film']['photo']}}" alt="Snow" style="width:100%" (click)="goToFilm(film['film']['id'])">
-        <span class="tooltip1">
-          <div style="display: inline; font-size: 20px; padding-right: 10px; color: white;" *ngIf="!film['watched']">
-            <fa-icon (click)="addToWatched(film['film']['id'])" [icon]="eyeIcon"></fa-icon> 
-          </div>
-          <div style="display: inline; font-size: 20px; padding-right: 10px; color: green;" *ngIf="film['watched']">
-            <fa-icon (click)="deleteFromWatched(film['film']['id'])" [icon]="eyeIcon"></fa-icon> 
-          </div>
-          <div  style="display: inline; font-size: 20px; color: white;" *ngIf="!film['liked']">
-            <fa-icon (click)="addToLiked(film['film']['id'])" [icon]="heartIcon"></fa-icon>
-          </div>
-          <div  style="display: inline; font-size: 20px; color: red;" *ngIf="film['liked']">
-            <fa-icon (click)="deleteFromLiked(film['film']['id'])" [icon]="heartIcon"></fa-icon>
-          </div>
-        </span>
-    </div>
-  </div> -->
 
-<ul *ngFor="let film of films; " style="">
+<ul *ngFor="let film of films; " style="" id="filmsUl">
   <li style="display: inline; margin-right: 17px; overflow-x: hidden; "><!-- 
     <img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="100" height="150" alt="" (click)="toFilm(film['id'])"> -->
     <div class="desc2">
