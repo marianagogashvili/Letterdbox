@@ -25,6 +25,9 @@ import { ReviewsComponent } from './user/reviews/reviews.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { LikedComponent } from './user/liked/liked.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { ListsComponent } from './lists/lists.component';
+import { OwnListsComponent } from './user/own-lists/own-lists.component';
+import { NewListComponent } from './lists/new-list/new-list.component';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { ProfileComponent } from './user/profile/profile.component';
     ReviewsComponent,
     WatchlistComponent,
     LikedComponent,
-    ProfileComponent,   
+    ProfileComponent,
+    ListsComponent,
+    OwnListsComponent,
+    NewListComponent,   
 
   ],
   imports: [

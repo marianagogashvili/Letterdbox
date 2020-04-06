@@ -12,6 +12,9 @@ import { ReviewsComponent } from './user/reviews/reviews.component';
 import { WatchlistComponent } from './user/watchlist/watchlist.component';
 import { LikedComponent } from './user/liked/liked.component';
 import { ProfileComponent } from './user/profile/profile.component';
+import { OwnListsComponent } from './user/own-lists/own-lists.component';
+import { ListsComponent } from './lists/lists.component';
+import { NewListComponent } from './lists/new-list/new-list.component';
 
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -23,10 +26,14 @@ const appRoutes: Routes = [
 		{path: 'reviews', component: ReviewsComponent},
 		{path: 'watchlist', component: WatchlistComponent},
 		{path: 'liked', component: LikedComponent},
-		{path: 'profile', component: ProfileComponent}
+		{path: 'profile', component: ProfileComponent},
+		{path: 'lists', component: OwnListsComponent}
 	]},
 	{path: 'films', component: FilmsComponent},
-	{path: 'films/:id', component: FilmComponent}
+	{path: 'films/:id', component: FilmComponent},
+	{path: 'lists', component: ListsComponent, children: [
+		{path: 'new', component: NewListComponent}
+	]}
 ];
 @NgModule({
 	imports: [RouterModule.forRoot(appRoutes)],
