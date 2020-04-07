@@ -3,14 +3,16 @@
 class List {
 	public $user_id;
 	public $title;
+	public $description;
 	public $ranked;
 	public $public;
 
 	public static function createList($conn) {
-		$sql = "INSERT INTO list(user_id, title, ranked, public) VALUES(:user_id, :title, :ranked, :public)";
+		$sql = "INSERT INTO list(user_id, title, description, ranked, public) VALUES(:user_id, :title, :description, :ranked, :public)";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id', $this->user_id, PDO::PARAM_INT);
 		$stmt->bindValue(':title', $this->title, PDO::PARAM_STR);
+		$stmt->bindValue(':description', $this->description, PDO::PARAM_STR);
 		$stmt->bindValue(':ranked', $this->ranked, PDO::PARAM_BOOL);
 		$stmt->bindValue(':public', $this->public, PDO::PARAM_BOOL);
 		if ($stmt->execute()) {

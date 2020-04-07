@@ -27,13 +27,12 @@ const appRoutes: Routes = [
 		{path: 'watchlist', component: WatchlistComponent},
 		{path: 'liked', component: LikedComponent},
 		{path: 'profile', component: ProfileComponent},
-		{path: 'lists', component: OwnListsComponent}
+		{path: 'own-lists', component: OwnListsComponent}
 	]},
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent},
-	{path: 'lists', component: ListsComponent, children: [
-		{path: 'new', component: NewListComponent}
-	]}
+	{path: 'lists', component: ListsComponent},
+	{path: 'lists/new', component: NewListComponent}
 ];
 @NgModule({
 	imports: [RouterModule.forRoot(appRoutes)],

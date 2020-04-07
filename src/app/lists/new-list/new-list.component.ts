@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { faStar } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-new-list',
@@ -6,10 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./new-list.component.css']
 })
 export class NewListComponent implements OnInit {
-
+  starIcon = faStar;
   constructor() { }
 
   ngOnInit() {
+  	// console.log('rbuh what');
   }
 
 }
