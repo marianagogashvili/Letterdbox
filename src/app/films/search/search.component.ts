@@ -80,7 +80,7 @@ export class SearchComponent implements OnInit, OnDestroy {
 			this.filmService.findFilms(title).subscribe(result => {
 				this.films = result;
 				this.isHidden = false;
-			})  		
+			});  		
 		} else {
 			this.isHidden = true;
 			this.films = [];
