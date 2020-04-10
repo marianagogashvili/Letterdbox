@@ -10,6 +10,7 @@ label {
 }
 #name, #descr {
 	border-radius: 3px; 
+	color: #9ab;
 	background-color: #2c3440; 
 	border: 1px solid rgb(153,170,187, 0.2); 
 	padding: 3px 6px 3px 6px; 
@@ -17,6 +18,7 @@ label {
 }
 #name:focus {
 	background-color: white; 
+	color: black;
 	border: 0;
 }
 #descr {
@@ -27,6 +29,8 @@ label {
 #descr:focus {
 	background-color: white; 
 	border: 0;
+	color: black;
+	
 }
 #public, #ranked {
 	transform: scale(2);
