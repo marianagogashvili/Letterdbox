@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 import { FilmService } from '../../films/film.service';
-import { FormControl } from '@angular/forms'; 
+import { NgForm, FormControl } from '@angular/forms'; 
 import { BehaviorSubject } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
-
+import { ListService } from '../list.service';
 @Component({
   selector: 'app-new-list',
   templateUrl: './new-list.component.html',
@@ -18,9 +18,12 @@ export class NewListComponent implements OnInit {
   films;
   listFilms = [];
   rankedList = false;
+  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  error;
   // filmSubject = new BehaviorSubject(null);
 
-  constructor(private filmService: FilmService) { }
+  constructor(private filmService: FilmService,
+              private listService: ListService) { }
 
   ngOnInit() {
         this.filmName.valueChanges.subscribe(title => {
@@ -53,11 +56,14 @@ export class NewListComponent implements OnInit {
 	  	});
 	  	if (add === 0) {
 	  		this.listFilms.push(film);
-	  		// this.filmSubject.next(this.listFilms);
-	  	}
+	  	} else {
+        this.error = "You've already added this list";
+        setTimeout(() => {
+          this.error = null;
+        }, 3000);
+      }
   	} else {
 	  	this.listFilms.push(film);
-  		// this.filmSubject.next(this.listFilms);
   	}
   	
   }
@@ -73,6 +79,29 @@ export class NewListComponent implements OnInit {
 
   switchRanked() {
     this.rankedList = !this.rankedList;
+  }
+  saveList(form: NgForm) {
+    if (this.listFilms.length === 0) {
+      this.error = "Please select films to create a list";
+      setTimeout(() => {
+        this.error = null;
+      }, 5000);
+    } else {
+      let films = [];
+      Object.values(this.listFilms).forEach(film => {
+        films.push(+film['id']);
+      });
+      let param = {name: form.value.list,
+                   desc: form.value.descr,
+                   public: form.value.public,
+                   ranked: form.value.ranked,
+                   user_id: this.currentUserId,
+                   films: films}
+      console.log(param);
+      this.listService.createList(param).subscribe(result => {
+        console.log(result);
+      });
+    }
   }
 }
 

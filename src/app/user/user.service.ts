@@ -52,4 +52,10 @@ export class UserService {
 			'http://localhost:8888/getUserLikes.php', JSON.stringify(param)
 			);
 	}
+
+	getUserLists(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getUserLists.php', JSON.stringify(param)
+			);
+	}
 }

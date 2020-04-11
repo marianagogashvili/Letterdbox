@@ -8,6 +8,9 @@ label {
 	width: 40vw;
 	margin-top: 8px;
 }
+#name.ng-touched.ng-invalid {
+	border: 1px solid rgb(255, 0, 0, 0.5);
+}
 #name, #descr {
 	border-radius: 3px; 
 	color: #9ab;
@@ -73,6 +76,7 @@ label {
 	background-color: #2c3440; 
 	border: 1px solid rgb(153,170,187, 0.2); 
 	outline: none;
+	padding-left: 6px;
 }
 #filmName:focus {
 	color: black;
@@ -105,7 +109,7 @@ label {
 	background-color: rgb(153,170,187, 0.4); 
 	width: 72%; 
 	list-style: none;
-	border: 1px solid rgb(153,170,187, 0.4); 
+	/*border: 1px solid rgb(153,170,187, 0.4); */
 	border-top: 0; 
 	border-radius: 3px; 
 	color: white; 
