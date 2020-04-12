@@ -43,7 +43,8 @@ export class ProfileComponent implements OnInit {
       if (subj === null) {
         this.userService.getShortUserActivity({user_id: this.userId}).subscribe(result => {
 	  		this.recentFilms = result;
-	  		this.likeAndWatch();
+	  		// console.log(result);
+        this.likeAndWatch();
 	  	});
       } else {
         this.recentFilms = subj;

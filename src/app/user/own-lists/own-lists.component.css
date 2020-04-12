@@ -1,0 +1,26 @@
+#films {
+	display: inline-block; width: 40px;
+}
+img {
+	position: relative;
+	z-index: 1;
+}
+img:hover {
+	width: 100px;
+	height: 150px;
+	z-index: 2;
+	border: 1px solid #00E054;
+}	
+#listName {
+	display: inline;
+	margin-left: 60px;
+	font-size: 20px;
+	font-family: 'Roboto';
+	color: white;
+}
+#list {
+	display: inline;
+}
+#iconPen:hover {
+	color: #00E054;
+}

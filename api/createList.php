@@ -33,9 +33,9 @@ if ($alreadyExists == null) {
 			}
 		}
 	}
-	echo(true);
+	echo(json_encode(true));
 } else  {
-	echo(false);
+	echo(json_encode(false));
 }
 
 

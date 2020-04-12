@@ -6,28 +6,50 @@ import { NgForm, FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 import { ListService } from '../list.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
-  selector: 'app-new-list',
-  templateUrl: './new-list.component.html',
-  styleUrls: ['./new-list.component.css']
+  selector: 'app-edit-list',
+  templateUrl: './edit-list.component.html',
+  styleUrls: ['./edit-list.component.css']
 })
-export class NewListComponent implements OnInit {
+export class EditListComponent implements OnInit {
   starIcon = faStar;
   crossIcon = faTimes;
   filmName: FormControl = new FormControl();
   films;
   listFilms = [];
-  rankedList = false;
   currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   error;
-  // filmSubject = new BehaviorSubject(null);
+
+  listName;
+  listDescr;
+  listPublic;
+  rankedList;
+
+  initFilms;
+  initList;
 
   constructor(private filmService: FilmService,
-              private listService: ListService) { }
+              private listService: ListService,
+              private route: ActivatedRoute) { }
 
-  ngOnInit() {
-        this.filmName.valueChanges.subscribe(title => {
+    ngOnInit() {
+    	this.route.params.subscribe(params => {
+    		let id = +params['id'];
+	    	this.listService.findList({id: id}).subscribe(result => {
+	    		// console.log(result);
+	    		this.initList = result[0];
+	    		this.initFilms = result[1];
+
+	    		this.listName = result[0]['title'];
+	    		this.listDescr = result[0]['description'];
+				this.listPublic = result[0]['public'];
+				this.rankedList = result[0]['ranked'];
+				this.listFilms = result[1];
+	    	});
+		});
+		this.filmName.valueChanges.subscribe(title => {
 	  		if (title !== '' && (title.split('').length >= 3)) {
 		  		this.filmService.findFilms(title).subscribe(result => {
 		  			this.films = result;
@@ -36,8 +58,9 @@ export class NewListComponent implements OnInit {
 		  	} else {
 				this.films = [];
 		  	}
-		  	
 	  	});
+		console.log(this.initFilms);
+	}
     // this.filmSubject.subscribe(result => {
     // 	console.log(result);
     // 	if (result !== null) {
@@ -45,7 +68,7 @@ export class NewListComponent implements OnInit {
     // 		this.listFilms = result;
     // 	}
     // });
-  }
+
 
   addToList(film) {
 	  let add=0;
@@ -99,16 +122,18 @@ export class NewListComponent implements OnInit {
                    user_id: this.currentUserId,
                    films: films}
       console.log(param);
-      this.listService.createList(param).subscribe(result => {
-        if (result === false) {
-          this.error = "List with this name already exists";
-          setTimeout(() => {
-            this.error = null;
-          }, 5000);
-        }
-      });
+   //    console.log(this.initList['title'] === form.value.list);
+   //    console.log(this.initList['description'] === form.value.descr);
+	  // console.log(this.initList['public'] === form.value.public);
+	  // console.log(this.initList['ranked'] === form.value.ranked);
+	  console.log(this.initFilms);
+	  console.log(this.listFilms);
+
+	  console.log(this.initFilms === this.listFilms);
+      // this.listService.updateList(param).subscribe(result => {
+      //   console.log(result);
+      // });
     }
   }
+
 }
-
-

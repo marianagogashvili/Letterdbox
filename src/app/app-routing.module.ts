@@ -15,6 +15,7 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { OwnListsComponent } from './user/own-lists/own-lists.component';
 import { ListsComponent } from './lists/lists.component';
 import { NewListComponent } from './lists/new-list/new-list.component';
+import { EditListComponent } from './lists/edit-list/edit-list.component';
 
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -32,7 +33,8 @@ const appRoutes: Routes = [
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent},
 	{path: 'lists', component: ListsComponent},
-	{path: 'lists/new', component: NewListComponent}
+	{path: 'lists/new', component: NewListComponent},
+	{path: 'lists/edit/:id', component: EditListComponent}
 ];
 @NgModule({
 	imports: [RouterModule.forRoot(appRoutes)],

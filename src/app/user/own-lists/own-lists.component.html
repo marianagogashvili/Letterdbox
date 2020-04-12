@@ -1,3 +1,12 @@
 <div *ngFor="let list of lists">
-	<div>{{ list[0]['title'] }}</div>
+	<div id="list" >
+		<div id="films" *ngFor="let film of list[1]">
+		<img width="70" height="105" src="{{film['photo']}}" alt="" >
+		</div>
+		<div id="listName">{{ list[0]['title'] }}
+			<span id="iconPen"><fa-icon [icon]="penIcon" [routerLink]="['/lists/edit',list[0]['id']]"></fa-icon></span>
+		</div>
+	</div>
+	
 </div>
+

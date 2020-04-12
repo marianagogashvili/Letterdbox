@@ -3,7 +3,7 @@
 	<div style="color: red; font-family: 'Roboto'; font-size: 17px; border: 1px solid rgb(255, 0, 0, 0.6); padding: 10px; border-radius: 2px; width: 96%" *ngIf="error">{{ error }}</div>
 	
 	<div>
-	<h1 style="color: white; font-family: 'Roboto'; font-size: 27px; color: #9ab" >New List</h1>
+	<h1 style="color: white; font-family: 'Roboto'; font-size: 27px; color: #9ab" >Update List</h1>
 	<div style="height: 1px; background-color:  rgb(153,170,187, 0.4);width: 96%"></div>
 	<div style="display: inline-block;width: 96%">
 		<form  #listForm="ngForm" (ngSubmit)="saveList(listForm)">
@@ -14,7 +14,7 @@
 				<input 
     		type="text"
 			id="name"
-			ngModel
+			[ngModel]="listName"  
 			name="list"
 			required
 			list 
@@ -32,7 +32,7 @@
 			id="public" 
 			name="public" 
 			type="checkbox" 
-			ngModel
+			[ngModel]="listPublic"
 			name="public"
 			public
 			#public="ngModel"
@@ -43,7 +43,7 @@
 				id="ranked" 
 				name="ranked" 
 				type="checkbox"
-				ngModel
+				[ngModel]="rankedList"
 				name="ranked"
 				ranked
 				#ranked="ngModel">
@@ -54,7 +54,7 @@
 			<div><label for="descr">Description</label></div>
 			<textarea 
 			id="descr" 
-			ngModel 
+			[ngModel]="listDescr" 
 			name="descr"
 			descr 
 			#descr="ngModel"
@@ -83,7 +83,7 @@
 
 		</div>
 		
-		<button (click)="saveList(listForm)" id="saveBtn" type="submit">Save</button>
+		<button (click)="saveList(listForm)" id="saveBtn" type="submit">Update</button>
 			
 	</div>
 	<div id="listDiv" style="margin-bottom: 20px;">

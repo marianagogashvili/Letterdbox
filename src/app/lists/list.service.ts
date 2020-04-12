@@ -9,4 +9,12 @@ export class ListService {
 	createList(param: Params){
 		return this.http.post('http://localhost:8888/createList.php', JSON.stringify(param));
 	}
+
+	findList(param: Params) {
+		return this.http.post('http://localhost:8888/findListById.php', JSON.stringify(param));		
+	}
+
+	updateList(param: Params) {
+		return this.http.post('http://localhost:8888/updateList.php', JSON.stringify(param));		
+	}
 }

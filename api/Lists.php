@@ -60,6 +60,15 @@ class Lists {
 		}
 	}
 
+	public static function findListById($conn, $id) {
+		$sql = "SELECT * FROM list WHERE id = :id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return $stmt->fetch();
+		}
+	}
+
 }
 
 ?>
