@@ -27,7 +27,7 @@ if ($alreadyExists == null) {
 	if ($alreadyExists == false) {
 		if ($list->createList($conn)) {
 			foreach ($value['films'] as $film) {
-				if(Lists::addFilmToList($conn, $list->id,  $film)) {
+				if(Lists::addFilmToList($conn, $list->id,  $film['id'], $film['rank'])) {
 
 				}
 			}

@@ -22,6 +22,7 @@ export class EditListComponent implements OnInit, OnDestroy {
   currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   error;
 
+  listId;
   listName;
   listDescr;
   listPublic;
@@ -48,10 +49,11 @@ export class EditListComponent implements OnInit, OnDestroy {
     			
 	    		this.initList = result[0];
 	    		
+	    		this.listId = result[0]['id'];
 	    		this.listName = result[0]['title'];
 	    		this.listDescr = result[0]['description'];
-				this.listPublic = result[0]['public'];
-				this.rankedList = result[0]['ranked'];
+				this.listPublic = +result[0]['public'];
+				this.rankedList = +result[0]['ranked'];
 				this.listFilms = result[1];
 				// console.log("RESULT !", result[1]);
 				// console.log("RESULT !2", this.initFilms);
@@ -130,39 +132,63 @@ export class EditListComponent implements OnInit, OnDestroy {
       }, 5000);
     } else {
       let films = [];
-      Object.values(this.listFilms).forEach(film => {
-        films.push(+film['id']);
-      });
-      let param = {name: form.value.list,
-                   desc: form.value.descr,
+      if (form.value.ranked === true) {
+      	Object.values(this.listFilms).forEach((film, i) => {
+	      films.push({rank: i, id: +film['id']});
+	    });
+      } else {
+		Object.values(this.listFilms).forEach(film => {
+	      films.push({id: +film['id']});
+	    });
+      }
+      
+      let param = {title: form.value.list,
+                   description: form.value.descr,
                    public: form.value.public,
                    ranked: form.value.ranked,
-                   user_id: this.currentUserId,
+                   id: this.listId,
                    films: films}
 
-      console.log(this.initList);
-      console.log(form.value.list);
-      console.log(this.initList['description'] === form.value.descr);
-	  console.log(this.initList['public'] === form.value.public);
-	  console.log(this.initList['ranked'] === form.value.ranked);
-	  console.log(this.initFilms === films);
-	  console.log(this.initFilms);
-	  console.log(films);
-	  console.log(JSON.stringify(this.initFilms) === JSON.stringify(films));
-	  console.log();
+   //    console.log(this.initList);
+   //    console.log(form.value.list);
+   //    console.log(this.initList['description'] === form.value.descr);
+	  console.log(+this.initList['public'] === form.value.public);
+	  console.log(+this.initList['ranked'] === form.value.ranked);
+
+	  // console.log("FILMS INIT" + this.initFilms);
+	  // console.log("FILMS" + films);
+	  // console.log(JSON.stringify(this.initFilms) === JSON.stringify(films));
+	  // console.log();
 
 	  if ((this.initList['title'] === form.value.list) && 
 	  	  (JSON.stringify(this.initFilms) === JSON.stringify(films)) &&
 	  	  (this.initList['description'] === form.value.descr) &&
-	  	  (this.initList['public'] === form.value.public) &&
-	  	  (this.initList['ranked'] === form.value.ranked)) {
+	  	  (+this.initList['public'] === form.value.public) &&
+	  	  (+this.initList['ranked'] === form.value.ranked)) {
 	  	this.error = "Sorry, you didn't change anything";
-	  } else if((JSON.stringify(this.initFilms) === JSON.stringify(films))) {
-
+	  } else {
+	  	if (JSON.stringify(this.initFilms) === JSON.stringify(films)) {
+	  		this.listService.updateList({title: form.value.list,
+                   description: form.value.descr,
+                   public: form.value.public,
+                   ranked: form.value.ranked,
+                   id: this.listId,
+                   films: null}).subscribe(result => {
+	       		console.log(result);
+	     	});
+	  	} else {
+	  		this.listService.updateList({title: form.value.list,
+                   description: form.value.descr,
+                   public: form.value.public,
+                   ranked: form.value.ranked,
+                   id: this.listId,
+                   films: films}).subscribe(result => {
+	       		console.log(result);
+	     	});
+	  	}
+	  	
 	  }
-      // this.listService.updateList(param).subscribe(result => {
-      //   console.log(result);
-      // });
+      
     }
   }
 

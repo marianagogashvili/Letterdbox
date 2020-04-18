@@ -35,18 +35,24 @@
 			[ngModel]="listPublic"
 			name="public"
 			public
+			[checked]="listPublic" 
 			#public="ngModel"
 			>
+
 				<label for="ranked">Ranked list</label>
 				<input 
 				(click)="switchRanked()" 
 				id="ranked" 
 				name="ranked" 
 				type="checkbox"
+				[checked]="rankedList"
 				[ngModel]="rankedList"
 				name="ranked"
 				ranked
-				#ranked="ngModel">
+				[checked]="rankedList" 
+				#ranked="ngModel"
+				>
+				
 			</div>
 			
 		</div>

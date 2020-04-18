@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+
 import { FilmService } from '../../films/film.service';
 import { NgForm, FormControl } from '@angular/forms'; 
 import { BehaviorSubject } from 'rxjs';
@@ -15,6 +18,8 @@ import { ListService } from '../list.service';
 export class NewListComponent implements OnInit {
   starIcon = faStar;
   crossIcon = faTimes;
+  upIcon = faArrowUp;
+  downIcon = faArrowDown;
   filmName: FormControl = new FormControl();
   films;
   listFilms = [];
@@ -89,9 +94,16 @@ export class NewListComponent implements OnInit {
       }, 5000);
     } else {
       let films = [];
-      Object.values(this.listFilms).forEach(film => {
-        films.push(+film['id']);
-      });
+      if (form.value.ranked === true) {
+        Object.values(this.listFilms).forEach((film, i) => {
+          films.push({rank: (i+1), id: +film['id']});
+        });
+      } else {
+        Object.values(this.listFilms).forEach((film, i) => {
+          films.push({rank: null,id: +film['id']});
+        });
+      }
+      
       let param = {name: form.value.list,
                    desc: form.value.descr,
                    public: form.value.public,
@@ -108,6 +120,38 @@ export class NewListComponent implements OnInit {
         }
       });
     }
+  }
+
+  // thoughts 0
+  // mom 1
+  // up mom = staticValue
+  // thoughts = 1
+  // 
+  
+  up(id) {
+    Object.values(this.listFilms).forEach((film, i) => {
+      if (film['id'] === id) {
+        if (this.listFilms[i-1]) {
+          let filmBefore = this.listFilms[i-1];
+          this.listFilms[i] = filmBefore;
+          this.listFilms[i-1] = film;
+        }  
+      }
+    });
+    console.log(this.listFilms);
+  }
+
+  down(id) {
+    Object.values(this.listFilms).forEach((film, i) => {
+      if (film['id'] === id) {
+        if (this.listFilms[i+1]) {
+          let filmAfter = this.listFilms[i+1];
+          this.listFilms[i] = filmAfter;
+          this.listFilms[i+1] = film;
+        }  
+      }
+    });
+    console.log(this.listFilms);
   }
 }
 

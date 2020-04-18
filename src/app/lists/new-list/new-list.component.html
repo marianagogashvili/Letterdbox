@@ -94,8 +94,15 @@
 			<p style="color: #9ab; font-size: 20px; font-family: 'Roboto'; display: inline-block;">{{film['year']}}</p>
 			<span style="display: inline-block; margin-left: 1vw; font-size: 20px">
 				<fa-icon style="color: #00b020;" [icon]="starIcon"></fa-icon></span>
-			<span (click)="up(film['id'])">up</span>
-			<span (click)="up(film['id'])">down</span>
+			
+				<span  (click)="up(film['id'])" style="margin-right: 7px;margin-left: 13px">
+					<fa-icon style="color: #9ab;" [icon]="upIcon"></fa-icon>
+				</span>
+				<span (click)="down(film['id'])" style="margin-left: 13px">
+					<fa-icon style="color: #9ab;" [icon]="downIcon"></fa-icon>
+				</span>
+			
+			
 			<fa-icon (click)="removeFilm(film)" id="crossIconId" [icon]="crossIcon"></fa-icon>
 		</div>
 		

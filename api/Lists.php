@@ -22,11 +22,12 @@ class Lists {
 		}
 	}
 
-	public static function addFilmToList($conn, $list_id, $film_id) {
-		$sql = "INSERT INTO list_film VALUES(:list_id, :film_id)";
+	public static function addFilmToList($conn, $list_id, $film_id, $rank) {
+		$sql = "INSERT INTO list_film VALUES(:list_id, :film_id, :rank)";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
 		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':rank', $rank, PDO::PARAM_INT);
 		if ($stmt->execute()) {
           	return true;
 		}
@@ -52,7 +53,7 @@ class Lists {
 	}
 
 	public static function getFilmsFromList($conn, $list_id) {
-		$sql = "SELECT film.*, film_id FROM list_film INNER JOIN film on film.id = list_film.film_id WHERE list_id = :list_id";
+		$sql = "SELECT film.*, film_id FROM list_film INNER JOIN film on film.id = list_film.film_id WHERE list_id = :list_id ORDER BY rank ASC";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
@@ -66,6 +67,28 @@ class Lists {
 		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
           	return $stmt->fetch();
+		}
+	}
+
+	public static function updateList($conn, $id, $title, $description, $ranked, $public) {
+		$sql = "UPDATE list SET title = :title, description = :description, ranked = :ranked, public = :public WHERE id = :id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->bindValue(':title', $title, PDO::PARAM_STR);
+		$stmt->bindValue(':description', $description, PDO::PARAM_STR);
+		$stmt->bindValue(':ranked', $ranked, PDO::PARAM_BOOL);
+		$stmt->bindValue(':public', $public, PDO::PARAM_BOOL);
+		if ($stmt->execute()) {
+          	return true;
+		}
+	}
+	public static function deleteFilmFromList($conn, $id, $film) {
+		$sql = "DELETE FROM list_film WHERE list_id = :id AND film_id = :film_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return true;
 		}
 	}
 
