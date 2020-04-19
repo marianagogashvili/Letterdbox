@@ -82,6 +82,18 @@ class Lists {
           	return true;
 		}
 	}
+
+	public static function updateFilmFromList($conn, $list_id, $film_id, $rank) {
+		$sql = "UPDATE list_film SET rank = :rank WHERE film_id = :film_id AND list_id = :list_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
+		$stmt->bindValue(':film_id', $film_id, PDO::PARAM_INT);
+		$stmt->bindValue(':rank', $rank, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return true;
+		}
+	}
+
 	public static function deleteFilmFromList($conn, $id, $film) {
 		$sql = "DELETE FROM list_film WHERE list_id = :id AND film_id = :film_id";
 		$stmt = $conn->prepare($sql);

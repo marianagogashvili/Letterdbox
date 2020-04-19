@@ -7,6 +7,8 @@ import { BehaviorSubject } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 import { ListService } from '../list.service';
 import { ActivatedRoute } from '@angular/router';
+import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
+import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-edit-list',
@@ -32,6 +34,9 @@ export class EditListComponent implements OnInit, OnDestroy {
   initList;
 
   sub1; sub2;
+
+  upIcon = faArrowUp;
+  downIcon = faArrowDown;
 
   constructor(private filmService: FilmService,
               private listService: ListService,
@@ -132,16 +137,18 @@ export class EditListComponent implements OnInit, OnDestroy {
       }, 5000);
     } else {
       let films = [];
-      if (form.value.ranked === true) {
-      	Object.values(this.listFilms).forEach((film, i) => {
-	      films.push({rank: i, id: +film['id']});
+  //     if (form.value.ranked === true) {
+  //     	Object.values(this.listFilms).forEach((film, i) => {
+	 //      films.push({rank: (i+1), id: +film['id']});
+	 //    });
+  //     } else {
+		// Object.values(this.listFilms).forEach(film => {
+	 //      films.push({id: +film['id']});
+	 //    });
+  //     }
+      Object.values(this.listFilms).forEach(film => {
+	      films.push(+film['id']);
 	    });
-      } else {
-		Object.values(this.listFilms).forEach(film => {
-	      films.push({id: +film['id']});
-	    });
-      }
-      
       let param = {title: form.value.list,
                    description: form.value.descr,
                    public: form.value.public,
@@ -152,13 +159,17 @@ export class EditListComponent implements OnInit, OnDestroy {
    //    console.log(this.initList);
    //    console.log(form.value.list);
    //    console.log(this.initList['description'] === form.value.descr);
-	  console.log(+this.initList['public'] === form.value.public);
-	  console.log(+this.initList['ranked'] === form.value.ranked);
+	  // console.log(+this.initList['public'] === form.value.public);
+	  // console.log(+this.initList['ranked'] === form.value.ranked);
 
-	  // console.log("FILMS INIT" + this.initFilms);
-	  // console.log("FILMS" + films);
+	  console.log("FILMS INIT" + this.initFilms);
+	  console.log("FILMS" + films);
 	  // console.log(JSON.stringify(this.initFilms) === JSON.stringify(films));
 	  // console.log();
+	  		console.log("BRUHBRUHBRUHBRUHBRUHBRUHBRUHBRUHBRUH");
+
+	  console.log(((JSON.stringify(this.initFilms) !== JSON.stringify(films)) ||
+	  			   (form.value.ranked !== +this.initList['ranked'])));
 
 	  if ((this.initList['title'] === form.value.list) && 
 	  	  (JSON.stringify(this.initFilms) === JSON.stringify(films)) &&
@@ -167,7 +178,8 @@ export class EditListComponent implements OnInit, OnDestroy {
 	  	  (+this.initList['ranked'] === form.value.ranked)) {
 	  	this.error = "Sorry, you didn't change anything";
 	  } else {
-	  	if (JSON.stringify(this.initFilms) === JSON.stringify(films)) {
+	  	if (JSON.stringify(this.initFilms) === JSON.stringify(films) && 
+	  		(form.value.ranked === +this.initList['ranked'])) {
 	  		this.listService.updateList({title: form.value.list,
                    description: form.value.descr,
                    public: form.value.public,
@@ -176,20 +188,148 @@ export class EditListComponent implements OnInit, OnDestroy {
                    films: null}).subscribe(result => {
 	       		console.log(result);
 	     	});
-	  	} else {
-	  		this.listService.updateList({title: form.value.list,
+	  	} else if ((JSON.stringify(this.initFilms) !== JSON.stringify(films)) ||
+	  			   (form.value.ranked !== +this.initList['ranked'])) {
+
+	  		if (form.value.ranked === 1 || form.value.ranked === true) {
+
+	  			let rankedInitlist = [];
+	  			let rankedFilms = [];
+
+	  			Object.values(this.initFilms).forEach((initFilm, i) => {
+	  				rankedInitlist.push({id: initFilm, rank: (i+1)});
+	  			});
+	  			Object.values(films).forEach((film, i) => {
+	  				rankedFilms.push({id: film, rank: (i+1)});
+	  			});
+
+	  			let toRemove = this.initFilms.filter((el) => {
+	  				return films.indexOf(el) < 0;
+	  			});
+	  			let toAdd = rankedFilms.filter((el) => {
+	  				return this.initFilms.indexOf(el['id']) < 0;
+	  			});
+ 
+	  		    let toUpdate = [];
+	  			Object.values(rankedInitlist).forEach(initFilms => {
+	  				Object.values(rankedFilms).forEach(films => {
+
+	  					if (+this.initList['ranked'] === 0) { // все чтобы были null
+	  						 console.log("ВСЕ ТЕПЕРЬ 0");
+	  						 if (initFilms['id'] === films['id']){
+		  						toUpdate.push(films);
+		  					 }
+	  					} else if (+this.initList['ranked'] === 1) {
+	  						 console.log("ВСЕ ТЕПЕРЬ 1");
+							 if ((initFilms['id'] === films['id']) && (initFilms['rank'] !== films['rank'])){
+		  						toUpdate.push(films);
+		  					 }
+	  					}
+	  					
+	  				});
+	  			});
+	  			console.log("toremove  ");
+	  			console.log(toRemove);
+
+	  			console.log("Toadd  ");
+	  			console.log(toAdd);
+
+	  			console.log("ToUpdate ");
+	  			console.log(toUpdate);
+
+	  			this.listService.updateList({title: form.value.list,
                    description: form.value.descr,
                    public: form.value.public,
                    ranked: form.value.ranked,
                    id: this.listId,
-                   films: films}).subscribe(result => {
-	       		console.log(result);
-	     	});
+                   add: toAdd,
+               	   remove: toRemove,
+               	   update: toUpdate}).subscribe(result => {
+		       		this.initFilms = films;
+		       		this.initList['ranked'] = 1;
+		     	});
+	  		} else if (form.value.ranked === 0 || form.value.ranked === false) {
+	  			let toRemove = this.initFilms.filter((el) => {
+	  				return films.indexOf(el) < 0;
+	  			});
+	  			
+	  			let rankedInitlist = [];
+	  			let rankedFilms = [];
+
+	  			Object.values(this.initFilms).forEach((initFilm, i) => {
+	  				rankedInitlist.push({id: initFilm, rank: null});
+	  			});
+
+	  			Object.values(films).forEach((film, i) => {
+	  				rankedFilms.push({id: film, rank: null});
+	  			});
+
+	  			let toAdd = rankedFilms.filter((el) => {
+	  				return this.initFilms.indexOf(el['id']) < 0;
+	  			});
+
+	  			let toUpdate = [];
+
+	  			Object.values(rankedInitlist).forEach(initFilms => {
+	  				Object.values(rankedFilms).forEach(films => {
+	  					if (+this.initList['ranked'] === 1) { // все чтобы имели rank
+	  						 if (initFilms['id'] === films['id']){
+		  						toUpdate.push(films);
+		  					 }	 
+	  					} 
+	  				});
+	  			});
+
+	  			console.log("toremove  ");
+	  			console.log(toRemove);
+	  			console.log("Toadd  ");
+	  			console.log(toAdd);
+				console.log("toUpdate  ");
+	  			console.log(toUpdate);
+
+	  			this.listService.updateList({title: form.value.list,
+                   description: form.value.descr,
+                   public: form.value.public,
+                   ranked: form.value.ranked,
+                   id: this.listId,
+                   add: toAdd,
+               	   remove: toRemove,
+               	   update: toUpdate}).subscribe(result => {
+		       		this.initFilms = films;
+		       		this.initList['ranked'] = 0;
+		     	});
+	  		}
+	  		
 	  	}
-	  	
 	  }
       
     }
+  }
+
+  up(id) {
+    Object.values(this.listFilms).forEach((film, i) => {
+      if (film['id'] === id) {
+        if (this.listFilms[i-1]) {
+          let filmBefore = this.listFilms[i-1];
+          this.listFilms[i] = filmBefore;
+          this.listFilms[i-1] = film;
+        }  
+      }
+    });
+    console.log(this.listFilms);
+  }
+
+  down(id) {
+    Object.values(this.listFilms).forEach((film, i) => {
+      if (film['id'] === id) {
+        if (this.listFilms[i+1]) {
+          let filmAfter = this.listFilms[i+1];
+          this.listFilms[i] = filmAfter;
+          this.listFilms[i+1] = film;
+        }  
+      }
+    });
+    console.log(this.listFilms);
   }
 
   ngOnDestroy() {

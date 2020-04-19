@@ -14,6 +14,7 @@ import { faClock as faClock2 } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
 
 import { BehaviorSubject } from 'rxjs';
+
 @Component({
   selector: 'app-watched-films',
   templateUrl: './watched-films.component.html',
@@ -49,6 +50,7 @@ export class WatchedFilmsComponent implements OnInit, OnDestroy {
         this.likeAndWatch();
       }
     });
+
 
   }
   likeAndWatch() {
