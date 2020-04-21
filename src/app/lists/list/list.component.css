@@ -1,0 +1,61 @@
+#filmImage:hover {
+	border: 1px solid #00e054;
+
+}
+#listTitleId {
+	font-family: 'Roboto';
+	font-size: 35px;
+	color: #9ab;
+	margin-left: 40px;
+}
+#filmImage {
+	margin: 10px;
+}
+
+ul {
+	padding:0;
+	margin:0;
+}
+#iconPen:hover{
+	color: #00e054;
+}
+
+li {
+	position:relative; 
+	float:left; 
+	display:inline;
+	list-style-type:none;
+	margin-bottom:10px; 
+}
+li .desc {
+	display: none;
+}
+/*:hover*/
+li:hover .desc {
+	display: block;
+	position:absolute; /* Important */
+	width:85%; 
+	bottom:0; 
+	text-align: center;
+	background-color:rgba(0, 0, 0, 0.5);
+	margin-left: 12px;
+	margin-bottom: 12px;
+	border-radius: 2px;
+}
+
+#filmsUl {
+	margin-left: 5vw;
+}
+@media only screen and (max-width: 600px) {
+	#filmImage {
+		margin: 24px;
+	}
+
+	li:hover .desc {
+		margin: 24px;
+		width: 70%;
+		margin-left: 30px;
+		margin-bottom: 27px;
+		border-radius: 2px;
+	}
+}

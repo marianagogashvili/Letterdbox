@@ -1,0 +1,25 @@
+<app-header></app-header>
+<h1 id="listTitleId">{{ list?.title }}  <span id="iconPen"><fa-icon [icon]="penIcon" id="iconPen" [routerLink]="['/lists/edit',list?.id]"></fa-icon></span></h1>
+
+<ul *ngFor="let film of films" id="filmsUl">
+
+	<li style="display: inline; margin-right: 17px; overflow-x: hidden;">
+		<img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="150" height="225" alt="" (click)="toFilm(film['id'])">
+		<div class="desc">
+			<div style="color: green; ">
+				<fa-icon *ngIf="film['watched']" style="padding-right: 4px; color: green" [icon]="eyeIcon" (click)="filmToWatched(film['id'], false, film['title'])"></fa-icon>
+				<fa-icon *ngIf="!film['watched']" style="padding-right: 4px; color: #9ab" [icon]="eyeIcon" (click)="filmToWatched(film['id'], true, film['title'])"></fa-icon>
+
+
+				<fa-icon *ngIf="film['liked']" style="padding-right: 4px; color: red" (click)="filmToLiked(film['id'], false, film['title'])" [icon]="likeIcon2"></fa-icon> 
+				<fa-icon *ngIf="!film['liked']" style="padding-right: 4px; color: #9ab" (click)="filmToLiked(film['id'], true, film['title'])" [icon]="likeIcon"></fa-icon> 
+<!-- film['watchlisted'] -->
+				<fa-icon *ngIf="film['watchlisted']" style="padding-right: 4px; color: #00A1E7" (click)="filmToWatchlist(film['id'], false, film['title'])"  [icon]="watchlistIcon2"></fa-icon> 
+				<fa-icon *ngIf="!film['watchlisted']" (click)="filmToWatchlist(film['id'], true, film['title'])" style="padding-right: 4px; color: #9ab"   [icon]="watchlistIcon"></fa-icon> 
+
+			</div>
+			
+		</div>
+	</li>
+	
+</ul>

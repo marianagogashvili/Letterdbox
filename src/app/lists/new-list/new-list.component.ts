@@ -9,6 +9,7 @@ import { NgForm, FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 import { ListService } from '../list.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-list',
@@ -29,7 +30,8 @@ export class NewListComponent implements OnInit {
   // filmSubject = new BehaviorSubject(null);
 
   constructor(private filmService: FilmService,
-              private listService: ListService) { }
+              private listService: ListService,
+              private router: Router) { }
 
   ngOnInit() {
         this.filmName.valueChanges.subscribe(title => {
@@ -117,7 +119,10 @@ export class NewListComponent implements OnInit {
           setTimeout(() => {
             this.error = null;
           }, 5000);
+        } else {
+          this.router.navigate(['/lists/' + result]);
         }
+
       });
     }
   }

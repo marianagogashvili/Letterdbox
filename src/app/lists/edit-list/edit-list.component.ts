@@ -9,6 +9,7 @@ import { ListService } from '../list.service';
 import { ActivatedRoute } from '@angular/router';
 import { faArrowUp } from '@fortawesome/free-solid-svg-icons';
 import { faArrowDown } from '@fortawesome/free-solid-svg-icons';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-edit-list',
@@ -40,7 +41,8 @@ export class EditListComponent implements OnInit, OnDestroy {
 
   constructor(private filmService: FilmService,
               private listService: ListService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private router: Router) { }
 
     ngOnInit() {
     	
@@ -60,32 +62,18 @@ export class EditListComponent implements OnInit, OnDestroy {
 				this.listPublic = +result[0]['public'];
 				this.rankedList = +result[0]['ranked'];
 				this.listFilms = result[1];
-				// console.log("RESULT !", result[1]);
-				// console.log("RESULT !2", this.initFilms);
-				// console.log("RESULT !3", this.listFilms);
-
 	    	});
 		});
 		this.sub2 = this.filmName.valueChanges.subscribe(title => {
 	  		if (title !== '' && (title.split('').length >= 3)) {
 		  		this.filmService.findFilms(title).subscribe(result => {
 		  			this.films = result;
-		  			// console.log(result);
 		  		});
 		  	} else {
 				this.films = [];
 		  	}
 	  	});
-		// console.log(this.initFilms);
 	}
-    // this.filmSubject.subscribe(result => {
-    // 	console.log(result);
-    // 	if (result !== null) {
-    // 		// this.listFilms.push(result);
-    // 		this.listFilms = result;
-    // 	}
-    // });
-
 
   addToList(film) {
 	  let add=0;
@@ -106,9 +94,6 @@ export class EditListComponent implements OnInit, OnDestroy {
   	} else {
 	  	this.listFilms.push(film);
   	}
-	// console.log("RESULT !2", this.initFilms);
-	// console.log("RESULT !3", this.listFilms);
-
   }
 
   removeFilm(film) {
@@ -118,8 +103,6 @@ export class EditListComponent implements OnInit, OnDestroy {
 				// this.filmSubject.next(film);
 			} 
   	});
-	// console.log("RESULT !2", this.initFilms);
-	// console.log("RESULT !3", this.listFilms);
 
   }
 
@@ -127,8 +110,8 @@ export class EditListComponent implements OnInit, OnDestroy {
     this.rankedList = !this.rankedList;
   }
   saveList(form: NgForm) {
-  	console.log("bRUH 1",this.initFilms);
-	console.log("bRUH 2",this.listFilms);
+//     console.log("bRUH 1",this.initFilms);
+	// console.log("bRUH 2",this.listFilms);
     
     if (this.listFilms.length === 0) {
       this.error = "Please select films to create a list";
@@ -137,16 +120,7 @@ export class EditListComponent implements OnInit, OnDestroy {
       }, 5000);
     } else {
       let films = [];
-  //     if (form.value.ranked === true) {
-  //     	Object.values(this.listFilms).forEach((film, i) => {
-	 //      films.push({rank: (i+1), id: +film['id']});
-	 //    });
-  //     } else {
-		// Object.values(this.listFilms).forEach(film => {
-	 //      films.push({id: +film['id']});
-	 //    });
-  //     }
-      Object.values(this.listFilms).forEach(film => {
+       Object.values(this.listFilms).forEach(film => {
 	      films.push(+film['id']);
 	    });
       let param = {title: form.value.list,
@@ -162,14 +136,14 @@ export class EditListComponent implements OnInit, OnDestroy {
 	  // console.log(+this.initList['public'] === form.value.public);
 	  // console.log(+this.initList['ranked'] === form.value.ranked);
 
-	  console.log("FILMS INIT" + this.initFilms);
-	  console.log("FILMS" + films);
-	  // console.log(JSON.stringify(this.initFilms) === JSON.stringify(films));
-	  // console.log();
-	  		console.log("BRUHBRUHBRUHBRUHBRUHBRUHBRUHBRUHBRUH");
+	  // console.log("FILMS INIT" + this.initFilms);
+	  // console.log("FILMS" + films);
+	  // // console.log(JSON.stringify(this.initFilms) === JSON.stringify(films));
+	  // // console.log();
+	  // 		console.log("BRUHBRUHBRUHBRUHBRUHBRUHBRUHBRUHBRUH");
 
-	  console.log(((JSON.stringify(this.initFilms) !== JSON.stringify(films)) ||
-	  			   (form.value.ranked !== +this.initList['ranked'])));
+	  // console.log(((JSON.stringify(this.initFilms) !== JSON.stringify(films)) ||
+	  // 			   (form.value.ranked !== +this.initList['ranked'])));
 
 	  if ((this.initList['title'] === form.value.list) && 
 	  	  (JSON.stringify(this.initFilms) === JSON.stringify(films)) &&
@@ -186,7 +160,8 @@ export class EditListComponent implements OnInit, OnDestroy {
                    ranked: form.value.ranked,
                    id: this.listId,
                    films: null}).subscribe(result => {
-	       		console.log(result);
+	       		// console.log(result);
+	       		this.router.navigate(['/lists/' + this.listId]);
 	     	});
 	  	} else if ((JSON.stringify(this.initFilms) !== JSON.stringify(films)) ||
 	  			   (form.value.ranked !== +this.initList['ranked'])) {
@@ -215,12 +190,12 @@ export class EditListComponent implements OnInit, OnDestroy {
 	  				Object.values(rankedFilms).forEach(films => {
 
 	  					if (+this.initList['ranked'] === 0) { // все чтобы были null
-	  						 console.log("ВСЕ ТЕПЕРЬ 0");
+	  						 // console.log("ВСЕ ТЕПЕРЬ 0");
 	  						 if (initFilms['id'] === films['id']){
 		  						toUpdate.push(films);
 		  					 }
 	  					} else if (+this.initList['ranked'] === 1) {
-	  						 console.log("ВСЕ ТЕПЕРЬ 1");
+	  						 // console.log("ВСЕ ТЕПЕРЬ 1");
 							 if ((initFilms['id'] === films['id']) && (initFilms['rank'] !== films['rank'])){
 		  						toUpdate.push(films);
 		  					 }
@@ -228,14 +203,14 @@ export class EditListComponent implements OnInit, OnDestroy {
 	  					
 	  				});
 	  			});
-	  			console.log("toremove  ");
-	  			console.log(toRemove);
+	  			// console.log("toremove  ");
+	  			// console.log(toRemove);
 
-	  			console.log("Toadd  ");
-	  			console.log(toAdd);
+	  			// console.log("Toadd  ");
+	  			// console.log(toAdd);
 
-	  			console.log("ToUpdate ");
-	  			console.log(toUpdate);
+	  			// console.log("ToUpdate ");
+	  			// console.log(toUpdate);
 
 	  			this.listService.updateList({title: form.value.list,
                    description: form.value.descr,
@@ -247,6 +222,7 @@ export class EditListComponent implements OnInit, OnDestroy {
                	   update: toUpdate}).subscribe(result => {
 		       		this.initFilms = films;
 		       		this.initList['ranked'] = 1;
+		       		this.router.navigate(['/lists/' + this.listId]);
 		     	});
 	  		} else if (form.value.ranked === 0 || form.value.ranked === false) {
 	  			let toRemove = this.initFilms.filter((el) => {
@@ -280,12 +256,12 @@ export class EditListComponent implements OnInit, OnDestroy {
 	  				});
 	  			});
 
-	  			console.log("toremove  ");
-	  			console.log(toRemove);
-	  			console.log("Toadd  ");
-	  			console.log(toAdd);
-				console.log("toUpdate  ");
-	  			console.log(toUpdate);
+	  	// 		console.log("toremove  ");
+	  	// 		console.log(toRemove);
+	  	// 		console.log("Toadd  ");
+	  	// 		console.log(toAdd);
+			 // console.log("toUpdate  ");
+	  	// 		console.log(toUpdate);
 
 	  			this.listService.updateList({title: form.value.list,
                    description: form.value.descr,
@@ -297,6 +273,7 @@ export class EditListComponent implements OnInit, OnDestroy {
                	   update: toUpdate}).subscribe(result => {
 		       		this.initFilms = films;
 		       		this.initList['ranked'] = 0;
+		       		this.router.navigate(['/lists/' + this.listId]);
 		     	});
 	  		}
 	  		
@@ -316,7 +293,7 @@ export class EditListComponent implements OnInit, OnDestroy {
         }  
       }
     });
-    console.log(this.listFilms);
+    // console.log(this.listFilms);
   }
 
   down(id) {
@@ -329,7 +306,7 @@ export class EditListComponent implements OnInit, OnDestroy {
         }  
       }
     });
-    console.log(this.listFilms);
+    // console.log(this.listFilms);
   }
 
   ngOnDestroy() {

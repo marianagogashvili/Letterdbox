@@ -29,6 +29,7 @@ import { ListsComponent } from './lists/lists.component';
 import { OwnListsComponent } from './user/own-lists/own-lists.component';
 import { NewListComponent } from './lists/new-list/new-list.component';
 import { EditListComponent } from './lists/edit-list/edit-list.component';
+import { ListComponent } from './lists/list/list.component';
 
 @NgModule({
   declarations: [
@@ -53,7 +54,8 @@ import { EditListComponent } from './lists/edit-list/edit-list.component';
     ListsComponent,
     OwnListsComponent,
     NewListComponent,
-    EditListComponent,   
+    EditListComponent,
+    ListComponent,   
 
   ],
   imports: [

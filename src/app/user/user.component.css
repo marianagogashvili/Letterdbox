@@ -65,15 +65,25 @@ button: focus {
 .navbar-brand:hover {
 	background-color: grey;
 }
-
+#hrId { 
+	display: none;
+	width: 100%;
+	height: 1px;	
+	clear: both;
+	background-color: #00E054;
+	margin-bottom: 17px;
+}
 @media only screen and (max-width: 770px) {
 	#activityDiv2 {
 		display: none;
 	}
+	#hrId {
+		display: block;
+	}
 }
 @media only screen and (max-width: 560px) {
 	#mainUserDiv {
-		padding-left: 50px;
+		padding-left: 40px;
 	}
 
 }

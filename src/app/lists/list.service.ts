@@ -17,4 +17,8 @@ export class ListService {
 	updateList(param: Params) {
 		return this.http.post('http://localhost:8888/updateList.php', JSON.stringify(param));		
 	}
+
+	// getFilms(param: Params) {
+	// 	return this.http.post('http://localhost:8888/getFilmsFromList.php', JSON.stringify(param));		
+	// }
 }

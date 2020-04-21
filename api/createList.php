@@ -31,9 +31,9 @@ if ($alreadyExists == null) {
 
 				}
 			}
+			echo(json_encode($list->id));
 		}
 	}
-	echo(json_encode(true));
 } else  {
 	echo(json_encode(false));
 }

@@ -20,8 +20,14 @@ img:hover {
 }
 #list {
 	display: inline;
-	
+
+}
+#iconPen {
+	margin-left: 3px;
 }
 #iconPen:hover {
 	color: #00E054;
+}
+#listSpan:hover {
+	color: #9ab;
 }

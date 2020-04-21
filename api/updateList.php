@@ -21,7 +21,7 @@ if (Lists::updateList($conn, $value['id'], $value['title'], $value['description'
 	echo(false);
 }
 
-if ($value['add']) {
+if (isset($value['add'])) {
 	foreach ($value['add'] as $filmToAdd ) {
 		// error_log($filmToAdd);
 		if (Lists::addFilmToList($conn, $value['id'], $filmToAdd['id'], $filmToAdd['rank'])) {
@@ -30,7 +30,7 @@ if ($value['add']) {
 		}
 	}
 } 
-if ($value['remove']) {
+if (isset($value['remove'])) {
 	foreach ($value['remove'] as $filmToRemove ) {
 		// error_log($filmToRemove);
 		if (Lists::deleteFilmFromList($conn, $value['id'], $filmToRemove)) {
@@ -40,7 +40,7 @@ if ($value['remove']) {
 	}
 }
 
-if ($value['update']) {
+if (isset($value['update'])) {
 	foreach ($value['update'] as $filmToUpdate ) {
 		// error_log($filmToRemove);
 		if (Lists::updateFilmFromList($conn, $value['id'], $filmToUpdate['id'], $filmToUpdate['rank'])) {
