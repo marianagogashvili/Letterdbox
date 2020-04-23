@@ -2,6 +2,7 @@
 header("Access-Control-Allow-Origin: *");
 
 class Lists {
+	public $id;
 	public $user_id;
 	public $title;
 	public $description;
@@ -53,7 +54,7 @@ class Lists {
 	}
 
 	public static function getFilmsFromList($conn, $list_id) {
-		$sql = "SELECT film.*, film_id FROM list_film INNER JOIN film on film.id = list_film.film_id WHERE list_id = :list_id ORDER BY rank ASC";
+		$sql = "SELECT film.*, film_id, list_film.rank FROM list_film INNER JOIN film on film.id = list_film.film_id WHERE list_id = :list_id ORDER BY rank ASC";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
@@ -104,6 +105,48 @@ class Lists {
 		}
 	}
 
+
+	public static function likeList($conn, $list_id, $user_id) {
+		$sql = "INSERT INTO like_list VALUES(:list_id, :user_id)";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return true;
+		}
+	}
+
+	public static function unlikeList($conn, $list_id, $user_id) {
+		$sql = "DELETE FROM like_list WHERE list_id = :list_id AND user_id =:user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return true;
+		}
+	}
+
+	public static function findLike($conn, $list_id, $user_id) {
+		$sql = "SELECT * FROM like_list WHERE list_id = :list_id AND user_id = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return $stmt->fetch();
+		}
+	}
+
+	public static function findNumberOfLikes($conn, $list_id) {
+		$sql = "SELECT COUNT(*) FROM like_list WHERE list_id = :list_id ";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
+
+		if ($stmt->execute()) {
+          	return $stmt->fetch();
+		}
+	}
+
+	
 }
 
 ?>

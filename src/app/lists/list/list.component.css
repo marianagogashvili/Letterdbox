@@ -2,12 +2,21 @@
 	border: 1px solid #00e054;
 
 }
+
 #listTitleId {
+	font-family: 'Titalium';
+	font-size: 40px;
+	color: white;
+	margin-left: 40px;
+}
+
+#listDescr {
 	font-family: 'Roboto';
-	font-size: 35px;
+	font-size: 24px;
 	color: #9ab;
 	margin-left: 40px;
 }
+
 #filmImage {
 	margin: 10px;
 }
@@ -16,6 +25,7 @@ ul {
 	padding:0;
 	margin:0;
 }
+
 #iconPen:hover{
 	color: #00e054;
 }
@@ -27,9 +37,11 @@ li {
 	list-style-type:none;
 	margin-bottom:10px; 
 }
+
 li .desc {
 	display: none;
 }
+
 /*:hover*/
 li:hover .desc {
 	display: block;
@@ -39,13 +51,66 @@ li:hover .desc {
 	text-align: center;
 	background-color:rgba(0, 0, 0, 0.5);
 	margin-left: 12px;
-	margin-bottom: 12px;
+	margin-bottom: 45px;
 	border-radius: 2px;
 }
 
 #filmsUl {
 	margin-left: 5vw;
+	width: 70vw;
+	/*max-width: 90vw;*/
 }
+
+#likeTab {
+	float: right;
+	 width: 220px; 
+	 height: 60px; 
+	 color: #9ab ; 
+	 margin-right: 4vw; 
+	 background-color: #456;
+	 border-radius: 5px;
+}
+
+#likeId:hover {
+	color:  #151b22;
+}
+
+#likeId {
+	font-family: 'Roboto';
+	/*padding: 10px; */
+	font-size: 17px;
+	text-align: center;
+}
+
+#comment {
+	border-radius: 3px; 
+	color: #9ab;
+	background-color: #2c3440; 
+	border: 1px solid rgb(153,170,187, 0.2); 
+	padding: 3px 6px 3px 6px; 
+	outline: none;
+	resize: none;
+	width: 70vw;
+	height: 15vh;
+	top: 0;
+}
+#comment:focus {
+	background-color: white; 
+	border: 0;
+	color: black;
+}
+#saveBtn {
+	outline: none;
+	background-color: #00b020;
+	font-family: 'Roboto';
+	text-transform: uppercase;
+	font-size: 14px;
+	color: white;
+	border: 0;
+	border-radius: 3px;
+	margin-left: 15px;
+}
+
 @media only screen and (max-width: 600px) {
 	#filmImage {
 		margin: 24px;
@@ -55,7 +120,24 @@ li:hover .desc {
 		margin: 24px;
 		width: 70%;
 		margin-left: 30px;
-		margin-bottom: 27px;
+		margin-bottom: 58px;
 		border-radius: 2px;
 	}
+	
+}
+
+@media only screen and (max-width: 900px) {
+	#likeTab {
+		width: 90%;
+		height: 70px; 
+		margin-bottom: 30px;
+		margin-top: 20px;
+	}
+	#likeId {
+		font-size: 27px;
+	}
+	#filmsUl {
+		width: 95%;
+	}
+
 }

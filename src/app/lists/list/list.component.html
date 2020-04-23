@@ -1,10 +1,20 @@
 <app-header></app-header>
 <h1 id="listTitleId">{{ list?.title }}  <span id="iconPen"><fa-icon [icon]="penIcon" id="iconPen" [routerLink]="['/lists/edit',list?.id]"></fa-icon></span></h1>
+<span id="listDescr">{{ list?.description }}</span>
+<div id="likeTab">
+	<h1 id="likeId" (click)="likeList()">Like this list 
+		<fa-icon *ngIf="ownLike !== false" style="padding-right: 4px; color: red"  [icon]="likeIcon2"></fa-icon> 
+		<fa-icon *ngIf="ownLike === false" style="padding-right: 4px; color: #9ab"  [icon]="likeIcon"></fa-icon> 
+		<span style="font-size: 17px" *ngIf="numberOfLikes > 0">{{ numberOfLikes }} liked this</span>
+	</h1>
+</div>
+<ul *ngFor="let film of films; let i = index" id="filmsUl">
 
-<ul *ngFor="let film of films" id="filmsUl">
-
-	<li style="display: inline; margin-right: 17px; overflow-x: hidden;">
+	<li style="display: inline; margin-right: 17px; overflow-x: hidden;" >
+		<div>
+			
 		<img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="150" height="225" alt="" (click)="toFilm(film['id'])">
+
 		<div class="desc">
 			<div style="color: green; ">
 				<fa-icon *ngIf="film['watched']" style="padding-right: 4px; color: green" [icon]="eyeIcon" (click)="filmToWatched(film['id'], false, film['title'])"></fa-icon>
@@ -20,6 +30,31 @@
 			</div>
 			
 		</div>
+		</div>
+		<p *ngIf="+list?.ranked === 1" style="color: white; font-family: 'Roboto'; text-align: center">{{ film['rank'] }}</p>
+		<p *ngIf="+list?.ranked === 0" style="color: white; font-family: 'Roboto'; text-align: center">{{ i+1 }}</p>
 	</li>
-	
 </ul>
+<div style="clear: both; margin-left: 5vw; margin-bottom: 10px">
+	<h1 style="color: #9ab; font-family: 'Roboto'; font-size: 23px">Comment?</h1>
+	<textarea 
+		id="comment"
+		[formControl]="comment"></textarea>
+	<button id="saveBtn" (click)="saveComment()">save</button>
+
+	<div *ngFor="let comment of comments" style=" padding-left: 10px; width: 60%; color: #9ab">
+		<div style=" display: inline-block;">
+			<div style=" display: inline-block;  ">
+				<span>{{ comment['username'] }}</span>  <div>{{ comment['date'] | date: 'dd MMMM' }}</div>
+			</div>
+
+			<span style="display: inline-block; width: 80%; margin-left: 15px; float: right; ">{{ comment['description'] }}</span>
+		</div>
+			
+
+		<div style="width: 100%; background-color: rgb(153,170,187,0.5); height: 1px;  margin-bottom: 20px; margin-top: 20px">
+		</div>
+	</div>
+	
+</div>
+

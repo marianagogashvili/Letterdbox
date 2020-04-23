@@ -15,7 +15,7 @@ import { DatePipe } from '@angular/common';
 
 import { FilmService } from '../../films/film.service';
 import { UserService } from '../../user/user.service';
-
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
@@ -25,6 +25,7 @@ export class ListComponent implements OnInit {
   listId;
   list;
   films;
+  comments;
   penIcon = faPen;
   currentUserId = JSON.parse(localStorage.getItem('userData')).id;
 
@@ -34,6 +35,11 @@ export class ListComponent implements OnInit {
 
   watchlistIcon = faClock;
   watchlistIcon2 = faClock2;
+
+  ownLike;
+  numberOfLikes;
+
+  comment: FormControl = new FormControl();
 
   constructor(private route: ActivatedRoute,
   			  private listService: ListService,
@@ -51,11 +57,13 @@ export class ListComponent implements OnInit {
   			this.films = list[1];
   			console.log(list[1]);
   			this.setUp();
+  			this.setUpComment();
   		});
   		// this.listService.getFilms({id: this.listId}).subscribe(films => {
   			
   		// });
   	});
+
   }
 
   setUp() {
@@ -70,6 +78,23 @@ export class ListComponent implements OnInit {
           film['watched'] = watched;
         });
       });
+
+  	this.listService.findListLike({user_id: this.currentUserId, list_id: this.listId}).subscribe(result => {
+  		console.log(result);
+  		if (result[0] === false) {
+  			this.ownLike = false;
+  		} else {
+  			this.ownLike = true;
+  		}
+  		
+  		this.numberOfLikes = +result[1][0];
+  	});
+  }
+  setUpComment() {
+  	this.listService.getComments({list_id: this.listId}).subscribe(result => {
+  		this.comments = result;
+  		console.log(result);
+  	});
   }
 
   filmToWatched(id, add, title) {
@@ -159,6 +184,28 @@ export class ListComponent implements OnInit {
   
   toFilm(id){
   	this.router.navigate(['/films', id]);
+  }
+
+  likeList() {
+  	this.listService.likeList({user_id: this.currentUserId, list_id: this.listId, like: !this.ownLike}).subscribe(result => {
+  		console.log(result);
+  		this.setUp();
+  	});
+  }
+
+  saveComment() {
+  	console.log(this.comment.value);
+  	let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString();
+  	this.listService.addComment({
+  		user_id: this.currentUserId, 
+  		list_id: this.listId, 
+  		description: this.comment.value,
+  		date: date
+  	}).subscribe(result => {
+  		console.log(result);
+  		this.setUpComment()
+  		this.comment.setValue('');
+  	})
   }
 
 }
