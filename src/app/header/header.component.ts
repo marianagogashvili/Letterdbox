@@ -7,6 +7,7 @@ import { FilmService } from '../films/film.service';
 import { map, catchError } from 'rxjs/operators';
 // import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
+import { FormControl } from '@angular/forms';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -24,12 +25,12 @@ import { AuthService } from '../auth/auth.service';
       transition('normal => sliding', animate(600)),
       transition('sliding => normal', animate(400)),
      ])
-
   ]
 })
 export class HeaderComponent implements OnInit {
   searchText = faSearch;
   searchState = 'normal';
+  lupaIcon = faSearch;
   // currentLink = 'films';
 
   films = null;
@@ -37,7 +38,7 @@ export class HeaderComponent implements OnInit {
   searchFilm = false;
   loggedInUser = localStorage.getItem('userData');
   // private subscription: Subscription;
-
+  filmSearch: FormControl = new FormControl();
   constructor(private route: ActivatedRoute,
               private router: Router,
               private filmService: FilmService, 
@@ -58,6 +59,10 @@ export class HeaderComponent implements OnInit {
   	} else {
   		this.searchText = faSearch;
   	}
+  }
+
+  onOpenSearch() {
+    console.log(this.filmSearch.value);
   }
 
   onSelect(result) {

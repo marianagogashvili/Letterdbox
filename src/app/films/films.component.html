@@ -4,12 +4,15 @@
   margin-left: 70px; font-size: 13px; ">
     <div class="container-fluid" style="background-color: #151b22"> 
     <div  style="">
-      <div  class="navbar-header" >
+      <!-- <div  class="navbar-header" >
         <a id="navText2" class="navbar-brand" style="font-size: 14px;" [routerLink]="">BROWSE BY</a>
-      </div>
+      </div> -->
       <ul class="nav navbar-nav">
+        <li>
+          <a id="navText2" class="navbar-brand" style="font-size: 14px;" [routerLink]="">BROWSE BY</a>
+        </li>
         <li  class="dropdown" appDropdown>
-          <a id="navText2" href="#" class="dropdown-toggle" role="button">YEAR <span class="caret"></span></a>
+          <a id="navText2" class="dropdown-toggle" role="button">YEAR <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a id="navText2" [routerLink]="['/home']" [queryParams]="{year:'2020'}" href="#">2020's</a></li>
             <li><a id="navText2" [routerLink]="['/home']" [queryParams]="{year:'2010'}" href="#">2010's</a></li>
@@ -18,30 +21,13 @@
           </ul>
         </li>
         <li class="dropdown" appDropdown>
-          <a id="navText2" href="#" class="dropdown-toggle" role="button">RATING <span class="caret"></span></a>
+          <a id="navText2"  class="dropdown-toggle" role="button">RATING <span class="caret"></span></a>
           <ul class="dropdown-menu">
             <li><a  id="navText2" [routerLink]="['/home']" [queryParams]="{rating:'DESC'}">Highest</a></li>
             <li><a id="navText2" [routerLink]="['/home']" [queryParams]="{rating:'ASC'}">Lowest</a></li>
           </ul>
         </li>
-        <li class="dropdown" appDropdown>
-          <a  id="navText2" href="#" class="dropdown-toggle" role="button">POPULAR <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a id="navText2" href="#">All time</a></li>
-            <li><a id="navText2" href="#">This year</a></li>
-            <li><a id="navText2" href="#">This week</a></li>
-            <li><a id="navText2" href="#">This month</a></li>
-          </ul>
-        </li>
-        <li class="dropdown" appDropdown>
-          <a id="navText2" href="#" class="dropdown-toggle" role="button">GENRE <span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <li><a id="navText2" href="#">Action</a></li>
-            <li><a id="navText2" href="#">Documentary</a></li>
-            <li><a id="navText2" href="#">Horror</a></li>
-            <li><a id="navText2" href="#">Drama</a></li>
-          </ul>
-        </li>
+        
       </ul> 
     </div>              
     </div>

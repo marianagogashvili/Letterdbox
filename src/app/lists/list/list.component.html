@@ -37,24 +37,34 @@
 </ul>
 <div style="clear: both; margin-left: 5vw; margin-bottom: 10px">
 	<h1 style="color: #9ab; font-family: 'Roboto'; font-size: 23px">Comment?</h1>
+	<form #commentForm="ngForm" (ngSubmit)="saveComment(commentForm)">
+<span class="help-block" *ngIf="comment.touched && !comment.valid" style="color: red; font-size: 15px; font-family: 'Roboto">Comment is not valid</span>
 	<textarea 
+		type="text"
 		id="comment"
-		[formControl]="comment"></textarea>
-	<button id="saveBtn" (click)="saveComment()">save</button>
+		ngModel
+		name="comment"
+		required
+		comment 
+		minlength="1" 
+		#comment="ngModel"
+		></textarea>
+		
+	<button id="saveBtn" type="submit">save</button>
 
 	<div *ngFor="let comment of comments" style=" padding-left: 10px; width: 60%; color: #9ab">
-		<div style=" display: inline-block;">
-			<div style=" display: inline-block;  ">
-				<span>{{ comment['username'] }}</span>  <div>{{ comment['date'] | date: 'dd MMMM' }}</div>
+		<div style=" display: inline-block;  width: 100%;" >
+			<div style=" display: inline-block; vertical-align: top; ">
+				<div><h5>{{ comment['username'] }}</h5>
+				<h5>{{ comment['date'] | date: 'dd MMMM' }}</h5></div>  
 			</div>
 
-			<span style="display: inline-block; width: 80%; margin-left: 15px; float: right; ">{{ comment['description'] }}</span>
+			<div style="width: 80%; margin-left: 5vw;  display: inline-block; margin-top: 10px">{{ comment['description'] }}</div>
 		</div>
-			
 
-		<div style="width: 100%; background-color: rgb(153,170,187,0.5); height: 1px;  margin-bottom: 20px; margin-top: 20px">
+		<div style="width: 100%; background-color: rgb(153,170,187,0.5); height: 1px;  margin-bottom: 10px; margin-top: 20px">
 		</div>
 	</div>
-	
+	</form>
 </div>
 

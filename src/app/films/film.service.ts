@@ -20,14 +20,6 @@ export class FilmService {
 			return this.http.post(
 				'http://localhost:8888/sortFilms.php', JSON.stringify(param)
 			);
-		} else if (param['popular']) {
-			return this.http.post(
-				'http://localhost:8888/sortFilms.php', JSON.stringify(param)
-			);
-		} else if (param['genre']) {
-			return this.http.post(
-				'http://localhost:8888/sortFilms.php', JSON.stringify(param)
-			);
 		} else {
 			return this.http.post(
 				'http://localhost:8888/getFilms.php', JSON.stringify(param)

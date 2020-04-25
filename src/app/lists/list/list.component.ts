@@ -12,7 +12,7 @@ import { faClock as faClock2 } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
 
 import { DatePipe } from '@angular/common';
-
+import { NgForm } from '@angular/forms';
 import { FilmService } from '../../films/film.service';
 import { UserService } from '../../user/user.service';
 import { FormControl } from '@angular/forms';
@@ -39,7 +39,7 @@ export class ListComponent implements OnInit {
   ownLike;
   numberOfLikes;
 
-  comment: FormControl = new FormControl();
+  // comment: FormControl = new FormControl();
 
   constructor(private route: ActivatedRoute,
   			  private listService: ListService,
@@ -52,12 +52,18 @@ export class ListComponent implements OnInit {
   	this.route.params.subscribe(result => {
   		this.listId = +result['id'];
   		this.listService.findList({id: this.listId}).subscribe(list => {
-  			this.list = list[0];
-  			console.log(list[0]);
-  			this.films = list[1];
-  			console.log(list[1]);
-  			this.setUp();
-  			this.setUpComment();
+  			console.log("List" + list);
+  			if (list === false) {
+  				this.router.navigate(['/']);
+  			} else  {
+  				this.list = list[0];
+	  			console.log(list[0]);
+	  			this.films = list[1];
+	  			console.log(list[1]);
+	  			this.setUp();
+	  			this.setUpComment();
+  			}
+  			
   		});
   		// this.listService.getFilms({id: this.listId}).subscribe(films => {
   			
@@ -92,7 +98,11 @@ export class ListComponent implements OnInit {
   }
   setUpComment() {
   	this.listService.getComments({list_id: this.listId}).subscribe(result => {
-  		this.comments = result;
+  		let end = [];
+  		Object.values(result).forEach(r => {
+  			end.unshift(r);
+  		});	
+  		this.comments = end;
   		console.log(result);
   	});
   }
@@ -193,18 +203,20 @@ export class ListComponent implements OnInit {
   	});
   }
 
-  saveComment() {
-  	console.log(this.comment.value);
+  saveComment(form: NgForm) {
+  	// console.log(this.comment.value);
   	let date = this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString();
+  	console.log(form.value.comment);
   	this.listService.addComment({
   		user_id: this.currentUserId, 
   		list_id: this.listId, 
-  		description: this.comment.value,
+  		description: form.value.comment,
   		date: date
   	}).subscribe(result => {
   		console.log(result);
   		this.setUpComment()
-  		this.comment.setValue('');
+  		form.reset();
+  		// this.comment.setValue('');
   	})
   }
 

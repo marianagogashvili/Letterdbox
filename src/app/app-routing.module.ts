@@ -17,6 +17,8 @@ import { ListsComponent } from './lists/lists.component';
 import { NewListComponent } from './lists/new-list/new-list.component';
 import { EditListComponent } from './lists/edit-list/edit-list.component';
 import { ListComponent } from './lists/list/list.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { FoundComponent } from './films/found/found.component';
 
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -33,11 +35,12 @@ const appRoutes: Routes = [
 	]},
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent},
+	{path: 'films/found', component: FoundComponent},
 	{path: 'lists', component: ListsComponent},
 	{path: 'lists/new', component: NewListComponent},
 	{path: 'lists/edit/:id', component: EditListComponent},
 	{path: 'lists/:id', component: ListComponent},
-
+	{path: '**', component: NotFoundComponent}
 ];
 @NgModule({
 	imports: [RouterModule.forRoot(appRoutes)],

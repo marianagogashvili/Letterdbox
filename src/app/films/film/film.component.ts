@@ -165,13 +165,22 @@ export class FilmComponent implements OnInit, OnDestroy {
 	  	
 	  	this.subscription1 = this.reviewSubject.subscribe(result => {
 	    	console.log('reviewssss', result);
-
+        let end = [];
 	    	if (result !== null) {
-	    		this.filmReviews = result;
+	    		// this.filmReviews = result;
+          Object.values(result).forEach(r => {
+            end.unshift(r);
+          });
+          this.filmReviews = end;
+
 	    	} else {
 	    		this.filmService.getAllReviewsOfFilm({film_id: id}).subscribe(result => {
-			    	this.filmReviews = result;
-			    	// console.log(result);
+			    	// this.filmReviews = result;
+			    	Object.values(result).forEach(r => {
+              end.unshift(r);
+            });
+            this.filmReviews = end;
+
 			    });
 	    	}
 	    	console.log('spin', this.spinnerIsLoading);

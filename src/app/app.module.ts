@@ -30,6 +30,8 @@ import { OwnListsComponent } from './user/own-lists/own-lists.component';
 import { NewListComponent } from './lists/new-list/new-list.component';
 import { EditListComponent } from './lists/edit-list/edit-list.component';
 import { ListComponent } from './lists/list/list.component';
+import { NotFoundComponent } from './not-found/not-found.component';
+import { FoundComponent } from './films/found/found.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +57,9 @@ import { ListComponent } from './lists/list/list.component';
     OwnListsComponent,
     NewListComponent,
     EditListComponent,
-    ListComponent,   
+    ListComponent,
+    NotFoundComponent,
+    FoundComponent,   
 
   ],
   imports: [

@@ -21,7 +21,7 @@ class Comment {
 	}
 
 	public static function getCommentsFromList($conn, $list_id) {
-		$sql = "SELECT comment.*, user.username FROM comment INNER JOIN user ON comment.user_id = user.id WHERE list_id = :list_id ORDER BY date DESC";
+		$sql = "SELECT comment.*, user.username FROM comment INNER JOIN user ON comment.user_id = user.id WHERE list_id = :list_id ORDER BY date ";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {

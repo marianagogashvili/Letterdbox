@@ -94,7 +94,7 @@ textarea {
   padding-right: 100px;
   /*margin-top: 200px;*/
   /*margin: 140px 0 20px 40px;*/
-
+  margin-bottom: 20px;
 }
 
 #review {
@@ -154,7 +154,7 @@ textarea {
   	width: 180px;
   }
 }
-@media only screen and (max-width: 1194px) {
+@media only screen and (max-width: 1210px) {
   #addition {
     /*float: right; */
 	/*position: relative; */
