@@ -63,6 +63,12 @@ export class HeaderComponent implements OnInit {
 
   onOpenSearch() {
     console.log(this.filmSearch.value);
+    if (this.filmSearch.value !== null && this.filmSearch.value.length >= 2) {
+      this.router.navigate(['/found', {film: this.filmSearch.value}]);
+      this.filmSearch.setValue('');
+      this.searchState = 'normal';
+      this.searchText = faSearch;
+    }
   }
 
   onSelect(result) {

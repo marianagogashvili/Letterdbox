@@ -1,0 +1,28 @@
+#filmImg {
+	display: inline-block;
+	height: 300px;
+	width: 200px;
+}
+#contentId {
+	display: inline-block; 
+	vertical-align: top; 
+	font-family: 'Roboto'; 
+	margin-left: 2vw; 
+	margin-top: 2vw;
+}
+#filmId {
+	font-size: 25px; 
+	color: white;
+}
+#filmId:hover {
+	color:  #00e054;
+}
+@media only screen and (max-width: 600px) { 
+	#filmImg {
+		margin-left: 22vw;
+	}
+	#contentId {
+		text-align: center;
+		margin-left: 10vw;
+	}
+}

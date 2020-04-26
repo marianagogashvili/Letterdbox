@@ -1,1 +1,12 @@
-<p>found works!</p>
+<app-header></app-header>
+<h1 *ngIf="films?.length === 0" style="font-family: 'Roboto'; font-size: 17px; color: #9ab; margin-left: 5vw;">No films found</h1>
+<div *ngFor="let film of films">
+	<div style="margin-left: 5vw; margin-bottom: 3vw; display: inline-block;">
+		<img id="filmImg" [src]="film['photo']" alt="">
+		<div id="contentId">
+			<p id="filmId" [routerLink]="['/films', +film['id']]">{{ film['title'] }} <span style="font-size: 15px">({{film['year']}})</span> 
+				<span style="color: #00e054; margin-left: 8px;" *ngIf="film['rating'] !== null"><fa-icon [icon]="star"></fa-icon>{{ film['rating'] }}</span></p>
+			<p style="max-width: 60vw; max-height: 30vh; overflow: scroll; color: #9ab">{{ film['description'] }}</p>	
+		</div>
+	</div>
+</div>

@@ -35,7 +35,7 @@ const appRoutes: Routes = [
 	]},
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent},
-	{path: 'films/found', component: FoundComponent},
+	{path: 'found', component: FoundComponent},
 	{path: 'lists', component: ListsComponent},
 	{path: 'lists/new', component: NewListComponent},
 	{path: 'lists/edit/:id', component: EditListComponent},
