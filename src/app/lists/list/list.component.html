@@ -1,6 +1,6 @@
 <app-header></app-header>
 <h1 id="listTitleId">{{ list?.title }}  <span id="iconPen"><fa-icon [icon]="penIcon" id="iconPen" [routerLink]="['/lists/edit',list?.id]"></fa-icon></span></h1>
-<span id="listDescr">{{ list?.description }}</span>
+<div id="listDescr">{{ list?.description }}</div>
 <div id="likeTab">
 	<h1 id="likeId" (click)="likeList()">Like this list 
 		<fa-icon *ngIf="ownLike !== false" style="padding-right: 4px; color: red"  [icon]="likeIcon2"></fa-icon> 

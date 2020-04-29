@@ -1,0 +1,53 @@
+#films {
+	display: inline-block; width: 40px;
+}
+#films2 {
+	display: inline-block;
+}
+img {
+	position: relative;
+	z-index: 1;
+}
+img:hover {
+	width: 200px;
+	height: 300px;
+	z-index: 2;
+	border: 1px solid #00E054;
+}	
+#listName {
+	display: inline;
+	margin-left: 120px;
+	font-size: 20px;
+	font-family: 'Roboto';
+	color: white;
+	vertical-align: top;
+}
+#list {
+	display: inline;
+
+}
+#listSpan {
+	/*vertical-align: top;*/
+}
+#listDescr {
+	font-size: 17px;
+	color: #9ab;
+	/*vertical-align: top;*/
+	/*clear: both;*/
+}
+
+#listSpan:hover {
+	color: #00E054;
+
+}
+@media only screen and (max-width: 700px) {
+	#films2 {
+		margin-left: 27vw;
+		margin-bottom: 4vh;
+		margin-top: 4vh;
+		margin-right: 20vw;
+	}
+	#listName {
+		margin-left: 20vw;
+	}
+}

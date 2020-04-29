@@ -99,11 +99,14 @@ export class ListComponent implements OnInit {
   setUpComment() {
   	this.listService.getComments({list_id: this.listId}).subscribe(result => {
   		let end = [];
-  		Object.values(result).forEach(r => {
-  			end.unshift(r);
-  		});	
-  		this.comments = end;
-  		console.log(result);
+  		if (result !== null ) {
+  			Object.values(result).forEach(r => {
+	  			end.unshift(r);
+	  		});	
+	  		this.comments = end;
+	  		console.log(result);
+  		}
+  		
   	});
   }
 

@@ -124,7 +124,7 @@ textarea {
 #filmDescr {
 	color: #9ab; 
 	width: 45vw; 
-	height: 30vw;  
+	max-height: 30vw;  
 	overflow:scroll;
 }
 

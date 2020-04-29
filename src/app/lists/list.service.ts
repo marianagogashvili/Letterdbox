@@ -6,6 +6,10 @@ import { HttpClient } from '@angular/common/http';
 export class ListService {
 	constructor(private http: HttpClient) {}
 
+	getAllLists() {
+		return this.http.get('http://localhost:8888/getAllLists.php');		
+	}
+
 	createList(param: Params){
 		return this.http.post('http://localhost:8888/createList.php', JSON.stringify(param));
 	}
@@ -29,6 +33,7 @@ export class ListService {
  	addComment(param: Params) {
 		return this.http.post('http://localhost:8888/addComment.php', JSON.stringify(param));		
 	}
+	
 	getComments(param: Params) {
 		return this.http.post('http://localhost:8888/getCommentsFromList.php', JSON.stringify(param));		
 	}

@@ -33,6 +33,12 @@ export class FilmService {
 		);
 	}
 
+	findFilmOrListOrReview(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/findFilmOrListOrReview.php', JSON.stringify(param)
+		);
+	}
+
 	getFilmById(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/getFilmById.php', JSON.stringify(param)

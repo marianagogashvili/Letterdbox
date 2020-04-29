@@ -12,9 +12,11 @@
 
 #listDescr {
 	font-family: 'Roboto';
-	font-size: 24px;
+	font-size: 20px;
 	color: #9ab;
-	margin-left: 40px;
+	padding-left: 40px;
+	width: 70vw;
+	margin-bottom: 30px;
 }
 
 #filmImage {

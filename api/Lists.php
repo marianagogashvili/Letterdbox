@@ -34,6 +34,14 @@ class Lists {
 		}
 	}
 
+	public static function findLists($conn, $word) {
+		$sql = "SELECT * FROM list WHERE title LIKE '%" . $word ."%'";
+		$stmt = $conn->prepare($sql);
+		if($stmt->execute()){
+      		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	}
+	}
+
 	public static function findList($conn, $title, $user_id) {
 		$sql = "SELECT * FROM list WHERE title = :title AND user_id = :user_id";
 		$stmt = $conn->prepare($sql);
@@ -143,6 +151,14 @@ class Lists {
 
 		if ($stmt->execute()) {
           	return $stmt->fetch();
+		}
+	}
+
+	public static function getAllLists($conn) {
+		$sql = "SELECT list.*, user.username FROM list INNER JOIN user ON user.id = list.user_id WHERE public = 1";
+		$stmt = $conn->prepare($sql);
+		if ($stmt->execute()) {
+          	return $stmt->fetchAll();
 		}
 	}
 

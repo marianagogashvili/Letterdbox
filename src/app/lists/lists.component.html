@@ -1,1 +1,29 @@
 <app-header></app-header>
+<h1 *ngIf="lists?.length === 0" style="font-family: 'Roboto'; font-size: 17px; color: #9ab; margin-left: 5vw;">No films found</h1>
+
+<div *ngFor="let list of lists" style="margin-left: 20px; margin-bottom: 20px">
+	<div id="list" >
+		<div id="films2">
+			<div id="films" *ngFor="let film of list[1]" style="display: inline-block;">
+			<img width="140" style="display: inline-block;" height="210" src="{{film['photo']}}" alt="" >
+			</div>
+		</div>
+		
+		<div id="listName" style="display: inline-block;">
+			<div id="listSpan" [routerLink]="['/lists/',list[0]['id']]">
+			{{ list[0]['title']  }}</div>
+			<div id="listDescr">
+				<span style="color: #abc; font-family: 'Tinos'; ">{{ list[0]['username'] }}</span>
+				 <span style=" font-size: 13px; color:#678; margin-left: 10px">{{ list[2]  }} films {{ list[3]  }} <fa-icon  style="font-size: 13px; color: #678; margin-bottom: 4px"  [icon]="commentIcon"></fa-icon>
+				{{ list[4] }}
+				<fa-icon  style="font-size: 13px; color: #678; margin-bottom: 4px"  [icon]="likeIcon2"></fa-icon></span> 
+			</div>
+			<div id="listDescr" style="max-width: 60vw; height: 20vh; overflow: scroll; font-size: 15px">
+				{{ list[0]['description'] }}
+			</div>
+		</div>
+
+	</div>
+	
+</div>
+

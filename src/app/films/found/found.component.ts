@@ -11,6 +11,8 @@ import { faStar as faStar2 } from '@fortawesome/free-solid-svg-icons';
 export class FoundComponent implements OnInit {
   films;
   star = faStar2;
+  result = [];
+  selected = 'film';
 
   constructor(private route: ActivatedRoute,
   			  private filmService: FilmService) { }
@@ -18,6 +20,7 @@ export class FoundComponent implements OnInit {
   ngOnInit() {
   	this.route.params.subscribe(result => {
   		console.log(result['film']);
+  		// this.result = result['film'];
   		if (result['film'].length >= 2) {
   			this.filmService.findFilms(result['film']).subscribe(films => {
 				this.films = films;
@@ -26,10 +29,24 @@ export class FoundComponent implements OnInit {
 						film['rating'] = rating;
 	 				});
 				});
-				console.log(films);
+				this.result.push(films['length'], result['film']) ;
+				console.log();
 			});
   		}
-  		
+  	});
+  }
+
+  changeSelected(num) {
+  	if (num === 1) {
+  		this.selected = 'film';
+  	} else if (num === 2) {
+  		this.selected = 'review';
+  	} else if (num === 3) {
+  		this.selected = 'list';
+  	}
+  	console.log(this.selected);
+  	this.filmService.findFilmOrListOrReview({param: this.selected, word: this.result[1]}).subscribe(result => {
+  		console.log(result);
   	});
   }
 

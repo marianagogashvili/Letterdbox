@@ -27,6 +27,14 @@ class Review {
 		}
 	}
 
+	public static function findReviews($conn, $word) {
+		$sql = "SELECT * FROM review WHERE text LIKE '%" . $word ."%'";
+		$stmt = $conn->prepare($sql);
+		if($stmt->execute()){
+      		return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    	}
+	}
+
 	public function createReview($conn) {
 		$sql = "INSERT INTO review(user_id, film_id, text, date) VALUES(:user_id, :film_id, :description, :dating)";
 		$stmt = $conn->prepare($sql);
