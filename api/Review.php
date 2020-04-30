@@ -28,7 +28,7 @@ class Review {
 	}
 
 	public static function findReviews($conn, $word) {
-		$sql = "SELECT * FROM review WHERE text LIKE '%" . $word ."%'";
+		$sql = "SELECT review.*, film.*, watched_films.rating FROM review INNER JOIN film ON film.id = review.film_id INNER JOIN watched_films ON watched_films.film_id = review.film_id AND watched_films.user_id = review.user_id WHERE text LIKE '%" . $word ."%'";
 		$stmt = $conn->prepare($sql);
 		if($stmt->execute()){
       		return $stmt->fetchAll(PDO::FETCH_ASSOC);

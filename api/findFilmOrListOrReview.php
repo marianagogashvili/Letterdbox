@@ -22,7 +22,13 @@ if ($value['param'] === 'film') {
 } else if ($value['param'] === 'review') {
 	$result = Review::findReviews($conn, $value['word']);
 } else if ($value['param'] === 'list') {
-	$result = Lists::findLists($conn, $value['word']);
+	$result = [];
+	$lists = Lists::findLists($conn, $value['word']);
+	foreach ($lists as $list) {
+		$films = Lists::getFilmsFromList($conn, $list['id']);
+		array_push($result, [$list, $films]);
+	}
+	
 }
 // error_log(json_encode($films));
 

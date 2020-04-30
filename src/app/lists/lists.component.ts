@@ -29,7 +29,7 @@ export class ListsComponent implements OnInit {
 	  			filmsToDisplay.push(list[1][i]);
 	  		}
   			finalResult.push([list[0], filmsToDisplay]);
-  			// console.log(finalResult);
+  			console.log(finalResult);
   		});
 
   		this.lists = finalResult;
