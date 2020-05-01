@@ -16,6 +16,12 @@ export class UserService {
  		);
  	}
 
+ 	deleteReview(param: Params) {
+ 		return this.http.post(
+			'http://localhost:8888/deleteReview.php', JSON.stringify(param)
+			);
+ 	}
+
  	getUserActivity(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/getUserActivity.php', JSON.stringify(param)

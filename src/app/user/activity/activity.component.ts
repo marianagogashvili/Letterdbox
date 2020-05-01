@@ -22,8 +22,13 @@ export class ActivityComponent implements OnInit {
 
   ngOnInit() {
 	  this.userService.getUserActivity({user_id: this.userId}).subscribe(result => {
-  		this.activity = result;
-  		console.log(result);
+  		// this.activity = result;
+  		// console.log(result);
+      let act = [];
+      Object.values(result).forEach(r => {
+        act.unshift(r);
+      });
+      this.activity = act;
   	});
   }
   clearActivity() {

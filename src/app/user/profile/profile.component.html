@@ -11,7 +11,7 @@
 	
 <ul *ngFor="let film of recentFilms">
 	<li style="display: inline; margin-right: 17px; overflow-x: hidden;">
-		<img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="150" height="225" alt="" (click)="toFilm(film['id'])">
+		<img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="150" height="225" alt="" routerLink="/films/{{film['id']}}">
 		<div class="desc">
 			<div style="color: green; ">
 				<fa-icon *ngIf="film['film_id']" style="padding-right: 4px; color: green" [icon]="eyeIcon" (click)="filmToWatched(film['id'], false, film['title'])"></fa-icon>

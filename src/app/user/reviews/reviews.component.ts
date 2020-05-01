@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
+import { FilmService } from '../../films/film.service';
+
 import { faStar } from '@fortawesome/free-solid-svg-icons';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-reviews',
@@ -11,13 +14,19 @@ export class ReviewsComponent implements OnInit {
   currentUserId = JSON.parse(localStorage.getItem('userData')).id;
   reviews;
   starIcon = faStar;
-  constructor(private userService: UserService) { }
+
+  constructor(private userService: UserService,
+              private filmService: FilmService,
+              private datePipe: DatePipe) { }
 
   ngOnInit() {
-  	this.userService.getUserReviews({user_id: this.currentUserId}).subscribe(result => {
-  		this.reviews = result;
-  		console.log(result);
-  	});
+  	this.setUp();
+  }
+  setUp() {
+    this.userService.getUserReviews({user_id: this.currentUserId}).subscribe(result => {
+      this.reviews = result;
+      console.log(result);
+    });
   }
 
   toArr(num) {
@@ -26,6 +35,21 @@ export class ReviewsComponent implements OnInit {
   		rating.push(i);
   	}
   	return rating;
+  }
+
+  deleteReview(id, title) {
+    this.userService.deleteReview({user_id: this.currentUserId, film_id: id}).subscribe(result => {
+      console.log(result);
+      this.setUp();
+      this.filmService.createActivity(
+          {user_id: this.currentUserId, 
+            film_id: id, 
+            film_title: title, 
+            action: 'deleted review of', 
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+          console.log('ACTIVITY', result);
+        });
+    });
   }
 
 }

@@ -21,12 +21,19 @@ class Comment {
 	}
 
 	public static function getCommentsFromList($conn, $list_id) {
-		$sql = "SELECT comment.*, user.username FROM comment INNER JOIN user ON comment.user_id = user.id WHERE list_id = :list_id ORDER BY date ";
+		$sql = "SELECT comment.*, user.username FROM comment INNER JOIN user ON comment.user_id = user.id WHERE list_id = :list_id ORDER BY date DESC";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
           	return $stmt->fetchAll();
 		}
+	}
+
+	public static function deleteComment($conn, $id) {
+		$sql = "DELETE FROM comment WHERE id = :id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        return $stmt->execute();
 	}
 }
 

@@ -113,6 +113,23 @@ li:hover .desc {
 	margin-left: 15px;
 }
 
+#deleteBtn {
+	font-family: 'Roboto';
+	/*padding-left: 9px;
+	padding-right: 9px;
+	padding-top: 5px;
+	padding-bottom: 5px;*/
+	padding: 5px 9px 5px 9px;
+	border-radius: 3px;
+	background-color: #9ab;
+	color: white;
+	border: 0;
+}
+
+#deleteBtn:hover {
+	background-color: #d10;
+}
+
 @media only screen and (max-width: 600px) {
 	#filmImage {
 		margin: 24px;

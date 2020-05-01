@@ -9,6 +9,8 @@
 			ngModel 
 			[formControl]="filmReview"></textarea>
 
+	<button id="deleteBtn" (click)="deleteReview()">Delete</button> 			
+
 	<button id="saveBtn" (click)="saveFilmReview()">Save</button>
 </div>
 
@@ -39,7 +41,7 @@
 	</div>
 	<div id="line"></div>
 	<div id="iconAndBtn">
-		<a ><p id="addReviewBtn" (click)="addReview()">Add a review</p></a>
+		<a ><p id="addReviewBtn" (click)="addReview()">Add or delete a review</p></a>
 		
 	</div>
 	<div id="line"></div>

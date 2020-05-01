@@ -28,7 +28,7 @@ export class ListsComponent implements OnInit {
   				// console.log("nbri");
 	  			filmsToDisplay.push(list[1][i]);
 	  		}
-  			finalResult.push([list[0], filmsToDisplay]);
+  			finalResult.push([list[0], filmsToDisplay, list[2], list[3], list[4]]);
   			console.log(finalResult);
   		});
 

@@ -14,6 +14,19 @@
 	border-radius: 3px
 }
 
+#deleteBtn {
+	font-family: 'Roboto';
+	padding-left: 9px;
+	padding-right: 9px;
+	border-radius: 3px;
+	background-color: #9ab;
+	color: white;
+	border: 0;
+}
+#deleteBtn:hover {
+	background-color: #d10;
+}
+
 @media only screen and (max-width: 770px) {
 	#filmImage {
 		margin-left: 24vw;

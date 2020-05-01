@@ -37,6 +37,10 @@ export class ListService {
 	getComments(param: Params) {
 		return this.http.post('http://localhost:8888/getCommentsFromList.php', JSON.stringify(param));		
 	}
+
+	deleteComment(param: Params) {
+		return this.http.post('http://localhost:8888/deleteComment.php', JSON.stringify(param));		
+	}
 	// getFilms(param: Params) {
 	// 	return this.http.post('http://localhost:8888/getFilmsFromList.php', JSON.stringify(param));		
 	// }

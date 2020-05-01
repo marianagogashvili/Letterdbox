@@ -18,7 +18,7 @@ import { DatePipe } from '@angular/common';
 import { Subject, BehaviorSubject } from 'rxjs';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { FormControl } from '@angular/forms';
-
+import { UserService } from '../../user/user.service';
 @Component({
   selector: 'app-film',
   templateUrl: './film.component.html',
@@ -87,6 +87,7 @@ export class FilmComponent implements OnInit, OnDestroy {
   spinnerIsLoading = false;
   // @Output() close = new Subject<void>();
   constructor(private filmService: FilmService,
+          private userService: UserService,
   			  private route: ActivatedRoute,
   			  private router: Router,
   			  private datePipe: DatePipe) { 
@@ -411,9 +412,9 @@ export class FilmComponent implements OnInit, OnDestroy {
   saveFilmReview() {
   	// this.spinnerIsLoading = true;
 
-  	console.log(this.filmReview.value);
+  	// console.log(this.filmReview.value);
   	let review = {film_id: this.currentFilmId, user_id: +this.currentUserId, text: this.filmReview.value};
-  	console.log(review);
+  	// console.log(review);
   	// if (this.watchedFilm['review'] !== false  ) {
   	if (this.currentReview !== null) {
 	  	if (this.filmReview.value !== this.currentReview['text']) {
@@ -457,7 +458,30 @@ export class FilmComponent implements OnInit, OnDestroy {
     this.showState = false;
   	this.initState = 'closed';
   }
-
+  deleteReview() {
+    if(this.currentReview !== null) {
+      this.userService.deleteReview({user_id: +this.currentUserId, film_id: this.currentFilmId}).subscribe(result => {
+        console.log(result);
+        this.filmService.createActivity(
+          {user_id: this.currentUserId, 
+            film_id: this.currentFilmId, 
+            film_title: this.film['title'], 
+            action: 'deleted review of', 
+            date: this.datePipe.transform(new Date(), 'yyyy-MM-dd').toString()}).subscribe(result => {
+          console.log('ACTIVITY', result);
+        });
+        
+        this.filmService.getAllReviewsOfFilm({film_id: this.currentFilmId}).subscribe(result => {
+            this.reviewSubject.next(result);
+            console.log('new result');
+        });
+        this.currentReview = null;
+        this.filmReview.setValue('');
+        this.showState = false;
+        this.initState = 'closed';
+      });
+    }
+  }
   ngOnDestroy() {
   	// this.reviewSubscription.unsubscribe();
   	this.subscription1.unsubscribe();

@@ -70,7 +70,7 @@ textarea {
 #addReviewBtn:hover {
 	color: #fff;
 }
-#saveBtn {
+#saveBtn, #deleteBtn {
   font-family: 'Montserrat', sans-serif;
   text-transform: uppercase;
   border: 0;
@@ -79,12 +79,13 @@ textarea {
   margin-top: 10px;
   padding: 5px 13px 5px 10px;
   border-radius: 2px;
-}
-#saveBtn {
   background-color: #00e054;
   float: right
 }
-
+#deleteBtn {
+  margin-left: 15px;
+  background-color: #d10;
+}
 #reviews {
   clear: both;
   color: #9ab;

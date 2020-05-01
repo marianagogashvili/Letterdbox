@@ -60,9 +60,12 @@
 			</div>
 
 			<div style="width: 80%; margin-left: 5vw;  display: inline-block; margin-top: 10px">{{ comment['description'] }}</div>
+			<div style="float: right; ">
+				<h5 type="" *ngIf="currentUserId === comment['user_id'] " id="deleteBtn" (click)="deleteComment(comment['id'])">Delete</h5> 
+			</div>
 		</div>
 
-		<div style="width: 100%; background-color: rgb(153,170,187,0.5); height: 1px;  margin-bottom: 10px; margin-top: 20px">
+		<div style="width: 100%; background-color: rgb(153,170,187,0.5); height: 1px;  margin-bottom: 10px; margin-top: 10px">
 		</div>
 	</div>
 	</form>

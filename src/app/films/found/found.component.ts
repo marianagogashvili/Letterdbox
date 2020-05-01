@@ -20,7 +20,7 @@ export class FoundComponent implements OnInit {
   starIcon = faStar;
   result = [];
   // result;
-  selected = 'review';
+  selected = 'film';
 
   constructor(private route: ActivatedRoute,
   			  private filmService: FilmService) { }

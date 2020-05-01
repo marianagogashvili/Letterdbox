@@ -223,4 +223,11 @@ export class ListComponent implements OnInit {
   	})
   }
 
+  deleteComment(id) {
+  	this.listService.deleteComment({id: id}).subscribe(result => {
+  		console.log(result);
+  		this.setUpComment();
+  	});
+  }
+
 }

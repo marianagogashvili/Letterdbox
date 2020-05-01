@@ -22,7 +22,7 @@ if($lists) {
 		foreach ($films as $f) {
 			$numOfFilm = $numOfFilm + 1;
 		}
-		// error_log(json_encode($numOfFilm));
+		error_log(json_encode($numOfFilm));
 
 
 		$numOfComment = 0;
@@ -30,18 +30,20 @@ if($lists) {
 		foreach ($comments as $c) {
 			$numOfComment = $numOfComment + 1;
 		}
-		// error_log(json_encode($numOfComment));
+		error_log(json_encode($numOfComment));
 
 
 		$numOfLike = Lists::findNumberOfLikes($conn, $list['id']);
+		error_log(json_encode($numOfLike));
+
 		if ($films) {
 			// array_push($result, [$list, $films, $numOfFilm, $numOfComment, intval($numOfLike[0])]);
 			array_push($result, [$list, $films, $numOfFilm, $numOfComment, intval($numOfLike[0])]);
-			
+
 		}
 
 		// error_log(json_encode(intval($numOfLike[0])));
-		error_log(json_encode($result));
+		error_log(json_encode([$list, $numOfFilm, $numOfComment, intval($numOfLike[0])]));
 	}
 	// error_log(json_encode($result));
 	echo(json_encode($result));
