@@ -13,7 +13,28 @@
 
 	<button id="saveBtn" (click)="saveFilmReview()">Save</button>
 </div>
+<div class="backdrop" [@initState2]="showListPage" (click)="onClose2()"></div>
+<div  [@initState]="showListPage" class="alert-box" id="scndAlertBox">
+	<p>Select list</p>
+	<select name="select" 
+	style="width: 22vw" 
+	    name="selectedList" 
+		ngModel 
+		[formControl]="selectedList"> 
+	  <option selected="true" value="null">---</option>
+	  <option 
+	  	*ngFor="let list of userLists" 
+	  	[disabled]="list[2]" 
+	  	[value]="list[0]" 
+	  	>
+	  	{{ list[1] }}
+	  </option> 
+	  	</select>
 
+	<button id="deleteBtn" routerLink="/lists/new">Create new list</button> 			
+
+	<button id="saveBtn" (click)="saveFilmToList()">Save</button>
+</div>
 <div id="mainDiv" style="display: inline-block;">
 	<img id="filmImg" src="{{ film?.photo }}" alt="" width="250" height="375" >
 	<div style="display: inline-block;">
@@ -29,7 +50,7 @@
 	<div id="iconAndBtn">
 		<fa-icon id="icon" [ngStyle]="watched && {'color':'#00e054'}" [icon]="eyeIcon" (click)="toWatched()"></fa-icon>
 		<fa-icon id="icon" [ngStyle]="liked && {'color': 'red'}" [icon]="likeIcon" (click)="toLiked()"></fa-icon>
-		<fa-icon id="icon" [ngStyle]="later && {'color': 'blue'}" [icon]="watchIcon" (click)="toLater()"></fa-icon>
+		<fa-icon id="icon" [ngStyle]="later && {'color': ' #00A1E7'}" [icon]="watchIcon" (click)="toLater()"></fa-icon>
 	</div>
 	<div id="line"></div>
 	<div id="iconAndBtn">
@@ -46,7 +67,7 @@
 	</div>
 	<div id="line"></div>
 	<div id="iconAndBtn">
-		<a href="" style="color: #9ab;">Add to a list</a>
+		<a  id="addReviewBtn" (click)="addToList()">Add to a list</a>
 		
 	</div>
 </div>

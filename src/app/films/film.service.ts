@@ -109,6 +109,18 @@ export class FilmService {
 			);
 	}
 
+	addFilmToList(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/addFilmToList.php', JSON.stringify(param)
+			);
+	}
+
+	getFilmsToList(param: Params) {
+		return this.http.post(
+			'http://localhost:8888/getFilmsToList.php', JSON.stringify(param)
+			);
+	}
+
 	findFromWatchlist(param: Params) {
 		return this.http.post(
 			'http://localhost:8888/findFromWatchlist.php', JSON.stringify(param)

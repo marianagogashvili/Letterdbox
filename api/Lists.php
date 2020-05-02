@@ -78,7 +78,14 @@ class Lists {
           	return $stmt->fetch();
 		}
 	}
-
+	public static function getLastRank($conn, $list_id) {
+		$sql = "SELECT MAX(rank) FROM list_film WHERE list_id = :list_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':list_id', $list_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+          	return $stmt->fetch();
+		}
+	}
 	public static function updateList($conn, $id, $title, $description, $ranked, $public) {
 		$sql = "UPDATE list SET title = :title, description = :description, ranked = :ranked, public = :public WHERE id = :id";
 		$stmt = $conn->prepare($sql);

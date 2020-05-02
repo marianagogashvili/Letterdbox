@@ -47,8 +47,21 @@ import { UserService } from '../../user/user.service';
   			visibility: 'visible'
   		})),
   		transition('closed <=> opened', animate(500))
-  	]),
-
+  	])
+    // ,
+    // trigger('initState3', [
+    //   state('closed', style({
+    //     transform: 'translateX(-200px)',
+    //     opacity: 0,
+    //     visibility: 'hidden'
+    //   })),
+    //   state('opened', style({
+    //     transform: 'translateX(0)',
+    //     opacity: 1,
+    //     visibility: 'visible'
+    //   })),
+    //   transition('closed <=> opened', animate(500))
+    // ]),
 
   ]
 })
@@ -76,6 +89,9 @@ export class FilmComponent implements OnInit, OnDestroy {
   mainRatingNum;
 
   initState = 'closed';
+  showListPage  = 'closed';
+  // initState3 = 'closed';
+
   showState = false;
   filmReview: FormControl = new FormControl();
 
@@ -85,6 +101,10 @@ export class FilmComponent implements OnInit, OnDestroy {
   reviewSubject = new BehaviorSubject(null); 
   subscription1; 
   spinnerIsLoading = false;
+
+  userLists;
+  selectedList: FormControl = new FormControl();
+
   // @Output() close = new Subject<void>();
   constructor(private filmService: FilmService,
           private userService: UserService,
@@ -94,11 +114,18 @@ export class FilmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
 	this.spinnerIsLoading = true;
 
   	this.route.params.subscribe(params => {
   		let id = +params['id'];
   		this.currentFilmId = id;
+
+      this.filmService.getFilmsToList({user_id: this.currentUserId, film_id: id}).subscribe(result => {
+        this.userLists = result;
+        console.log(this.userLists);
+      });
+
    		this.filmService.getFilmById({id: id}).subscribe(result => {
 			this.film = result;
 			if (result === null) {
@@ -408,6 +435,9 @@ export class FilmComponent implements OnInit, OnDestroy {
   	this.initState = 'closed';
   	// this.reviewSubscription.unsubscribe();
   }
+  onClose2() {
+    this.showListPage = 'closed';
+  }
 
   saveFilmReview() {
   	// this.spinnerIsLoading = true;
@@ -481,6 +511,26 @@ export class FilmComponent implements OnInit, OnDestroy {
         this.initState = 'closed';
       });
     }
+  }
+
+  saveFilmToList() {
+    console.log(this.selectedList.value);
+    if (this.selectedList.value !== 'null' && this.selectedList.value !== '') {
+        this.filmService.addFilmToList({list_id: this.selectedList.value, film_id: this.currentFilmId}).subscribe(result => {
+          console.log(result);
+          this.showListPage = 'closed';
+          this.selectedList.setValue('---');
+          this.filmService.getFilmsToList({user_id: this.currentUserId, film_id: this.currentFilmId}).subscribe(result => {
+            this.userLists = result;
+            console.log(this.userLists);
+          });
+        });
+    }
+    
+  }
+
+  addToList() {
+    this.showListPage = 'opened';
   }
   ngOnDestroy() {
   	// this.reviewSubscription.unsubscribe();
