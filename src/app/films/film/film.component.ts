@@ -529,6 +529,10 @@ export class FilmComponent implements OnInit, OnDestroy {
     
   }
 
+  toNewList() {
+    this.router.navigate(['/lists/new', {id: this.currentFilmId}]);
+  }
+
   addToList() {
     this.showListPage = 'opened';
   }

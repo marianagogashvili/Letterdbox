@@ -19,6 +19,17 @@ label {
 	padding: 3px 6px 3px 6px; 
 	outline: none;
 }
+#filmTitleId {
+	margin-left: 2vw; 
+	margin-right: 1vw; 
+	color: white; 
+	font-size: 25px; 
+	font-family: 'Roboto'; 
+	display: inline-block;
+}
+#filmTitleId:hover {
+	color:  #00A1E7;
+}
 #name:focus {
 	background-color: white; 
 	color: black;

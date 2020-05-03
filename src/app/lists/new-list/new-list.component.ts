@@ -9,7 +9,7 @@ import { NgForm, FormControl } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'; // <== add the imports!
 import { ListService } from '../list.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-new-list',
@@ -31,20 +31,28 @@ export class NewListComponent implements OnInit {
 
   constructor(private filmService: FilmService,
               private listService: ListService,
-              private router: Router) { }
+              private router: Router,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+        this.route.params.subscribe(result => { 
+          console.log(result['id']);
+          this.filmService.getFilmById({id: result['id']}).subscribe(film => {
+            this.addToList(film);
+          });
+          
+        });
         this.filmName.valueChanges.subscribe(title => {
-	  		if (title !== '' && (title.split('').length >= 3)) {
-		  		this.filmService.findFilms(title).subscribe(result => {
-		  			this.films = result;
-		  			// console.log(result);
-		  		});
-		  	} else {
-				this.films = [];
-		  	}
-		  	
-	  	});
+  	  		if (title !== '' && (title.split('').length >= 3)) {
+  		  		this.filmService.findFilms(title).subscribe(result => {
+  		  			this.films = result;
+  		  			// console.log(result);
+  		  		});
+  		  	} else {
+  				this.films = [];
+  		  	}
+
+  	  	});
     // this.filmSubject.subscribe(result => {
     // 	console.log(result);
     // 	if (result !== null) {
@@ -55,6 +63,7 @@ export class NewListComponent implements OnInit {
   }
 
   addToList(film) {
+    console.log(film);
 	  let add=0;
   	if (this.listFilms.length !== 0) {
   		Object.values(this.listFilms).forEach(result => {

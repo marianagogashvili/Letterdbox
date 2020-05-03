@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { UserService } from '../user.service';
 import { FilmService } from '../../films/film.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faEye as faEye2 } from '@fortawesome/free-solid-svg-icons';
@@ -21,8 +22,9 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class ProfileComponent implements OnInit {
   recentFilms;
-  userId = JSON.parse(localStorage.getItem('userData')).id;
-  
+  // userId = JSON.parse(localStorage.getItem('userData')).id;
+  userId;
+
   eyeIcon = faEye;
   likeIcon = faHeart;
   likeIcon2 = faHeart2;
@@ -34,11 +36,23 @@ export class ProfileComponent implements OnInit {
 
   subscription;
   all = false;
+
   constructor(private userService: UserService,
   			  private filmService: FilmService,
-  			  private datePipe: DatePipe) { }
+  			  private datePipe: DatePipe,
+          private router: Router,
+          private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // console.log(this.id);
+    this.route.params.subscribe(result => {
+      console.log(result['id']);
+      if (result['id'] === undefined) {
+        this.userId = JSON.parse(localStorage.getItem('userData')).id;
+      } else {
+        this.userId = result['id'];
+      }
+    });
   	this.subscription = this.filmSubject.subscribe(subj => {
       if (subj === null) {
         this.userService.getShortUserActivity({user_id: this.userId}).subscribe(result => {

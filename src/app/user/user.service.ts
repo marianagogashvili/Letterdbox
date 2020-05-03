@@ -16,6 +16,13 @@ export class UserService {
  		);
  	}
 
+ 	findUserById(param: Params) {
+ 		return this.http.post(
+ 			'http://localhost:8888/findUserById.php',
+ 		 	JSON.stringify(param)
+ 		);
+ 	}
+
  	deleteReview(param: Params) {
  		return this.http.post(
 			'http://localhost:8888/deleteReview.php', JSON.stringify(param)

@@ -31,8 +31,18 @@ const appRoutes: Routes = [
 		{path: 'watchlist', component: WatchlistComponent},
 		{path: 'liked', component: LikedComponent},
 		{path: 'profile', component: ProfileComponent},
-		{path: 'own-lists', component: OwnListsComponent}
+		{path: 'own-lists', component: OwnListsComponent},
+		{path: 'films/:id', component: WatchedFilmsComponent},
+		{path: 'activity/:id', component: ActivityComponent},
+		{path: 'diary/:id', component: DiaryComponent},
+		{path: 'reviews/:id', component: ReviewsComponent},
+		{path: 'watchlist/:id', component: WatchlistComponent},
+		{path: 'liked/:id', component: LikedComponent},
+		{path: 'profile/:id', component: ProfileComponent},
+		{path: 'own-lists/:id', component: OwnListsComponent}
+
 	]},
+	{path: 'user/:id', component: UserComponent },
 	{path: 'films', component: FilmsComponent},
 	{path: 'films/:id', component: FilmComponent},
 	{path: 'found', component: FoundComponent},

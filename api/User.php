@@ -19,6 +19,15 @@ class User {
         }
 	}
 
+	public static function findUserById($conn, $id) {
+		$sql = "SELECT * FROM user WHERE id = :id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":id", $id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
+		}
+	}
+
 	public static function findUserByEmail($conn, $email) {
 		$sql = "SELECT * FROM user WHERE email = :email";
 		$stmt = $conn->prepare($sql);
