@@ -45,18 +45,25 @@ export class ProfileComponent implements OnInit {
 
   ngOnInit() {
     // console.log(this.id);
-    this.route.params.subscribe(result => {
+    this.route.parent.params.subscribe(result => {
       console.log(result['id']);
       if (result['id'] === undefined) {
+        // console.log("IS UNDEFINED");
         this.userId = JSON.parse(localStorage.getItem('userData')).id;
       } else {
+        // console.log("IS DEFINED!!!!!!");
         this.userId = result['id'];
       }
     });
+
+    console.log(this.userId);
+
   	this.subscription = this.filmSubject.subscribe(subj => {
       if (subj === null) {
         this.userService.getShortUserActivity({user_id: this.userId}).subscribe(result => {
 	  		this.recentFilms = result;
+        console.log(result);
+        
 	  		// console.log(result);
         this.likeAndWatch();
 	  	});

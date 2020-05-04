@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
-import {Router} from '@angular/router';
+import {Router, ActivatedRoute} from '@angular/router';
 @Component({
   selector: 'app-own-lists',
   templateUrl: './own-lists.component.html',
@@ -29,13 +29,26 @@ import {Router} from '@angular/router';
   // ]
 })
 export class OwnListsComponent implements OnInit {
-  userId = JSON.parse(localStorage.getItem('userData')).id;
+  userId;
+   // = JSON.parse(localStorage.getItem('userData')).id;
   lists;
   penIcon = faPen;
   constructor(private userService: UserService,
-  			  private router: Router) { }
+  			  private router: Router,
+          		private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // console.log(this.id);
+    this.route.parent.params.subscribe(result => {
+      console.log(result['id']);
+      if (result['id'] === undefined) {
+        // console.log("IS UNDEFINED");
+        this.userId = JSON.parse(localStorage.getItem('userData')).id;
+      } else {
+        // console.log("IS DEFINED!!!!!!");
+        this.userId = result['id'];
+      }
+    });
   	this.userService.getUserLists({user_id: this.userId}).subscribe(result => {
   		this.lists = result;
   		console.log(result);

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../user.service';
 import { FilmService } from '../../films/film.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faEye as faEye2 } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,7 +22,8 @@ import { BehaviorSubject } from 'rxjs';
 })
 export class WatchedFilmsComponent implements OnInit, OnDestroy {
   watchedFilms;
-  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  currentUserId;
+   // = JSON.parse(localStorage.getItem('userData')).id;
   eyeIcon = faEye;
   likeIcon = faHeart;
   likeIcon2 = faHeart2;
@@ -36,9 +37,18 @@ export class WatchedFilmsComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,
               private filmService: FilmService,
               private router: Router,
+              private route: ActivatedRoute,
               private datePipe: DatePipe) { }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(result => {
+      if (result['id'] === undefined) {
+        this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+      } else {
+        this.currentUserId = result['id'];
+      }
+    });
+
     this.subscription = this.filmSubject.subscribe(subj => {
       if (subj === null) {
         this.userService.getWatchedFilms({user_id: this.currentUserId}).subscribe(films => {

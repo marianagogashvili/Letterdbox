@@ -2,7 +2,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { UserService } from '../user.service';
 import { FilmService } from '../../films/film.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { faEye } from '@fortawesome/free-regular-svg-icons';
 import { faEye as faEye2 } from '@fortawesome/free-solid-svg-icons';
 
@@ -22,7 +22,8 @@ import { DatePipe } from '@angular/common';
 })
 export class WatchlistComponent implements OnInit, OnDestroy {
   watchlistFilms;
-  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  currentUserId;
+   // = JSON.parse(localStorage.getItem('userData')).id;
   
   eyeIcon = faEye;
   likeIcon = faHeart;
@@ -37,15 +38,26 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   constructor(private userService: UserService,
               private filmService: FilmService,
               private router: Router,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(result => {
+      if (result['id'] === undefined) {
+        this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+      } else {
+        this.currentUserId = result['id'];
+      }
+    });
+
     this.subscription = this.filmSubject.subscribe(subj => {
       if (subj === null) {
         this.userService.getWatchlist({user_id: this.currentUserId}).subscribe(films => {
           console.log(films);
-          this.watchlistFilms = films;
-          this.likeAndWatch();
+          if (films !== null) {
+            this.watchlistFilms = films;
+            this.likeAndWatch();
+          } 
         });
       } else {
         this.watchlistFilms = subj;

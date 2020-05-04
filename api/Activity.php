@@ -29,7 +29,8 @@ class Activity {
 
 	public static function getShortUserActivity($conn, $user_id) {
 		// $sql = "SELECT DISTINCT watched_films.*, film.*, activity.date FROM activity LEFT JOIN watched_films ON activity.film_id = watched_films.film_id AND activity.user_id = watched_films.user_id LEFT JOIN film ON activity.film_id = film.id WHERE activity.user_id = :user_id ORDER BY activity.date DESC";
-		$sql = "SELECT film.*, watched_films.film_id, watched_films.user_id FROM activity LEFT JOIN film on film.id= activity.film_id LEFT JOIN watched_films ON watched_films.film_id = film.id AND watched_films.user_id = :user_id GROUP BY activity.film_id";
+		// $sql = "SELECT film.*, watched_films.film_id, watched_films.user_id FROM activity LEFT JOIN film on film.id= activity.film_id LEFT JOIN watched_films ON watched_films.film_id = film.id AND watched_films.user_id = :user_id GROUP BY activity.film_id";
+		$sql = "SELECT film.*, watched_films.film_id FROM activity INNER JOIN film on film.id = activity.film_id INNER JOIN watched_films ON watched_films.film_id = activity.film_id WHERE activity.user_id = :user_id GROUP BY film.id";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {

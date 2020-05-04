@@ -2,7 +2,10 @@
 
 <div style="margin-left: 50px; font-family: 'Roboto'; font-size: 16px; color: #9ab">FOUND {{result[0]}} RESULTS MATCHING "{{result[1]}}"</div>
 <div style="height: 1px; width: 40%; background-color: #9ab; margin-left: 46px; margin-top: 8px; margin-bottom: 15px"></div>
-<h1 *ngIf="films?.length === 0 || reviews?.length === 0 || list?.length === 0" style="font-family: 'Roboto'; font-size: 17px; color: #9ab; margin-left: 5vw;">No results found</h1>
+<h1 *ngIf="(selected === 'film' && films?.length === 0) || 
+		   (selected === 'review' && reviews?.length === 0)  || 
+		   (selected === 'list' && lists?.length === 0)  || 
+		   (selected === 'user' && users?.length === 0) " style="font-family: 'Roboto'; font-size: 17px; color: #9ab; margin-left: 5vw;">No results found</h1>
 
 <div id="helpDiv">
 	<p>SHOW RESULTS FOR</p>
@@ -16,6 +19,9 @@
 	<p id="selectP" (click)="changeSelected(3)" [ngStyle]="selected === 'list' && {'color': 'white',
 				   'padding-left': '5px',
 				   'background-color': '#2c3440'}">Lists</p>
+	<p id="selectP" (click)="changeSelected(4)" [ngStyle]="selected === 'user' && {'color': 'white',
+				   'padding-left': '5px',
+				   'background-color': '#2c3440'}">Users</p>
 </div>
 <div *ngIf="selected === 'film'">
 	<div *ngFor="let film of films" >
@@ -55,7 +61,7 @@
 	<div *ngFor="let list of lists" style="margin-left: 40px; margin-bottom: 25px">
 		<div id="list" >
 			<div id="films" *ngFor="let film of list[1]">
-			<img width="140" height="210" src="{{film['photo']}}" alt="" >
+			<img width="140" height="210" src="{{film['photo']}}" id="listPhoto" alt="" >
 			</div>
 			<div id="listName" [routerLink]="['/lists/',list[0]['id']]"><span id="listSpan">
 				{{ list[0]['title']  }}    </span>
@@ -63,5 +69,13 @@
 			</div>
 		</div>
 		
+	</div>
+</div>
+
+<div *ngIf="selected === 'user'">
+	<div *ngFor="let user of users" style="margin-bottom: 20px; margin-left: 40px; ">
+		 <img  style="display: inline-block; border-radius: 50%"  width="80" height="80" src="https://i0.wp.com/letterboxd.com/static/img/avatar220.486f8632.png?ssl=1" alt="">
+		 <h1 id="userTitle" (click)="toUserPage(user['id'])">{{ user['username'] }}</h1>
+
 	</div>
 </div>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -11,23 +11,36 @@ import { DatePipe } from '@angular/common';
 export class ActivityComponent implements OnInit {
  
   activity;
-  userId = JSON.parse(localStorage.getItem('userData')).id;
+  userId;
 
   today = this.datePipe.transform(new Date(Date.now()), 'yyyy-MM-dd').toString(); 
   yesterday = this.datePipe.transform((new Date(Date.now() - 86400000)), 'yyyy-MM-dd').toString(); 
   weekAgo = this.datePipe.transform((new Date(Date.now() - 7*86400000)), 'yyyy-MM-dd').toString(); 
   constructor(private userService: UserService,
   			  private route: ActivatedRoute,
-  			  private datePipe: DatePipe) { }
+  			  private datePipe: DatePipe,
+          private router: Router) { }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(result => {
+      console.log(result['id']);
+      if (result['id'] === undefined) {
+        this.userId = JSON.parse(localStorage.getItem('userData')).id;
+      } else {
+        this.userId = result['id'];
+      }
+    });
+    console.log(this.userId);
+    
 	  this.userService.getUserActivity({user_id: this.userId}).subscribe(result => {
   		// this.activity = result;
   		// console.log(result);
       let act = [];
-      Object.values(result).forEach(r => {
-        act.unshift(r);
-      });
+      if (result !== null) {
+        Object.values(result).forEach(r => {
+          act.unshift(r);
+        });
+      }
       this.activity = act;
   	});
   }

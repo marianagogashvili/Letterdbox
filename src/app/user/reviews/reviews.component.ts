@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../user.service';
 import { FilmService } from '../../films/film.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { faStar } from '@fortawesome/free-solid-svg-icons';
 import { DatePipe } from '@angular/common';
@@ -11,15 +12,28 @@ import { DatePipe } from '@angular/common';
   styleUrls: ['./reviews.component.css']
 })
 export class ReviewsComponent implements OnInit {
-  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  currentUserId;
+   // = JSON.parse(localStorage.getItem('userData')).id;
   reviews;
   starIcon = faStar;
 
   constructor(private userService: UserService,
               private filmService: FilmService,
-              private datePipe: DatePipe) { }
+              private datePipe: DatePipe,
+              private route: ActivatedRoute,
+              private router: Router) { }
 
   ngOnInit() {
+    this.route.parent.params.subscribe(result => {
+      console.log(result['id']);
+      if (result['id'] === undefined) {
+        console.log("IS UNDEFINED");
+        this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+      } else {
+        console.log("IS DEFINED!!!!!!");
+        this.currentUserId = result['id'];
+      }
+    });
   	this.setUp();
   }
   setUp() {

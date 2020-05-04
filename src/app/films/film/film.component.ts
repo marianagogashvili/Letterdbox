@@ -66,6 +66,8 @@ import { UserService } from '../../user/user.service';
   ]
 })
 export class FilmComponent implements OnInit, OnDestroy {
+  loggedIn;
+
   film;
   star = faStar2;
 
@@ -79,7 +81,8 @@ export class FilmComponent implements OnInit, OnDestroy {
   likeIcon = faHeart;
   watchIcon = faClock;
 
-  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  currentUserId;
+  // = JSON.parse(localStorage.getItem('userData')).id;
   currentFilmId;
 
   liked;
@@ -114,6 +117,15 @@ export class FilmComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+
+  if (localStorage.getItem('userData') === null) {
+    this.loggedIn = false;
+    this.currentUserId = null;
+  } else {
+    this.loggedIn = true;
+    this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+
+  }
 
 	this.spinnerIsLoading = true;
 

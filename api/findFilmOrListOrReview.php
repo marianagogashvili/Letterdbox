@@ -5,6 +5,7 @@ header("Access-Control-Allow-Origin: *");
 require 'Film.php';
 require 'Lists.php';
 require 'Review.php';
+require 'User.php';
 
 require 'Database.php';
 
@@ -28,7 +29,10 @@ if ($value['param'] === 'film') {
 		array_push($result, [$list, $films]);
 	}
 	
-}
+} else if ($value['param'] === 'user') {
+	$result = User::findUserByName($conn, $value['word']);
+	error_log(json_encode($result));
+} 
 // error_log(json_encode($films));
 
 echo(json_encode($result));

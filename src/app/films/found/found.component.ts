@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FilmService } from '../film.service';
 import { faStar as faStar2 } from '@fortawesome/free-solid-svg-icons';
 import { faPen } from '@fortawesome/free-solid-svg-icons';
@@ -14,6 +14,7 @@ export class FoundComponent implements OnInit {
   films;
   reviews;
   lists;
+  users;
 
   star = faStar2;
   penIcon = faPen;
@@ -23,6 +24,7 @@ export class FoundComponent implements OnInit {
   selected = 'film';
 
   constructor(private route: ActivatedRoute,
+  			  private router: Router,
   			  private filmService: FilmService) { }
 
   ngOnInit() {
@@ -30,24 +32,13 @@ export class FoundComponent implements OnInit {
   		console.log(result['film']);
   		// this.result = result['film'];
   		if (result['film'].length >= 2) {
-  	// 		this.filmService.findFilms(result['film']).subscribe(films => {
-			// 	this.films = films;
-			// 	Object.values(this.films).forEach(film => {
-			// 		this.filmService.getFilmRating({'film_id': +film['id']}).subscribe(rating => {
-			// 			film['rating'] = rating;
-	 	// 			});
-			// 	});
-			// 	this.result.push(films['length'], result['film']) ;
-			// 	// console.log('RESULT');
-			// 	// console.log(result);
-
-			// });
 			this.setUp(result['film']);
 			// this.result.push(films['length'], result['film']) ;
   		}
   	});
   }
   setUp(word) {
+  	console.log(word);
   	this.result = [];
   	this.filmService.findFilmOrListOrReview({param: this.selected, word: word}).subscribe(result => {
   		if (this.selected === 'film') {
@@ -74,10 +65,13 @@ export class FoundComponent implements OnInit {
 	  			// console.log(finalResult);
 	  		});
 	  		this.lists = finalResult;
+	  	} else if (this.selected === 'user') { 
+	  		this.users = result;
+	  		console.log(result);
 	  	}	
 
 	  	this.result.push(result['length'], word);
-	  	console.log(this.result);
+	  	// return this.result;
   	});
   }
   changeSelected(num) {
@@ -87,6 +81,8 @@ export class FoundComponent implements OnInit {
   		this.selected = 'review';
   	} else if (num === 3) {
   		this.selected = 'list';
+  	} else if (num === 4) {
+  		this.selected = 'user';
   	}
   	console.log("CONSOLE LOH");
   	console.log(this.selected);
@@ -102,4 +98,13 @@ export class FoundComponent implements OnInit {
   	return arr;
   }
 
+  toUserPage(id) {
+  	let logId = JSON.parse(localStorage.getItem('userData')).id;
+
+  	if (id === logId) {
+  		this.router.navigate(['/user']);
+  	} else {
+  		this.router.navigate(['/user/', id]);
+  	}
+  }
 }

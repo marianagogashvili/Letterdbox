@@ -27,33 +27,33 @@
   <nav class="navbar navbar-inverse" style="width:80vw; font-size: 13px; border: 1px solid grey;">
     <div class="container-fluid" style="background-color: #151b22; background-color: #2e3945; "> 
       <div  class="navbar-header" >
-        <a class="navbar-brand" style="font-size: 14px;" routerLinkActive="active" routerLink="/user/profile/{{routeId}}">profile</a>
+        <a class="navbar-brand" style="font-size: 14px;" routerLinkActive="active" routerLink="profile">profile</a>
       </div>
       <div class="navbar-header" >
-        <a  class="navbar-brand" style="font-size: 14px;" routerLink="activity" routerLinkActive="/user/active/{{routeId}}">activity</a>
+        <a  class="navbar-brand" style="font-size: 14px;" routerLink="activity" routerLinkActive="active">activity</a>
       </div>
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="/user/films/{{routeId}}">films</a>
+        <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="films">films</a>
       </div> 
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" routerLink="/user/diary/{{routeId}}" style="font-size: 14px;" href="#">diary</a>
+        <a  class="navbar-brand" routerLinkActive="active" routerLink="diary" style="font-size: 14px;" href="#">diary</a>
       </div>       
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="/user/reviews/{{routeId}}">reviews</a>
+        <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="reviews">reviews</a>
       </div>       
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="/user/watchlist/{{routeId}}" href="#">watchlist</a>
+        <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="watchlist" href="#">watchlist</a>
       </div> 
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" routerLink="/user/own-lists/{{routeId}}" style="font-size: 14px;" href="#">lists</a>
+        <a  class="navbar-brand" routerLinkActive="active" routerLink="own-lists" style="font-size: 14px;" href="#">lists</a>
       </div> 
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" routerLink="/user/liked/{{routeId}}" style="font-size: 14px;" href="#">likes</a>
+        <a  class="navbar-brand" routerLinkActive="active" routerLink="liked" style="font-size: 14px;" href="#">likes</a>
       </div> 
     </div>
   </nav>
 </div>
 <div id="hrId"></div>
-  <router-outlet [id]="id"></router-outlet>
+  <router-outlet></router-outlet>
 
 </div>

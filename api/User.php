@@ -28,6 +28,15 @@ class User {
 		}
 	}
 
+	public static function findUserByName($conn, $name) {
+		$sql = "SELECT * FROM user WHERE username LIKE '%" . $name ."%'";
+		$stmt = $conn->prepare($sql);
+		// $stmt->bindValue(":name", $name, PDO::PARAM_STR);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
 	public static function findUserByEmail($conn, $email) {
 		$sql = "SELECT * FROM user WHERE email = :email";
 		$stmt = $conn->prepare($sql);

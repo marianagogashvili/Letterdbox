@@ -46,7 +46,7 @@
 
 	</div>
 </div>
-<div id="addition" style="">
+<div *ngIf="loggedIn" id="addition" style="">
 	<div id="iconAndBtn">
 		<fa-icon id="icon" [ngStyle]="watched && {'color':'#00e054'}" [icon]="eyeIcon" (click)="toWatched()"></fa-icon>
 		<fa-icon id="icon" [ngStyle]="liked && {'color': 'red'}" [icon]="likeIcon" (click)="toLiked()"></fa-icon>

@@ -58,11 +58,11 @@
 #films {
 	display: inline-block; width: 40px;
 }
-img {
+#listPhoto {
 	position: relative;
 	z-index: 1;
 }
-img:hover {
+#listPhoto:hover {
 	width: 210px;
 	height: 315px;
 	z-index: 2;
@@ -105,7 +105,16 @@ img:hover {
 	margin-bottom: 15px; 
 	border-radius: 3px
 }
-
+#userTitle {
+	display: inline-block; 
+	font-family: 'Roboto'; 
+	color: white; 
+	font-size: 25px; 
+	margin-left: 20px;
+}
+#userTitle:hover {
+	color: #00A1E7;
+}
 @media only screen and (max-width: 770px) {
 	#filmImage {
 		margin-left: 24vw;
