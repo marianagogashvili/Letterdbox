@@ -16,6 +16,7 @@ export class ReviewsComponent implements OnInit {
    // = JSON.parse(localStorage.getItem('userData')).id;
   reviews;
   starIcon = faStar;
+  showTab;
 
   constructor(private userService: UserService,
               private filmService: FilmService,
@@ -28,9 +29,12 @@ export class ReviewsComponent implements OnInit {
       console.log(result['id']);
       if (result['id'] === undefined) {
         console.log("IS UNDEFINED");
+        this.showTab = true;
         this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
       } else {
         console.log("IS DEFINED!!!!!!");
+        this.showTab = false;
+
         this.currentUserId = result['id'];
       }
     });

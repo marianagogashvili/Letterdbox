@@ -1,7 +1,7 @@
 <app-header></app-header>
-<h1 id="listTitleId">{{ list?.title }}  <span id="iconPen"><fa-icon [icon]="penIcon" id="iconPen" [routerLink]="['/lists/edit',list?.id]"></fa-icon></span></h1>
+<h1 id="listTitleId">{{ list?.title }}  <span id="iconPen"><fa-icon [icon]="penIcon" id="iconPen" [routerLink]="['/lists/edit',list?.id]" *ngIf="loggedIn && list?.user_id === currentUserId"></fa-icon></span></h1>
 <div id="listDescr">{{ list?.description }}</div>
-<div id="likeTab">
+<div *ngIf="loggedIn" id="likeTab">
 	<h1 id="likeId" (click)="likeList()">Like this list 
 		<fa-icon *ngIf="ownLike !== false" style="padding-right: 4px; color: red"  [icon]="likeIcon2"></fa-icon> 
 		<fa-icon *ngIf="ownLike === false" style="padding-right: 4px; color: #9ab"  [icon]="likeIcon"></fa-icon> 
@@ -16,7 +16,7 @@
 		<img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="150" height="225" alt="" (click)="toFilm(film['id'])">
 
 		<div class="desc">
-			<div style="color: green; ">
+			<div *ngIf="loggedIn" style="color: green; ">
 				<fa-icon *ngIf="film['watched']" style="padding-right: 4px; color: green" [icon]="eyeIcon" (click)="filmToWatched(film['id'], false, film['title'])"></fa-icon>
 				<fa-icon *ngIf="!film['watched']" style="padding-right: 4px; color: #9ab" [icon]="eyeIcon" (click)="filmToWatched(film['id'], true, film['title'])"></fa-icon>
 
@@ -37,21 +37,21 @@
 </ul>
 <div style="clear: both; margin-left: 5vw; margin-bottom: 10px">
 	<h1 style="color: #9ab; font-family: 'Roboto'; font-size: 23px">Comment?</h1>
-	<form #commentForm="ngForm" (ngSubmit)="saveComment(commentForm)">
-<span class="help-block" *ngIf="comment.touched && !comment.valid" style="color: red; font-size: 15px; font-family: 'Roboto">Comment is not valid</span>
-	<textarea 
-		type="text"
-		id="comment"
-		ngModel
-		name="comment"
-		required
-		comment 
-		minlength="1" 
-		#comment="ngModel"
-		></textarea>
-		
-	<button id="saveBtn" type="submit">save</button>
-
+	<form #commentForm="ngForm" (ngSubmit)="saveComment(commentForm)" *ngIf="loggedIn">
+		<span class="help-block" *ngIf="comment.touched && !comment.valid" style="color: red; font-size: 15px; font-family: 'Roboto">Comment is not valid</span>
+			<textarea 
+				type="text"
+				id="comment"
+				ngModel
+				name="comment"
+				required
+				comment 
+				minlength="1" 
+				#comment="ngModel"
+				></textarea>
+				
+			<button id="saveBtn" type="submit">save</button>
+	</form>
 	<div *ngFor="let comment of comments" style=" padding-left: 10px; width: 60%; color: #9ab">
 		<div style=" display: inline-block;  width: 100%;" >
 			<div style=" display: inline-block; vertical-align: top; ">
@@ -61,13 +61,13 @@
 
 			<div style="width: 80%; margin-left: 5vw;  display: inline-block; margin-top: 10px">{{ comment['description'] }}</div>
 			<div style="float: right; ">
-				<h5 type="" *ngIf="currentUserId === comment['user_id'] " id="deleteBtn" (click)="deleteComment(comment['id'])">Delete</h5> 
+				<h5 type="" *ngIf="currentUserId === comment['user_id'] && loggedIn === true" id="deleteBtn" (click)="deleteComment(comment['id'])">Delete</h5> 
 			</div>
 		</div>
 
 		<div style="width: 100%; background-color: rgb(153,170,187,0.5); height: 1px;  margin-bottom: 10px; margin-top: 10px">
 		</div>
 	</div>
-	</form>
+
 </div>
 

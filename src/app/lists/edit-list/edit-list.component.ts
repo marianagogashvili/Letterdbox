@@ -53,7 +53,9 @@ export class EditListComponent implements OnInit, OnDestroy {
 	    		Object.values(result[1]).forEach(film => {
 	    			this.initFilms.push(+film['id']);
 	    		});
-    			
+    			if (this.currentUserId !== result[0]['user_id']) {
+    				this.router.navigate(["/"]);
+	    		}
 	    		this.initList = result[0];
 	    		
 	    		this.listId = result[0]['id'];

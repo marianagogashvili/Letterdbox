@@ -25,7 +25,8 @@ class Film {
     	}
 	}
 	public static function sortAllByRating($conn, $user_id, $asc_desc) {
-		$sql = "SELECT watched_films.film_id, watched_films.user_id, watched_films.date, film.*,AVG(watched_films.rating) AS average FROM film LEFT JOIN watched_films ON film.id = watched_films.film_id AND watched_films.user_id = :user_id GROUP BY film.id, watched_films.date ORDER BY average " . $asc_desc;
+		// $sql = "SELECT watched_films.film_id, watched_films.user_id, watched_films.date, film.*,AVG(watched_films.rating) AS average FROM film LEFT JOIN watched_films ON film.id = watched_films.film_id AND watched_films.user_id = :user_id GROUP BY film.id, watched_films.date ORDER BY average " . $asc_desc;
+		$sql = "SELECT watched_films.film_id, film.*, ROUND(AVG(watched_films.rating)) AS average FROM film LEFT JOIN watched_films ON film.id = watched_films.film_id GROUP BY film.id ORDER BY average "  . $asc_desc;
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if($stmt->execute()){

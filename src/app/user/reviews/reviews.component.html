@@ -12,7 +12,7 @@
 				<span>Added {{ review['date'] | date: 'dd MMM, yyyy' }}</span>
 			</div>
 			<div style="color: #9ab; font-size: 15px;width: 60vw; max-height: 30vh;overflow:scroll;">{{ review['text'] }}</div>
-			<div style="float: right">
+			<div *ngIf="showTab" style="float: right">
 				<button id="deleteBtn" (click)="deleteReview(review['id'], review['title'])">Delete</button> 
 			</div>
 		</div>

@@ -36,6 +36,7 @@ export class ProfileComponent implements OnInit {
 
   subscription;
   all = false;
+  showTab;
 
   constructor(private userService: UserService,
   			  private filmService: FilmService,
@@ -50,9 +51,11 @@ export class ProfileComponent implements OnInit {
       if (result['id'] === undefined) {
         // console.log("IS UNDEFINED");
         this.userId = JSON.parse(localStorage.getItem('userData')).id;
+        this.showTab = true;
       } else {
         // console.log("IS DEFINED!!!!!!");
         this.userId = result['id'];
+        this.showTab = false;
       }
     });
 

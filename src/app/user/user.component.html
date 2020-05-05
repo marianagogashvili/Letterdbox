@@ -30,25 +30,25 @@
         <a class="navbar-brand" style="font-size: 14px;" routerLinkActive="active" routerLink="profile">profile</a>
       </div>
       <div class="navbar-header" >
-        <a  class="navbar-brand" style="font-size: 14px;" routerLink="activity" routerLinkActive="active">activity</a>
+        <a *ngIf="showTab" class="navbar-brand" style="font-size: 14px;" routerLink="activity" routerLinkActive="active">activity</a>
       </div>
       <div  class="navbar-header" >
         <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="films">films</a>
       </div> 
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" routerLink="diary" style="font-size: 14px;" href="#">diary</a>
+        <a *ngIf="showTab" class="navbar-brand" routerLinkActive="active" routerLink="diary" style="font-size: 14px;" href="#">diary</a>
       </div>       
       <div  class="navbar-header" >
         <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="reviews">reviews</a>
       </div>       
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="watchlist" href="#">watchlist</a>
+        <a *ngIf="showTab" class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="watchlist" href="#">watchlist</a>
       </div> 
       <div  class="navbar-header" >
         <a  class="navbar-brand" routerLinkActive="active" routerLink="own-lists" style="font-size: 14px;" href="#">lists</a>
       </div> 
       <div  class="navbar-header" >
-        <a  class="navbar-brand" routerLinkActive="active" routerLink="liked" style="font-size: 14px;" href="#">likes</a>
+        <a class="navbar-brand" routerLinkActive="active" routerLink="liked" style="font-size: 14px;" href="#">likes</a>
       </div> 
     </div>
   </nav>

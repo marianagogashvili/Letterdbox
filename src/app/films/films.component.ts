@@ -27,9 +27,20 @@ export class FilmsComponent implements OnInit, OnDestroy {
   			      private datePipe: DatePipe,
   		        private route: ActivatedRoute,
               private router: Router) { }
-  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  currentUserId;
+  loggedIn;
+   // = JSON.parse(localStorage.getItem('userData')).id;
   date = this.datePipe.transform(new Date(), 'yyyy-MM-dd');
   ngOnInit() {
+
+     if (localStorage.getItem('userData') === null) {
+      this.loggedIn = false;
+      this.currentUserId = null;
+    } else {
+      this.loggedIn = true;
+      this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+
+    }
 
     this.subscription = this.route.queryParams.subscribe(params => {
       this.films = [];
@@ -52,13 +63,16 @@ export class FilmsComponent implements OnInit, OnDestroy {
           // } else {
           //   this.films.push({film: value, watched: false, liked: like});
           // }
-          if (value['film_id']) {
-            value['watched'] = true;
-            // this.films.push({film: value, watched: true, liked: like});
-          } else {
-            value['watched'] = false;
-            // this.films.push({film: value, watched: false, liked: like});
-          }
+          // if (value['film_id']) {
+          //   value['watched'] = true;
+          //   // this.films.push({film: value, watched: true, liked: like});
+          // } else {
+          //   value['watched'] = false;
+          //   // this.films.push({film: value, watched: false, liked: like});
+          // }
+          this.filmService.findWatchedFilm({film_id: value['id'], user_id: this.currentUserId}).subscribe(watched => {
+            value['watched'] = watched;
+          });
           this.filmService.findLike({film_id: value['id'], user_id: this.currentUserId}).subscribe(like => {
             value['liked'] = like;
           });

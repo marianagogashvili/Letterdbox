@@ -33,6 +33,7 @@ export class WatchedFilmsComponent implements OnInit, OnDestroy {
 
   filmSubject = new BehaviorSubject(null); 
   subscription;
+  showTab;
 
   constructor(private userService: UserService,
               private filmService: FilmService,
@@ -44,8 +45,10 @@ export class WatchedFilmsComponent implements OnInit, OnDestroy {
     this.route.parent.params.subscribe(result => {
       if (result['id'] === undefined) {
         this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+        this.showTab = true;
       } else {
         this.currentUserId = result['id'];
+        this.showTab = false;
       }
     });
 

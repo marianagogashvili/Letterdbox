@@ -17,6 +17,7 @@ export class UserComponent implements OnInit {
   routeId;
   foundUser = false;
 
+  showTab;
   currentYear = this.datePipe.transform(new Date, 'yyyy');
   constructor(private userService: UserService,
               private datePipe: DatePipe,
@@ -24,12 +25,22 @@ export class UserComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
+    // this.router.navigate(["profile"]);
     this.route.params.subscribe(result => {
       console.log(result['id']);
       if (result['id'] === undefined) {
+        this.showTab = true;
         this.id = JSON.parse(localStorage.getItem('userData')).id;
         this.username = JSON.parse(localStorage.getItem('userData')).username;
       } else {
+        if (localStorage.getItem('userData') !== null) {
+          let id = JSON.parse(localStorage.getItem('userData')).id;
+          if (id === result['id']) {
+            this.router.navigate(["/user"]);
+          }
+        }
+        
+        this.showTab = false;
         this.routeId = result['id'];
         this.id = result['id'];
         this.userService.findUserById({id: result['id']}).subscribe(result => {

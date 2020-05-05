@@ -34,6 +34,7 @@ export class WatchlistComponent implements OnInit, OnDestroy {
 
   filmSubject = new BehaviorSubject(null); 
   subscription;
+  showTab;
 
   constructor(private userService: UserService,
               private filmService: FilmService,
@@ -44,9 +45,13 @@ export class WatchlistComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.parent.params.subscribe(result => {
       if (result['id'] === undefined) {
+        this.showTab = true;
         this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
       } else {
+        this.showTab = false;
         this.currentUserId = result['id'];
+        this.router.navigate(["/user/", this.currentUserId]);
+
       }
     });
 

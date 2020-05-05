@@ -32,6 +32,7 @@ export class LikedComponent implements OnInit, OnDestroy {
 
   filmSubject = new BehaviorSubject(null); 
   subscription;
+  showTab;
 
   constructor(private userService: UserService,
               private filmService: FilmService,
@@ -43,8 +44,10 @@ export class LikedComponent implements OnInit, OnDestroy {
     this.route.parent.params.subscribe(result => {
       console.log(result['id']);
       if (result['id'] === undefined) {
+        this.showTab = true;
         this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
       } else {
+        this.showTab = false;
         this.currentUserId = result['id'];
       }
     });

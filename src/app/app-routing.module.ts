@@ -19,11 +19,12 @@ import { EditListComponent } from './lists/edit-list/edit-list.component';
 import { ListComponent } from './lists/list/list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FoundComponent } from './films/found/found.component';
+import { AuthGuard } from './auth-guard.service';
 
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
 	{path: 'home', component: HomeComponent},
-	{path: 'user', component: UserComponent, children: [
+	{path: 'user', canActivate:[AuthGuard], component: UserComponent, children: [
 		{path: 'films', component: WatchedFilmsComponent},
 		{path: 'activity', component: ActivityComponent},
 		{path: 'diary', component: DiaryComponent},
@@ -48,8 +49,8 @@ const appRoutes: Routes = [
 	{path: 'films/:id', component: FilmComponent},
 	{path: 'found', component: FoundComponent},
 	{path: 'lists', component: ListsComponent},
-	{path: 'lists/new', component: NewListComponent},
-	{path: 'lists/edit/:id', component: EditListComponent},
+	{path: 'lists/new', canActivate:[AuthGuard], component: NewListComponent},
+	{path: 'lists/edit/:id', canActivate:[AuthGuard], component: EditListComponent},
 	{path: 'lists/:id', component: ListComponent},
 	{path: '**', component: NotFoundComponent}
 ];

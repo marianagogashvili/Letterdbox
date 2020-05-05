@@ -8,22 +8,23 @@ import {Router, ActivatedRoute} from '@angular/router';
   templateUrl: './own-lists.component.html',
   styleUrls: ['./own-lists.component.css'],
   //   animations: [
-  //   trigger('imgState', [
-  //     state('small', style({
-  //       transform: 'translateZ(0)',
-  //       width: '70px',
-  //       height: '105px'
+  //   trigger('zoomFilm', [
+  //     state('false', style({
+
+  //       // transform: 'translateZ(1)',
+  //       // width: '70px',
+  //       // height: '105px'
   //       // opacity: 0,
   //       // visibility: 'hidden'
   //     })),
-  //     state('big', style({
-  //       transform: 'translateZ(100px)',
+  //     state('true', style({
+  //       // transform: 'translateZ(2)',
   //       width: '100px',
   //       height: '150px'
   //       // opacity: 1,
   //       // visibility: 'visible'
   //     })),
-  //     transition('small <=> big', animate(500)),
+  //     transition('false <=> true', animate(500)),
 
   //   ]),
   // ]
@@ -33,6 +34,7 @@ export class OwnListsComponent implements OnInit {
    // = JSON.parse(localStorage.getItem('userData')).id;
   lists;
   penIcon = faPen;
+  showTab;
   constructor(private userService: UserService,
   			  private router: Router,
           		private route: ActivatedRoute) { }
@@ -43,9 +45,11 @@ export class OwnListsComponent implements OnInit {
       console.log(result['id']);
       if (result['id'] === undefined) {
         // console.log("IS UNDEFINED");
+        this.showTab = true;
         this.userId = JSON.parse(localStorage.getItem('userData')).id;
       } else {
         // console.log("IS DEFINED!!!!!!");
+        this.showTab = false;
         this.userId = result['id'];
       }
     });

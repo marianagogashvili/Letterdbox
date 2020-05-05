@@ -32,7 +32,7 @@ import { EditListComponent } from './lists/edit-list/edit-list.component';
 import { ListComponent } from './lists/list/list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FoundComponent } from './films/found/found.component';
-
+import { AuthGuard } from './auth-guard.service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -74,7 +74,7 @@ import { FoundComponent } from './films/found/found.component';
   exports: [
     LoadingSpinnerComponent
   ],
-  providers: [DatePipe],
+  providers: [DatePipe, AuthGuard],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -22,12 +22,23 @@ export class FoundComponent implements OnInit {
   result = [];
   // result;
   selected = 'film';
+  loggedIn;
+  currentUserId;
+   // = JSON.parse(localStorage.getItem('userData')).id;
 
   constructor(private route: ActivatedRoute,
   			  private router: Router,
   			  private filmService: FilmService) { }
 
   ngOnInit() {
+  	if (localStorage.getItem('userData') !== null) {
+  		this.loggedIn = true;
+  		this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+  	} else {
+   		this.loggedIn = false;
+  		this.currentUserId = null;
+  	}
+
   	this.route.params.subscribe(result => {
   		console.log(result['film']);
   		// this.result = result['film'];

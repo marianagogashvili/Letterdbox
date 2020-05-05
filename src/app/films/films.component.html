@@ -43,7 +43,7 @@
     </div>
     <img  class="filmImage" src="{{film['photo']}}" alt="Snow"  (click)="goToFilm(film['id'])" >
     <div class="desc">
-      <div >
+      <div *ngIf="loggedIn">
           <div style="display: inline; font-size: 20px; padding-right: 10px; color: white;" *ngIf="!film['watched']">
             <fa-icon (click)="addToWatched(film['id'])" [icon]="eyeIcon"></fa-icon> 
           </div>

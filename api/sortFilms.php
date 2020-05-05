@@ -17,8 +17,8 @@ if ($value['year'] != null) {
 								intval($value['year'])
 								);
 } else if ($value['rating'] != null) {
-	$films = Film::sortAllByRating($conn, $value['user_id'], $value['rating']);
+	$films = Film::sortAllByRating($conn, intval($value['user_id']), $value['rating']);
 }
-error_log(json_encode($films));
+// error_log(json_encode($films));
 echo(json_encode($films));
 ?>

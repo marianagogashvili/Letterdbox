@@ -1,8 +1,8 @@
 <div *ngIf="watchlistFilms">
 <ul *ngFor="let film of watchlistFilms" >
-	<li style="display: inline; margin-right: 17px; overflow-x: hidden;">
+	<li  style="display: inline; margin-right: 17px; overflow-x: hidden;">
 		<img id="filmImage" style="border-radius: 1px; " src="{{film['photo']}}" width="100" height="150" alt="" (click)="toFilm(film['id'])">
-		<div class="desc">
+		<div class="desc" *ngIf="showTab">
 			<div >
 
 				<fa-icon *ngIf="film['film_id']" style="padding-right: 4px; color: green" [icon]="eyeIcon" (click)="filmToWatched(film['id'], false, film['title'])"></fa-icon>

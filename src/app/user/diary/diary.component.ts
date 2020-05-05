@@ -32,6 +32,7 @@ export class DiaryComponent implements OnInit {
       } else {
         console.log("IS DEFINED!!!!!!");
         this.currentUserId = result['id'];
+        this.router.navigate(["/user/", this.currentUserId]);
       }
     });
 

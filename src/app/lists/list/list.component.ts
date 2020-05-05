@@ -27,8 +27,10 @@ export class ListComponent implements OnInit {
   films;
   comments;
   penIcon = faPen;
-  currentUserId = JSON.parse(localStorage.getItem('userData')).id;
-
+  currentUserId;
+  // = JSON.parse(localStorage.getItem('userData')).id;
+  loggedIn;
+  
   eyeIcon = faEye;
   likeIcon = faHeart;
   likeIcon2 = faHeart2;
@@ -49,6 +51,16 @@ export class ListComponent implements OnInit {
   			  private datePipe: DatePipe) { }
 
   ngOnInit() {
+
+    if (localStorage.getItem('userData') === null) {
+      this.loggedIn = false;
+      this.currentUserId = null;
+    } else {
+      this.loggedIn = true;
+      this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
+
+    }
+
   	this.route.params.subscribe(result => {
   		this.listId = +result['id'];
   		this.listService.findList({id: this.listId}).subscribe(list => {

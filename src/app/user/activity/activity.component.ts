@@ -12,6 +12,7 @@ export class ActivityComponent implements OnInit {
  
   activity;
   userId;
+  showTab;
 
   today = this.datePipe.transform(new Date(Date.now()), 'yyyy-MM-dd').toString(); 
   yesterday = this.datePipe.transform((new Date(Date.now() - 86400000)), 'yyyy-MM-dd').toString(); 
@@ -26,8 +27,17 @@ export class ActivityComponent implements OnInit {
       console.log(result['id']);
       if (result['id'] === undefined) {
         this.userId = JSON.parse(localStorage.getItem('userData')).id;
+        this.showTab = true;
       } else {
         this.userId = result['id'];
+        this.showTab = false;
+        this.router.navigate(["/user/", this.userId]);
+        // if (localStorage.getItem('userData') !== null) {
+        //   let id = JSON.parse(localStorage.getItem('userData')).id;
+        //   if (id === result['id']) {
+        //     this.router.navigate(["/user"]);
+        //   }
+        // }
       }
     });
     console.log(this.userId);
