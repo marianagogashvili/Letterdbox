@@ -33,6 +33,7 @@ import { ListComponent } from './lists/list/list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FoundComponent } from './films/found/found.component';
 import { AuthGuard } from './auth-guard.service';
+import { SettingsComponent } from './user/settings/settings.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -59,7 +60,8 @@ import { AuthGuard } from './auth-guard.service';
     EditListComponent,
     ListComponent,
     NotFoundComponent,
-    FoundComponent,   
+    FoundComponent,
+    SettingsComponent,   
 
   ],
   imports: [

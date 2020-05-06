@@ -20,7 +20,7 @@ import { ListComponent } from './lists/list/list.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { FoundComponent } from './films/found/found.component';
 import { AuthGuard } from './auth-guard.service';
-
+import { SettingsComponent } from './user/settings/settings.component';
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
 	{path: 'home', component: HomeComponent},
@@ -34,6 +34,7 @@ const appRoutes: Routes = [
 		{path: 'profile', component: ProfileComponent},
 		{path: 'own-lists', component: OwnListsComponent},
 	]},
+	{path: 'settings', canActivate:[AuthGuard], component: SettingsComponent},
 	{path: 'user/:id', component: UserComponent, children: [
 		{path: 'films', component: WatchedFilmsComponent},
 		{path: 'activity', component: ActivityComponent},

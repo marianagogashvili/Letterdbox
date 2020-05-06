@@ -1,0 +1,88 @@
+
+<div class="alert-box">
+<div style="padding-left: 7vw; margin-top: 4vh; ">
+	<div style="color: red; font-family: 'Roboto'; font-size: 17px; border: 1px solid rgb(255, 0, 0, 0.6); padding: 10px; border-radius: 2px; width: 96%" *ngIf="error">{{ error }}</div>
+	
+	<div>
+	<h1 style="color: white; font-family: 'Roboto'; font-size: 18px; color: #9ab" >Account Settings</h1>
+	<div style="height: 1px; background-color:  rgb(153,170,187, 0.4);width: 80%; margin-bottom: 15px"></div>
+	<div style="display: inline-block;width: 96%; margin-bottom: 30px;">
+		<form  #listForm="ngForm" (ngSubmit)="saveList(listForm)">
+		
+		<div style="display: inline-block; top: 0; ">
+			<label for="name">Username</label>
+			<div>
+				<input 
+    		type="text"
+			id="name"
+			ngModel
+			name="username"
+			required
+			username 
+			minlength="1" 
+			#username="ngModel"
+	    	/>
+	    	<span class="help-block" *ngIf="!username.valid && username.touched" style="color: red; font-family: 'Roboto'">
+	    		Enter valid username
+	    	</span>
+			
+			</div>
+			
+			<label for="name" style="margin-top: 15px">Email</label>
+				<div>
+					<input 
+	    		type="email"
+				id="name"
+				ngModel
+				name="email"
+				required
+				email 
+				minlength="1" 
+				#email="ngModel"
+		    	/>
+		    	<span class="help-block" *ngIf="!email.valid && email.touched" style="color: red; font-family: 'Roboto'">
+		    		Enter valid email
+		    	</span>
+		    </div>
+			<label for="name" style="margin-top: 15px">Old Password</label>
+				<div>
+					<input 
+	    		type="password"
+				id="name"
+				ngModel
+				name="oldPassword"
+				required
+				oldPassword 
+				minlength="1" 
+				#oldPassword="ngModel"
+		    	/>
+		    	<span class="help-block" *ngIf="!oldPassword.valid && oldPassword.touched" style="color: red; font-family: 'Roboto'">
+		    		Enter valid password
+		    	</span>
+		    </div>
+		    <label for="name" style="margin-top: 15px">New password</label>
+				<div>
+					<input 
+	    		type="password"
+				id="name"
+				ngModel
+				name="password"
+				required
+				password 
+				minlength="1" 
+				#password="ngModel"
+		    	/>
+		    	<span class="help-block" *ngIf="!password.valid && password.touched" style="color: red; font-family: 'Roboto'">
+		    		Enter valid password
+		    	</span>
+		    </div>
+		</div>
+		<div class="alert-box-actions">
+		    <button class="btn btn-success" style="margin-top: 17px">Save</button>
+		  </div>
+		</form>
+	</div>
+	</div>
+
+</div>
+</div>

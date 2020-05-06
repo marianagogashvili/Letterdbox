@@ -37,9 +37,12 @@ export class NewListComponent implements OnInit {
   ngOnInit() {
         this.route.params.subscribe(result => { 
           console.log(result['id']);
-          this.filmService.getFilmById({id: result['id']}).subscribe(film => {
-            this.addToList(film);
-          });
+          if (result['id']) {
+            this.filmService.getFilmById({id: result['id']}).subscribe(film => {
+              this.addToList(film);
+            });
+          }
+         
           
         });
         this.filmName.valueChanges.subscribe(title => {

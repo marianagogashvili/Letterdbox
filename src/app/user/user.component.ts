@@ -2,11 +2,26 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from './user.service';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { trigger, state, style, animate, transition } from '@angular/animations';
+
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
-})
+  styleUrls: ['./user.component.css'],
+    animations: [
+    trigger('showSettings', [
+      state('hidden', style({
+          opacity: 0,
+          visibility: 'hidden'
+      })),
+      state('shown', style({
+        opacity: 1,
+          visibility: 'visible'
+      })),
+      transition('hidden <=> shown', animate(500))
+    ])
+  ]
+}) // 
 export class UserComponent implements OnInit {
 
   username;
@@ -16,13 +31,14 @@ export class UserComponent implements OnInit {
 
   routeId;
   foundUser = false;
-
+  openSetting = 'hidden';
   showTab;
   currentYear = this.datePipe.transform(new Date, 'yyyy');
   constructor(private userService: UserService,
               private datePipe: DatePipe,
               private router: Router,
               private route: ActivatedRoute) { }
+  
 
   ngOnInit() {
     // this.router.navigate(["profile"]);
@@ -65,6 +81,14 @@ export class UserComponent implements OnInit {
     });
   	
 
+  }
+  openSettings() {
+    this.openSetting = 'shown';
+    console.log(this.openSetting);
+
+  }
+  onClose() {
+    this.openSetting = 'hidden';
   }
   	// this.userService.numberOfFilms.subscribe(number => {
   	// 	console.log(number);

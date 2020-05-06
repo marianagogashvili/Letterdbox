@@ -19,6 +19,10 @@ class User {
         }
 	}
 
+	public function editUser($conn) {
+		$sql = "UPDATE user";
+	}
+
 	public static function findUserById($conn, $id) {
 		$sql = "SELECT * FROM user WHERE id = :id";
 		$stmt = $conn->prepare($sql);
