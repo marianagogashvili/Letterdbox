@@ -7,24 +7,20 @@
 	<h1 style="color: white; font-family: 'Roboto'; font-size: 18px; color: #9ab" >Account Settings</h1>
 	<div style="height: 1px; background-color:  rgb(153,170,187, 0.4);width: 80%; margin-bottom: 15px"></div>
 	<div style="display: inline-block;width: 96%; margin-bottom: 30px;">
-		<form  #listForm="ngForm" (ngSubmit)="saveList(listForm)">
+		<form [formGroup]="userForm" (ngSubmit)="saveUser()">
 		
-		<div style="display: inline-block; top: 0; ">
+		<div formGroupName="userData" style="display: inline-block; top: 0; ">
 			<label for="name">Username</label>
 			<div>
-				<input 
-    		type="text"
-			id="name"
-			ngModel
-			name="username"
-			required
-			username 
-			minlength="1" 
-			#username="ngModel"
-	    	/>
-	    	<span class="help-block" *ngIf="!username.valid && username.touched" style="color: red; font-family: 'Roboto'">
-	    		Enter valid username
-	    	</span>
+				<input
+            type="name"
+            id="name"
+            formControlName="username"
+            >
+            <span 
+              class="help-block"
+              *ngIf="!userForm.get('userData.username').valid && userForm.get('userData.username').touched"
+            >Please enter a valid username</span>
 			
 			</div>
 			
@@ -33,14 +29,9 @@
 					<input 
 	    		type="email"
 				id="name"
-				ngModel
-				name="email"
-				required
-				email 
-				minlength="1" 
-				#email="ngModel"
+				formControlName="email"
 		    	/>
-		    	<span class="help-block" *ngIf="!email.valid && email.touched" style="color: red; font-family: 'Roboto'">
+		    	<span class="help-block" *ngIf="!userForm.get('userData.email').valid && userForm.get('userData.email').touched" style="color: red; font-family: 'Roboto'">
 		    		Enter valid email
 		    	</span>
 		    </div>
@@ -49,14 +40,9 @@
 					<input 
 	    		type="password"
 				id="name"
-				ngModel
-				name="oldPassword"
-				required
-				oldPassword 
-				minlength="1" 
-				#oldPassword="ngModel"
+				formControlName="oldPassword"
 		    	/>
-		    	<span class="help-block" *ngIf="!oldPassword.valid && oldPassword.touched" style="color: red; font-family: 'Roboto'">
+		    	<span class="help-block" *ngIf="!userForm.get('userData.oldPassword').valid && userForm.get('userData.oldPassword').touched" style="color: red; font-family: 'Roboto'">
 		    		Enter valid password
 		    	</span>
 		    </div>
@@ -65,20 +51,15 @@
 					<input 
 	    		type="password"
 				id="name"
-				ngModel
-				name="password"
-				required
-				password 
-				minlength="1" 
-				#password="ngModel"
+				formControlName="password"
 		    	/>
-		    	<span class="help-block" *ngIf="!password.valid && password.touched" style="color: red; font-family: 'Roboto'">
+		    	<span class="help-block" *ngIf="!userForm.get('userData.password').valid && userForm.get('userData.password').touched" style="color: red; font-family: 'Roboto'">
 		    		Enter valid password
 		    	</span>
 		    </div>
 		</div>
 		<div class="alert-box-actions">
-		    <button class="btn btn-success" style="margin-top: 17px">Save</button>
+		    <button class="btn btn-success" style="margin-top: 17px" [disabled]="!userForm.valid" >Save</button>
 		  </div>
 		</form>
 	</div>

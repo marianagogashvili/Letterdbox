@@ -6,8 +6,20 @@ import { Subject } from 'rxjs';
 @Injectable({providedIn: 'root'})
 export class UserService {
   	numberOfFilms = new Subject();
+  	newUser = new Subject<any>();
 
 	constructor(private http: HttpClient) {}
+
+	editUser(param:Params) {
+ 		return this.http.post(
+ 			'http://localhost:8888/editUser.php',
+ 		 	JSON.stringify(param)
+ 		);
+ 	}
+
+ 	sendNewUser(user) {
+ 		this.newUser.next(user);
+ 	}
 
  	getWatchedFilms(param: Params) {
  		return this.http.post(

@@ -41,6 +41,15 @@ export class UserComponent implements OnInit {
   
 
   ngOnInit() {
+
+    this.userService.newUser.subscribe(result => {
+      console.log(result);
+      if (result !== null) {
+        this.username = result['username'];
+      }
+      this.openSetting = 'hidden';
+    })
+
     // this.router.navigate(["profile"]);
     this.route.params.subscribe(result => {
       console.log(result['id']);

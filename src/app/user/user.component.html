@@ -1,6 +1,6 @@
 <app-header></app-header>
 <div class="backdrop" (click)="onClose()"  [@showSettings]="openSetting"></div>
-<app-settings *ngIf="openSetting === 'shown'"></app-settings>
+<app-settings *ngIf="openSetting === 'shown'" ></app-settings>
 <div id="mainUserDiv">
   <div id="userImgWrap">
 	 <img  style="display: inline-block;"  width="120" height="120" id="userImg" src="https://i0.wp.com/letterboxd.com/static/img/avatar220.486f8632.png?ssl=1" alt="">
