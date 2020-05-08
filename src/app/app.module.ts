@@ -34,6 +34,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FoundComponent } from './films/found/found.component';
 import { AuthGuard } from './auth-guard.service';
 import { SettingsComponent } from './user/settings/settings.component';
+import { PeopleComponent } from './people/people.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -61,7 +62,8 @@ import { SettingsComponent } from './user/settings/settings.component';
     ListComponent,
     NotFoundComponent,
     FoundComponent,
-    SettingsComponent,   
+    SettingsComponent,
+    PeopleComponent,   
 
   ],
   imports: [

@@ -21,6 +21,8 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { FoundComponent } from './films/found/found.component';
 import { AuthGuard } from './auth-guard.service';
 import { SettingsComponent } from './user/settings/settings.component';
+import { PeopleComponent } from './people/people.component';
+
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
 	{path: 'home', component: HomeComponent},
@@ -53,6 +55,7 @@ const appRoutes: Routes = [
 	{path: 'lists/new', canActivate:[AuthGuard], component: NewListComponent},
 	{path: 'lists/edit/:id', canActivate:[AuthGuard], component: EditListComponent},
 	{path: 'lists/:id', component: ListComponent},
+	{path: 'people', component: PeopleComponent},
 	{path: '**', component: NotFoundComponent}
 ];
 @NgModule({

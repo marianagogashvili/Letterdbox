@@ -1,0 +1,49 @@
+<app-header></app-header>
+<div style="width: 100%; text-align: center; font-size: 28px; color: #9ab; font-family: 'Roboto'; margin-bottom: 15px">
+	Film lovers, critics and friends — find popular contributors here.
+
+</div>
+<div style="width: 80%; height: 1px; background-color: rgb(153,170,187, 0.4); margin-left: 10vw; margin-bottom: 20px">
+	
+</div>
+<div style="width: 100%; ">
+	<div *ngFor="let top of top4" style="display: inline-block; padding-left: 10vw">
+	<div >
+		<img id="pplImg" width="150" height="150" src="{{top[1]}}" alt="">
+	</div>
+	
+	<div id="pplName" routerLink="/user/{{top[0]['id']}}">{{top[0]['username']}}</div>
+	<div id="descrId"><span routerLink="/user/{{top[0]['id']}}/films" id="filmId">{{top[0]['watchedCount']}} films </span> <span routerLink="/user/{{top[0]['id']}}/reviews" id="filmId">{{top[0]['reviewCount']}} reviews</span></div>
+	
+	</div>
+
+</div>
+<div style="margin-top: 10vh; margin-left: 10vw; ">
+	<!-- <div *ngFor="let user of people" >
+		<div style="display: inline-block;">
+			<span >{{user['username']}}</span>
+			{{user['watchedCount']}}
+			{{user['listCount']}}
+			{{user['likeCount']}}
+
+		</div>
+	</div>	 -->
+	<table style="width: 70%">
+				<thead >
+					<tr>
+						<th style="width: 40%"></th>
+						<th style="width: 20%"></th>
+						<th style="width: 20%"></th>
+						<th style="width: 20%"></th>
+					</tr>
+				</thead>
+				<tbody  *ngFor="let user of people">
+					<tr style="border-bottom: 1px solid rgb(153,170,187, 0.2); ">
+						<td style="color: white; font-family: 'Titillium Web'; font-size: 16px">{{user['username']}}</td>
+						<td id="detId">{{user['watchedCount']}}</td>
+						<td id="detId">{{user['listCount']}}</td>
+						<td id="detId">{{user['likeCount']}}</td>
+					</tr>
+				</tbody>
+			</table>
+</div>

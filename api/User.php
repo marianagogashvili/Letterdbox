@@ -31,38 +31,6 @@ class User {
 		}
 	}
 
-	public static function getMostPopularUsersByReview($conn) {
-		$sql = "SELECT user.*, COUNT(review.id) AS cnt FROM user INNER JOIN review ON review.user_id = user.id GROUP BY user.id ORDER BY cnt DESC";
-		$stmt = $conn->prepare($sql);
-		if ($stmt->execute()) {
-			return $stmt->fetchAll();
-		}
-	}
-
-	public static function getMostPopularUsersByLikes($conn) {
-		$sql = "SELECT user.*, COUNT(like_list.user_id) FROM user INNER JOIN like_list ON like_list.user_id = user.id GROUP BY user.id";
-		$stmt = $conn->prepare($sql);
-		if ($stmt->execute()) {
-			return $stmt->fetchAll();
-		}
-	}
-
-	public static function getMostPopularUsersByWatched($conn) {
-		$sql = "SELECT user.*, COUNT(watched_films.user_id) FROM user INNER JOIN watched_films ON watched_films.user_id = user.id GROUP BY user.id";
-		$stmt = $conn->prepare($sql);
-		if ($stmt->execute()) {
-			return $stmt->fetchAll();
-		}
-	}
-
-	public static function getMostPopularUsersByList($conn) {
-		$sql = "SELECT user.*, COUNT(list.user_id) FROM user INNER JOIN list ON list.user_id = user.id GROUP BY user.id";
-		$stmt = $conn->prepare($sql);
-		if ($stmt->execute()) {
-			return $stmt->fetchAll();
-		}
-	}
-
 	public static function findUserById($conn, $id) {
 		$sql = "SELECT * FROM user WHERE id = :id";
 		$stmt = $conn->prepare($sql);

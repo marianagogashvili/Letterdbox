@@ -1,0 +1,33 @@
+#pplImg {
+	object-fit: cover; 
+	border-radius: 50%;
+}
+#pplImg:hover {
+	border: 2px solid #00A1E7;
+}
+#pplName {
+	/*text-align: center;*/
+	margin-top: 12px;
+	font-family: 'Titillium Web';
+	font-size: 17px;
+	color: white;
+}
+#pplName:hover {
+	color: #00e054;
+}
+td {
+	line-height: 50px;
+}
+#descrId {
+	color: #9ab;
+	font-family: 'Titillium Web';
+
+	font-size: 14px;
+}
+#detId {
+	color:#9ab;
+	font-family: 'Titillium Web';
+}
+#filmId:hover {
+	color: white;
+}
