@@ -57,7 +57,7 @@ export class RegisterComponent implements OnInit {
   			let store = {id: result['id'], username: result['username'], email: result['email'], date: date};
   			localStorage.setItem('userData', JSON.stringify(store));
   			this.close.next();
-			this.router.navigate(['/user']);
+			this.router.navigate(['/user/profile']);
   		}
   		
   	});

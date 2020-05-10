@@ -3,6 +3,7 @@ import { UserService } from './user.service';
 import { DatePipe } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import { PeopleService } from '../people/people.service';
 
 @Component({
   selector: 'app-user',
@@ -28,16 +29,20 @@ export class UserComponent implements OnInit {
   id;
   numberOfFilms = 0;
   numberOfFilmsThisYear = 0;
+  numOfLists = 0;
 
   routeId;
   foundUser = false;
   openSetting = 'hidden';
   showTab;
+  loggedIn = false;
+  youFollowed;
   currentYear = this.datePipe.transform(new Date, 'yyyy');
   constructor(private userService: UserService,
               private datePipe: DatePipe,
               private router: Router,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private peopleService: PeopleService) { }
   
 
   ngOnInit() {
@@ -52,17 +57,20 @@ export class UserComponent implements OnInit {
 
     // this.router.navigate(["profile"]);
     this.route.params.subscribe(result => {
-      console.log(result['id']);
+
       if (result['id'] === undefined) {
         this.showTab = true;
         this.id = JSON.parse(localStorage.getItem('userData')).id;
         this.username = JSON.parse(localStorage.getItem('userData')).username;
       } else {
         if (localStorage.getItem('userData') !== null) {
+          this.loggedIn = true; 
           let id = JSON.parse(localStorage.getItem('userData')).id;
           if (id === result['id']) {
             this.router.navigate(["/user"]);
           }
+          // there
+          this.followSetUp(id, result['id']);
         }
         
         this.showTab = false;
@@ -87,9 +95,19 @@ export class UserComponent implements OnInit {
           }
         });
       });
+      this.userService.getUserLists({user_id: this.id}).subscribe(lists => {
+        if (lists !== null) {
+          this.numOfLists = lists['length'];      
+        }      
+      });
     });
   	
 
+  }
+  followSetUp(me, person) {
+    this.peopleService.getFollowed({me: me, person: person}).subscribe(result => {
+      this.youFollowed = result;
+    });
   }
   openSettings() {
     this.openSetting = 'shown';
@@ -98,6 +116,21 @@ export class UserComponent implements OnInit {
   }
   onClose() {
     this.openSetting = 'hidden';
+  }
+  follow() {
+    let me = JSON.parse(localStorage.getItem('userData')).id;
+    this.peopleService.followUnfollow({me: me, person: this.id, follow: true}).subscribe(result => {
+      console.log(result);
+      this.followSetUp(me, this.id);
+    });
+  }
+
+  unfollow() {
+    let me = JSON.parse(localStorage.getItem('userData')).id;
+    this.peopleService.followUnfollow({me: me, person: this.id, follow: false}).subscribe(result => {
+      console.log(result);
+      this.followSetUp(me, this.id);
+    });
   }
   	// this.userService.numberOfFilms.subscribe(number => {
   	// 	console.log(number);

@@ -73,6 +73,44 @@ class People {
 
 	}
 
+	public static function getTopThreeFilms($conn, $user_id) {
+		$sql = "SELECT film.* FROM watched_films INNER JOIN film on watched_films.film_id = film.id WHERE user_id = :user_id LIMIT 3";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":user_id", $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
+	public static function getFollowedPeople($conn, $me, $person) {
+		$sql = "SELECT * FROM follow WHERE follow.follower = :me AND follow.following = :person";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":me", $me, PDO::PARAM_INT);
+		$stmt->bindValue(":person", $person, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetch();
+		}
+	}
+	
+	public static function follow($conn, $me, $person) {
+		$sql = "INSERT INTO follow VALUES(:me, :person)";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":me", $me, PDO::PARAM_INT);
+		$stmt->bindValue(":person", $person, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return true;
+		}
+	}
+	
+	public static function unfollow($conn, $me, $person) {
+		$sql = "DELETE FROM follow WHERE follower = :me AND following = :person";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":me", $me, PDO::PARAM_INT);
+		$stmt->bindValue(":person", $person, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return true;
+		}
+	}
 
 }
 

@@ -91,8 +91,15 @@ foreach ($array5 as $fifthKey=>$fifth) {
 		}
 	}
 }
-
 $final = array_merge($array6, $array5);
+// error_log(json_encode($final));
+
+for ($i=0; $i < 4; $i++) { 
+	$films = People::getTopThreeFilms($conn, intval($final[$i][0]));
+	$final[$i]['films'] = $films;
+	// error_log(json_encode(intval($final[$i][0])));
+}
+
 // error_log(json_encode($final));
 
 echo(json_encode($final));

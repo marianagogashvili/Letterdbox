@@ -7,7 +7,12 @@
   </div>
 	<div style="display: inline-block;" id="nameDiv">
 		<p id="username">{{ username }}</p>
-		<button (click)="openSettings()" id="btnEdit">Edit profile</button>
+		<button *ngIf="showTab" (click)="openSettings()" id="btnEdit">Edit profile</button>
+    <div *ngIf="loggedIn === true && showTab === false">
+      <button *ngIf="youFollowed === true" (click)="unfollow()" id="following"><span id="followingSpan"></span></button>
+      <button *ngIf="youFollowed === false" (click)="follow()" id="followId">Follow</button>
+    </div>
+    
 	</div>
 	<div id="activityDiv">
 		<div style="display: inline-block; border-right: 1px solid grey; padding-right: 7px;">
@@ -19,7 +24,7 @@
 			<p id="numText">This year</p>
 		</div>
 		<div  style="display: inline-block; padding-left: 7px">
-			<p id="num">0</p>
+			<p id="num">{{numOfLists}}</p>
 			<p id="numText">Lists</p>
 		</div>
 	</div>

@@ -30,7 +30,7 @@
 #username {
 	font-size: 22px;
 }
-#btnEdit {
+#btnEdit, #following, #followId {
 	font-family: 'Montserrat', sans-serif;
 	text-transform: uppercase;
 	color: #c8d4e0;
@@ -39,6 +39,29 @@
 	border: 0;
 	border-radius: 5px;
 	padding: 5px;
+}
+#following {
+	background-color: #00b020; 
+	color: white;
+	content: 'following';
+	letter-spacing: 2px;
+}
+#followId {
+	letter-spacing: 2px;
+}
+#followId:hover {
+	color: white;
+}
+#following:hover {
+	background-color: #ee7000;
+	/*content: 'Unfollow?';*/
+}
+#followingSpan:after {
+	content: 'Following';
+}
+
+#following:hover #followingSpan:after {
+	content: 'Unfollow?';
 }
 button: focus {
 	outline: none;

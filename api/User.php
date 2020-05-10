@@ -152,7 +152,7 @@ class User {
 			return $stmt->fetchAll();
 		}
 	}
-	
+
 }
 
 ?>

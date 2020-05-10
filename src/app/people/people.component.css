@@ -1,6 +1,8 @@
 #pplImg {
 	object-fit: cover; 
 	border-radius: 50%;
+	margin-top: 10px;
+
 }
 #pplImg:hover {
 	border: 2px solid #00A1E7;
@@ -16,7 +18,7 @@
 	color: #00e054;
 }
 td {
-	line-height: 50px;
+	line-height: 60px;
 }
 #descrId {
 	color: #9ab;
@@ -24,10 +26,46 @@ td {
 
 	font-size: 14px;
 }
+#usId:hover {
+	color: #00e054;
+}
+#imgId {
+	margin-right: 7px;
+	border-radius: 3px;
+	margin-top: 5px;
+}
+#imgId:hover {
+	border: 1px solid #00e054;
+}
+#reviewId {
+	 font-size: 13px; 
+	 color: #9ab; 
+	 line-height: 3px; 
+	 margin-top: 1px;
+}
+#reviewId:hover{
+	color: white;
+}
 #detId {
 	color:#9ab;
 	font-family: 'Titillium Web';
 }
+#detId:hover {
+	color: white;
+}
 #filmId:hover {
 	color: white;
+}
+#plusIcon {
+	color:#9ab;
+	margin-right: 5px;
+}
+#plusIcon:hover {
+	color: #00e054;
+}
+#checkIcon {
+	color: #ffc55c;
+}
+#checkIcon:hover {
+	color: #EE4141;
 }
