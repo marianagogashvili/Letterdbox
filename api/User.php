@@ -153,6 +153,24 @@ class User {
 		}
 	}
 
+	public static function getFollowing($conn, $user_id) {
+		$sql = "SELECT * FROM follow WHERE follower = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
+	public static function getFollowers($conn, $user_id) {
+		$sql = "SELECT * FROM follow WHERE following = :user_id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return $stmt->fetchAll();
+		}
+	}
+
 }
 
 ?>

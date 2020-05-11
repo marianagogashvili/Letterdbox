@@ -17,16 +17,24 @@
 	<div id="activityDiv">
 		<div style="display: inline-block; border-right: 1px solid grey; padding-right: 7px;">
 			<p id="num">{{numberOfFilms}}</p>
-			<p id="numText">Films</p>
+			<p id="numText" routerLink="films">Films</p>
 		</div>
 		<div  style="display: inline-block;border-right: 1px solid grey; padding-left: 7px;  padding-right: 7px">
 			<p id="num">{{numberOfFilmsThisYear}}</p>
-			<p id="numText">This year</p>
+			<p id="numText" routerLink="films">This year</p>
 		</div>
-		<div  style="display: inline-block; padding-left: 7px">
+		<div  style="display: inline-block;border-right: 1px solid grey; padding-left: 7px;  padding-right: 7px">
 			<p id="num">{{numOfLists}}</p>
-			<p id="numText">Lists</p>
+			<p id="numText" routerLink="own-lists">Lists</p>
 		</div>
+    <div  style="display: inline-block;border-right: 1px solid grey; padding-left: 7px;  padding-right: 7px">
+      <p id="num">{{numOfFollowing}}</p>
+      <p id="numText" routerLink="network">Following</p>
+    </div>
+    <div  style="display: inline-block; padding-left: 7px;  padding-right: 7px">
+      <p id="num">{{numOfFollower}}</p>
+      <p id="numText" routerLink="network">Followers</p>
+    </div>
 	</div>
 
 <div id="activityDiv2" style=" clear: both;"> 
@@ -55,6 +63,9 @@
       </div> 
       <div  class="navbar-header" >
         <a class="navbar-brand" routerLinkActive="active" routerLink="liked" style="font-size: 14px;" href="#">likes</a>
+      </div> 
+      <div  class="navbar-header" >
+        <a class="navbar-brand" routerLinkActive="active" routerLink="network" style="font-size: 14px;" href="#">network</a>
       </div> 
     </div>
   </nav>

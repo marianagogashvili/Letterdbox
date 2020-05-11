@@ -83,4 +83,10 @@ export class UserService {
 			'http://localhost:8888/getUserLists.php', JSON.stringify(param)
 			);
 	}
+
+	getNumOfFollowers(param:Params) {
+		return this.http.post(
+			'http://localhost:8888/getNumOfFollowers.php', JSON.stringify(param)
+			);
+	}
 }

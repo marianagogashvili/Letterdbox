@@ -22,6 +22,7 @@ import { FoundComponent } from './films/found/found.component';
 import { AuthGuard } from './auth-guard.service';
 import { SettingsComponent } from './user/settings/settings.component';
 import { PeopleComponent } from './people/people.component';
+import { NetworkComponent } from './user/network/network.component';
 
 const appRoutes: Routes = [
 	{path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
 		{path: 'liked', component: LikedComponent},
 		{path: 'profile', component: ProfileComponent},
 		{path: 'own-lists', component: OwnListsComponent},
+		{path: 'network', component: NetworkComponent},
 	]},
 	{path: 'settings', canActivate:[AuthGuard], component: SettingsComponent},
 	{path: 'user/:id', component: UserComponent, children: [

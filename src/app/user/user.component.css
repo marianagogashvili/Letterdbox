@@ -77,6 +77,10 @@ button: focus {
 }
 #numText {
 	color: #9ab ;
+	font-size: 12px;
+}
+#numText:hover {
+	color: white;
 }
 .navbar-brand {
 	text-transform: uppercase;

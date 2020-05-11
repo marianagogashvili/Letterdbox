@@ -30,6 +30,8 @@ export class UserComponent implements OnInit {
   numberOfFilms = 0;
   numberOfFilmsThisYear = 0;
   numOfLists = 0;
+  numOfFollowing = 0;
+  numOfFollower = 0;
 
   routeId;
   foundUser = false;
@@ -99,6 +101,11 @@ export class UserComponent implements OnInit {
         if (lists !== null) {
           this.numOfLists = lists['length'];      
         }      
+      });
+      this.userService.getNumOfFollowers({user_id: this.id}).subscribe(follow => {
+        this.numOfFollowing = follow[0]['length'];
+        this.numOfFollower = follow[1]['length'];
+
       });
     });
   	
