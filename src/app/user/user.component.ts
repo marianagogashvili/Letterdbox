@@ -109,7 +109,8 @@ export class UserComponent implements OnInit {
       });
     });
   	
-
+    // console.log(this.route);
+    // this.router.navigate(['profile'], {relativeTo: this.route});
   }
   followSetUp(me, person) {
     this.peopleService.getFollowed({me: me, person: person}).subscribe(result => {

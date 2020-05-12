@@ -154,7 +154,7 @@ class User {
 	}
 
 	public static function getFollowing($conn, $user_id) {
-		$sql = "SELECT * FROM follow WHERE follower = :user_id";
+		$sql = "SELECT user.username, user.id, follow.* FROM follow INNER JOIN user ON user.id = following WHERE follower = :user_id";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
@@ -163,7 +163,7 @@ class User {
 	}
 
 	public static function getFollowers($conn, $user_id) {
-		$sql = "SELECT * FROM follow WHERE following = :user_id";
+		$sql = "SELECT user.username, user.id, follow.* FROM follow INNER JOIN user ON user.id = follower WHERE following = :user_id";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(':user_id', $user_id, PDO::PARAM_INT);
 		if ($stmt->execute()) {

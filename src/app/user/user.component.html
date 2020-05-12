@@ -50,7 +50,7 @@
         <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="films">films</a>
       </div> 
       <div  class="navbar-header" >
-        <a *ngIf="showTab" class="navbar-brand" routerLinkActive="active" routerLink="diary" style="font-size: 14px;" href="#">diary</a>
+        <a class="navbar-brand" routerLinkActive="active" routerLink="diary" style="font-size: 14px;" href="#">diary</a>
       </div>       
       <div  class="navbar-header" >
         <a  class="navbar-brand" routerLinkActive="active" style="font-size: 14px;" routerLink="reviews">reviews</a>
@@ -65,7 +65,7 @@
         <a class="navbar-brand" routerLinkActive="active" routerLink="liked" style="font-size: 14px;" href="#">likes</a>
       </div> 
       <div  class="navbar-header" >
-        <a class="navbar-brand" routerLinkActive="active" routerLink="network" style="font-size: 14px;" href="#">network</a>
+        <a *ngIf="showTab" class="navbar-brand" routerLinkActive="active" routerLink="network" style="font-size: 14px;" href="#">network</a>
       </div> 
     </div>
   </nav>

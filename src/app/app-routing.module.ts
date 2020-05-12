@@ -48,6 +48,7 @@ const appRoutes: Routes = [
 		{path: 'liked', component: LikedComponent},
 		{path: 'profile', component: ProfileComponent},
 		{path: 'own-lists', component: OwnListsComponent},
+		{path: 'network', component: NetworkComponent},
 
 	]},
 	{path: 'films', component: FilmsComponent},

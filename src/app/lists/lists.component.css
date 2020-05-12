@@ -4,6 +4,24 @@
 #films2 {
 	display: inline-block;
 }
+#userId {
+	color: #abc; font-family: 'Tinos'; 
+}
+#userId:hover {
+	color: white;
+}
+#newListBtn {
+	border: 0;
+	background-color: #283038;
+	color: #9ab;
+	font-family: 'Roboto';
+	padding:  3px 9px 3px 9px;
+	margin-top: 10px;
+	margin-bottom: 20px;
+}
+#newListBtn:hover {
+	color: white;
+}
 img {
 	position: relative;
 	z-index: 1;

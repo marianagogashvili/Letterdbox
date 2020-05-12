@@ -1,1 +1,47 @@
-<p>network works!</p>
+<table style="width: 70%">
+				<thead >
+					<tr>
+						<th style="width: 30%"></th>
+						<th style="width: 20%"></th>
+						<th style="width: 20%"></th>
+						<th style="width: 20%"></th>
+						<th style="width: 10%"></th>
+					</tr>
+				</thead>
+				<tbody  *ngFor="let user of currentTab">
+					<tr style="border-bottom: 1px solid rgb(153,170,187, 0.2); ">
+						<td style="color: white; font-family: 'Titillium Web'; font-size: 16px">
+
+							<div style="line-height: 30px">
+
+								<span routerLink="/user/{{user['id']}}" id="usId">
+							{{user['username']}}</span>
+							</div>
+
+						
+					    </td>
+						<td routerLink="/user/{{user['id']}}/films"> 
+							<span id="detId">
+							<fa-icon style="color: #00e054; margin-right: 5px" [icon]="eyeIcon" ></fa-icon>{{user['watchedCount']}}
+							</span>
+						</td>
+						<td routerLink="/user/{{user['id']}}/own-lists">
+							<span  id="detId" >
+							<fa-icon style="margin-right: 5px; color: #00A1E7" [icon]="listIcon"></fa-icon>
+							{{user['listCount']}}
+							</span>
+					</td>
+						<td routerLink="/user/{{user['id']}}/liked" >
+							<span id="detId">
+							<fa-icon style="margin-right: 5px; color: #ffc55c" [icon]="likeIcon"></fa-icon>
+							{{user['likeCount']}}
+						</span>
+					</td>
+					<td style="font-size: 30px" >
+						<fa-icon *ngIf="!user['followed']" id="plusIcon" (click)="follow(user['id'])" [icon]="plusIcon"></fa-icon>	
+
+						<fa-icon  *ngIf="user['followed']" id="checkIcon" (click)="unfollow(user['id'])" [icon]="checkIcon"></fa-icon>	
+					</td>
+					</tr>
+				</tbody>
+			</table>

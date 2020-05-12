@@ -1,8 +1,9 @@
 <app-header></app-header>
 <!-- <h1 *ngIf="lists?.length === 0" style="font-family: 'Roboto'; font-size: 17px; color: #9ab; margin-left: 5vw;">No films found</h1> -->
-<div style="text-align: center">
-	Collect, curate, and share. Lists are the perfect way to group films.
-	<div><button>Start your own list</button></div>
+<div style="text-align: center; ">
+	<span style="font-size: 30px; font-family: 'Roboto'; color: #AABBCC; padding-bottom: 20px">Collect, curate, and share. Lists are the perfect way to group films.</span>
+	<div><button routerLink="/lists/new" id="newListBtn">Start your own list</button></div>
+	<div style="width: 90%; height: 1px; background-color: rgb(153,170,187, 0.3); margin-left: 5vw; margin-bottom: 30px"></div>
 </div>
 <div *ngFor="let list of lists" style="margin-left: 20px; margin-bottom: 20px">
 	<div id="list" >
@@ -16,7 +17,7 @@
 			<div id="listSpan" [routerLink]="['/lists/',list[0]['id']]">
 			{{ list[0]['title']  }}</div>
 			<div id="listDescr">
-				<span style="color: #abc; font-family: 'Tinos'; ">{{ list[0]['username'] }}</span>
+				<span id="userId" routerLink="/user/{{ list[0]['user_id'] }}">{{ list[0]['username'] }}</span>
 				 <span style=" font-size: 13px; color:#678; margin-left: 10px">{{ list[2]  }} films {{ list[3]  }} <fa-icon  style="font-size: 13px; color: #678; margin-bottom: 4px"  [icon]="commentIcon"></fa-icon>
 				{{ list[4] }}
 				<fa-icon  style="font-size: 13px; color: #678; margin-bottom: 4px"  [icon]="likeIcon2"></fa-icon></span> 
