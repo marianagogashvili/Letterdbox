@@ -11,7 +11,7 @@ import { PeopleService } from '../../people/people.service';
 @Component({
   selector: 'app-network',
   templateUrl: './network.component.html',
-  styleUrls: ['./network.component.css']
+  styleUrls: ['./network.component.css'],
 })
 export class NetworkComponent implements OnInit {
   eyeIcon = faEye;
@@ -25,6 +25,7 @@ export class NetworkComponent implements OnInit {
   following;
 
   currentTab;
+  currentState = 'follower';
   constructor(private userService: UserService,
   			  private router: Router,
   			  private route: ActivatedRoute,
@@ -32,6 +33,7 @@ export class NetworkComponent implements OnInit {
 
   ngOnInit() {
   	this.route.parent.params.subscribe(result => {
+      // console.log(result);
       if (result['id'] === undefined) {
         this.currentUserId = JSON.parse(localStorage.getItem('userData')).id;
       } else {
@@ -39,15 +41,30 @@ export class NetworkComponent implements OnInit {
         this.router.navigate(["/user/", this.currentUserId]);
       }
     });
-
+ 
   	this.userService.getNetwork({user_id: this.currentUserId}).subscribe(result => {
   		console.log(result);
   		this.followers = result[0];
   		this.following = result[1];
   		this.setUpSubscription();
-  		this.currentTab = this.followers;
+  		// this.currentTab = this.followers;
+  		this.route.params.subscribe(result => {
+		    if (result['f'] === "1") {
+		    	console.log("what?");
+		    	this.currentTab = this.following;
+		    	this.currentState = 'following';
+		    } else if (result['f'] === "2") {
+		    	console.log("um chile");
+		    	this.currentTab = this.followers;
+		    	this.currentState = 'follower';
+		    } else {
+		    	this.currentTab = this.followers;
+		    	this.currentState = 'follower';
+		    }
+    	});
   	});
   	
+
   }
 
   setUpSubscription() {
@@ -77,6 +94,15 @@ export class NetworkComponent implements OnInit {
   		this.setUpSubscription();
   		
   	})
+  }
+  changeState() {
+  	if (this.currentState === 'follower') {
+  		this.currentState = 'following';
+  		this.currentTab = this.following;
+  	} else if (this.currentState === 'following'){
+  		this.currentState = 'follower';
+  		this.currentTab = this.followers;
+  	}
   }
 
 }

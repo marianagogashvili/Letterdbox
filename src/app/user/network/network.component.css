@@ -60,6 +60,12 @@ td {
 	color:#9ab;
 	margin-right: 5px;
 }
+#followBtn {
+	font-family: 'Roboto';
+	text-transform: uppercase;
+	padding-bottom: 3px;
+}
+
 #plusIcon:hover {
 	color: #00e054;
 }

@@ -27,8 +27,8 @@ export class SettingsComponent implements OnInit {
       'userData': new FormGroup({
         'username': new FormControl(this.user.username, [Validators.required]),
         'email': new FormControl(this.user.email, [Validators.required, Validators.email]),
-        'oldPassword': new FormControl(null, [Validators.required]),  
-        'password': new FormControl(null, [Validators.required]),  
+        'oldPassword': new FormControl(null),  
+        'password': new FormControl(null),  
       })
     });
     // this.userForm.patchValue({
@@ -45,14 +45,17 @@ export class SettingsComponent implements OnInit {
   	console.log("save");
   	// console.log(form.value.username, form.value.password, form.value.oldPassword, form.value.email);
     if (this.userForm.value.userData.email === this.user.email && 
-      this.userForm.value.userData.username === this.user.username) {
+      this.userForm.value.userData.username === this.user.username &&
+      this.userForm.value.userData.password === null) {
       this.error = "You haven't changed anything";
-      console.log("You haven't changed anything");
+      // console.log("You haven't changed anything");
     } else {
-      if (this.userForm.value.userData.oldPassword ===
-          this.userForm.value.userData.password) {
+      if ((this.userForm.value.userData.oldPassword !== null) &&
+          (this.userForm.value.userData.password !== null) && 
+          (this.userForm.value.userData.oldPassword ===
+                this.userForm.value.userData.password)) {
         this.error = "Password is the same";
-        console.log("Password is the same");
+        // console.log("Password is the same");
       } else {
         this.userService.editUser({id: this.user.id, 
                    email: this.userForm.value.userData.email,
@@ -60,20 +63,24 @@ export class SettingsComponent implements OnInit {
                    old_password: this.userForm.value.userData.oldPassword,
                    password: this.userForm.value.userData.password}).subscribe(result => {
           console.log(result);   
-          localStorage.removeItem('userData');
+          if (result === "wrong pass") {
+            this.error = "Password is wrong";             
+          } else {
+            localStorage.removeItem('userData');
                 
-          let date = new Date();
-          let store = {id: this.user.id, 
-                       username: this.userForm.value.userData.username, 
-                       email: this.userForm.value.userData.email, 
-                       date: date};
-          localStorage.setItem('userData', JSON.stringify(store));         
-          
-          this.userService.findUserById({id: this.user.id}).subscribe(result => {
-            this.userService.sendNewUser(result);
-          });
+            let date = new Date();
+            let store = {id: this.user.id, 
+                         username: this.userForm.value.userData.username, 
+                         email: this.userForm.value.userData.email, 
+                         date: date};
+            localStorage.setItem('userData', JSON.stringify(store));         
+            
+            this.userService.findUserById({id: this.user.id}).subscribe(result => {
+              this.userService.sendNewUser(result);
+            });
 
-          this.router.navigate(["/user"]);
+            this.router.navigate(["/user"]);
+          }
         });
       }
       

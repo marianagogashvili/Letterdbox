@@ -19,12 +19,23 @@ class User {
         }
 	}
 
-	public function editUser($conn, $username, $email, $password, $id) {
+	public static function editUser($conn, $username, $email, $password, $id) {
 		$sql = "UPDATE user SET username = :username, email = :email, password = :password WHERE id = :id";
 		$stmt = $conn->prepare($sql);
 		$stmt->bindValue(":username", $username, PDO::PARAM_STR);
 		$stmt->bindValue(":email", $email, PDO::PARAM_STR);
 		$stmt->bindValue(":password", password_hash($password, PASSWORD_BCRYPT), PDO::PARAM_STR);
+		$stmt->bindValue(":id", $id, PDO::PARAM_INT);
+		if ($stmt->execute()) {
+			return true;
+		}
+	}
+
+	public static function editUserWithoutPassword($conn, $username, $email, $id) {
+		$sql = "UPDATE user SET username = :username, email = :email WHERE id = :id";
+		$stmt = $conn->prepare($sql);
+		$stmt->bindValue(":username", $username, PDO::PARAM_STR);
+		$stmt->bindValue(":email", $email, PDO::PARAM_STR);
 		$stmt->bindValue(":id", $id, PDO::PARAM_INT);
 		if ($stmt->execute()) {
 			return true;

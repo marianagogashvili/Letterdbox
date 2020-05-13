@@ -29,11 +29,11 @@
 		</div>
     <div  style="display: inline-block;border-right: 1px solid grey; padding-left: 7px;  padding-right: 7px">
       <p id="num">{{numOfFollowing}}</p>
-      <p id="numText" routerLink="network">Following</p>
+      <p id="numText" [routerLink]="['network', {f:1}]">Following</p>
     </div>
     <div  style="display: inline-block; padding-left: 7px;  padding-right: 7px">
       <p id="num">{{numOfFollower}}</p>
-      <p id="numText" routerLink="network">Followers</p>
+      <p id="numText" [routerLink]="['network', {f:2}]">Followers</p>
     </div>
 	</div>
 

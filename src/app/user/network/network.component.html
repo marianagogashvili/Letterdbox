@@ -1,3 +1,13 @@
+<div>
+	<span id="followBtn" [ngStyle]="currentState === 'following' ? 
+	{'color': 'white',
+	'border-bottom': '1px solid white'} : {'color': '#00e054',
+	'border-bottom': '0'}" (click)="changeState()">Following</span> 
+	<span [ngStyle]="currentState === 'follower' ? 
+	{'color': 'white',
+	'border-bottom': '1px solid white'} : {'color': '#00e054',
+	'border-bottom': '0'}" style="margin-left: 10px" id="followBtn" (click)="changeState()">Followers</span>
+</div>
 <table style="width: 70%">
 				<thead >
 					<tr>
