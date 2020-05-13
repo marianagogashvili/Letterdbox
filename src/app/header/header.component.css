@@ -27,6 +27,9 @@
 	background-color: #151b22;
 }
 
+.navbar-nav > li > .dropdown-menu a:visited {
+	background-color: #151b22;
+}
 .inputSearch {
 	margin-top: 9px; 
 	margin-bottom: 8px;

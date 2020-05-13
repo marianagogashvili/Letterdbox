@@ -58,6 +58,36 @@ li .desc {
 li .desc2 {
 	display: none;
 }
+#navText {
+	color: #9ab;
+	font-family: 'Titillium Web', sans-serif;
+	text-transform: uppercase;
+}
+#navText:hover {
+	color: #edeeee;
+}
+#navText2 {
+	color: #778390;
+	font-family: 'Titillium Web', sans-serif;
+	text-transform: uppercase;
+}
+#navText2:hover {
+	color: #edeeee;
+}
+
+.navbar-nav > li > .dropdown-menu {
+	background-color: #151b22;
+	color: #778390;
+	font-family: 'Titillium Web', sans-serif;
+}
+
+
+.navbar-nav > li > .dropdown-menu a:hover {
+	background-color: #151b22;
+}
+.navbar-nav > li > .dropdown-menu a:visited {
+	background-color: #151b22;
+}
 /*:hover*/
 li:hover .desc {
 	display: block;

@@ -11,7 +11,12 @@
 a {
 	text-decoration: none;
 }
-
+#userId {
+  font-weight: 900; font-size: 17px; color: white;
+}
+#userId:hover {
+  color: #00e054;
+}
 .backdrop {
   position: fixed;
   top: 0;

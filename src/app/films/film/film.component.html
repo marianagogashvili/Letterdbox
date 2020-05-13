@@ -80,7 +80,7 @@
 	<div style="padding-left: 10px" *ngFor="let review of filmReviews">
 		<div style="width: 40vw; height: 1px; background-color: grey; margin-top: 20px;margin-bottom: 20px;"></div>
 		<p style="font-style: italic;">Review by 
-			<span style="font-weight: 900; font-size: 17px; color: white">{{ review['username'] }}</span> added on <span style="font-weight: 900; font-size: 12px; color: white">{{ review['date'] }}</span></p>
+			<span id="userId" routerLink="/user/{{review['user_id']}}">{{ review['username'] }}</span> added on <span style="font-weight: 900; font-size: 12px; color: white">{{ review['date'] }}</span></p>
 		<p id="review">{{ review['text'] }}</p>
 	</div>
 </div>

@@ -224,6 +224,7 @@ export class FilmComponent implements OnInit, OnDestroy {
                 end.unshift(r);
               });
               this.filmReviews = end;
+              console.log(this.filmReviews);
             } else {
               this.filmReviews = null;
             }
